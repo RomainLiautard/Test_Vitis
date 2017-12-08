@@ -1,0 +1,3415 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Anc Test Rest",
+        "description": "All fetaures to access server operation for anc",
+        "version": "1.0.0"
+    },
+    "host": "medoc",
+    "basePath": "/rest/anc",
+    "schemes": [
+        "https"
+    ],
+    "produces": [
+        "application/json",
+        "application/xml",
+        "text/html"
+    ],
+    "paths": {
+        "/composants/{id_composant}": {
+            "get": {
+                "tags": [
+                    "Composants"
+                ],
+                "summary": "Get Composant",
+                "description": "Request to get Composant by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_composant",
+                        "in": "path",
+                        "description": "id_composant",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Composant Response",
+                        "schema": {
+                            "$ref": "#/definitions/composants"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Composants"
+                ],
+                "summary": "update Composants",
+                "description": "Request to update Composants",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Composant token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_composant",
+                        "in": "path",
+                        "description": "id of the Composants",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/composants"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Composants"
+                ],
+                "summary": "delete Composants",
+                "description": "Request to delete Composants",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Composant token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_composant",
+                        "in": "path",
+                        "description": "id of the Composants",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/composants"
+                        }
+                    }
+                }
+            }
+        },
+        "/composanttypefeaturestyles/{composant_type}": {
+            "get": {
+                "tags": [
+                    "ComposantTypeFeatureStyles"
+                ],
+                "summary": "Get ComposantTypeFeatureStyle",
+                "description": "Request to get ComposantTypeFeatureStyle by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "composant_type",
+                        "in": "path",
+                        "description": "composant_type",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ComposantTypeFeatureStyle Response",
+                        "schema": {
+                            "$ref": "#/definitions/composanttypefeaturestyles"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "ComposantTypeFeatureStyles"
+                ],
+                "summary": "update ComposantTypeFeatureStyles",
+                "description": "Request to update ComposantTypeFeatureStyles",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "ComposantTypeFeatureStyle token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "composant_type",
+                        "in": "path",
+                        "description": "id of the ComposantTypeFeatureStyles",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/composanttypefeaturestyles"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "ComposantTypeFeatureStyles"
+                ],
+                "summary": "delete ComposantTypeFeatureStyles",
+                "description": "Request to delete ComposantTypeFeatureStyles",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "ComposantTypeFeatureStyle token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "composant_type",
+                        "in": "path",
+                        "description": "id of the ComposantTypeFeatureStyles",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/composanttypefeaturestyles"
+                        }
+                    }
+                }
+            }
+        },
+        "/composanttypefeaturestyles": {
+            "get": {
+                "tags": [
+                    "ComposantTypeFeatureStyles"
+                ],
+                "summary": "Get ComposantTypeFeatureStyles",
+                "description": "Request to get ComposantTypeFeatureStyles",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ComposantTypeFeatureStyle Response",
+                        "schema": {
+                            "$ref": "#/definitions/composanttypefeaturestyles"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "ComposantTypeFeatureStyles"
+                ],
+                "summary": "Add composant",
+                "description": "Request to add ComposantTypeFeatureStyles",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "composant Response",
+                        "schema": {
+                            "$ref": "#/definitions/composanttypefeaturestyles"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "ComposantTypeFeatureStyles"
+                ],
+                "summary": "delete ComposantTypeFeatureStyles",
+                "description": "Request to delete ComposantTypeFeatureStyles",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the composant",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "composant Response",
+                        "schema": {
+                            "$ref": "#/definitions/composanttypefeaturestyles"
+                        }
+                    }
+                }
+            }
+        },
+        "/composants": {
+            "get": {
+                "tags": [
+                    "Composants"
+                ],
+                "summary": "Get Composants",
+                "description": "Request to get Composants",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "composant Response",
+                        "schema": {
+                            "$ref": "#/definitions/composants"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Composants"
+                ],
+                "summary": "Add composant",
+                "description": "Request to add Composants",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "composant Response",
+                        "schema": {
+                            "$ref": "#/definitions/composants"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Composants"
+                ],
+                "summary": "delete Composants",
+                "description": "Request to delete Composants",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the composant",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "composant Response",
+                        "schema": {
+                            "$ref": "#/definitions/composants"
+                        }
+                    }
+                }
+            }
+        },
+        "/controles/{id_controle}": {
+            "get": {
+                "tags": [
+                    "Controles"
+                ],
+                "summary": "Get Controle",
+                "description": "Request to get Controle by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_controle",
+                        "in": "path",
+                        "description": "id_controle",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Controle Response",
+                        "schema": {
+                            "$ref": "#/definitions/controles"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Controles"
+                ],
+                "summary": "update Controles",
+                "description": "Request to update Controles",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Controle token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_controle",
+                        "in": "path",
+                        "description": "id of the Controles",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/controles"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Controles"
+                ],
+                "summary": "delete Controles",
+                "description": "Request to delete Controles",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Controle token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_controle",
+                        "in": "path",
+                        "description": "id of the Controles",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/controles"
+                        }
+                    }
+                }
+            }
+        },
+        "/controles": {
+            "get": {
+                "tags": [
+                    "Controles"
+                ],
+                "summary": "Get Controles",
+                "description": "Request to get Controles",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "controle Response",
+                        "schema": {
+                            "$ref": "#/definitions/controles"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Controles"
+                ],
+                "summary": "Add controle",
+                "description": "Request to add Controles",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "controle Response",
+                        "schema": {
+                            "$ref": "#/definitions/controles"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Controles"
+                ],
+                "summary": "delete Controles",
+                "description": "Request to delete Controles",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the controle",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "controle Response",
+                        "schema": {
+                            "$ref": "#/definitions/controles"
+                        }
+                    }
+                }
+            }
+        },
+        "/entreprises/{id_entreprise}": {
+            "get": {
+                "tags": [
+                    "Entreprises"
+                ],
+                "summary": "Get Entreprise",
+                "description": "Request to get Entreprise by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_entreprise",
+                        "in": "path",
+                        "description": "id_entreprise",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Entreprise Response",
+                        "schema": {
+                            "$ref": "#/definitions/entreprises"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Entreprises"
+                ],
+                "summary": "update Entreprises",
+                "description": "Request to update Entreprises",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Entreprise token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_entreprise",
+                        "in": "path",
+                        "description": "id of the Entreprises",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/entreprises"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Entreprises"
+                ],
+                "summary": "delete Entreprises",
+                "description": "Request to delete Entreprises",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Entreprise token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_entreprise",
+                        "in": "path",
+                        "description": "id of the Entreprises",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/entreprises"
+                        }
+                    }
+                }
+            }
+        },
+        "/entreprises": {
+            "get": {
+                "tags": [
+                    "Entreprises"
+                ],
+                "summary": "Get Entreprises",
+                "description": "Request to get Entreprises",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "entreprise Response",
+                        "schema": {
+                            "$ref": "#/definitions/entreprises"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Entreprises"
+                ],
+                "summary": "Add entreprise",
+                "description": "Request to add Entreprises",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "entreprise Response",
+                        "schema": {
+                            "$ref": "#/definitions/entreprises"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Entreprises"
+                ],
+                "summary": "delete Entreprises",
+                "description": "Request to delete Entreprises",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the entreprise",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "entreprise Response",
+                        "schema": {
+                            "$ref": "#/definitions/entreprises"
+                        }
+                    }
+                }
+            }
+        },
+        "/evacuation_eauxs/{id_evacuation_eaux}": {
+            "get": {
+                "tags": [
+                    "Evacuation_eauxs"
+                ],
+                "summary": "Get Evacuation_eaux",
+                "description": "Request to get Evacuation_eaux by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_evacuation_eaux",
+                        "in": "path",
+                        "description": "id_evacuation_eaux",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Evacuation_eaux Response",
+                        "schema": {
+                            "$ref": "#/definitions/evacuation_eauxs"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Evacuation_eauxs"
+                ],
+                "summary": "update Evacuation_eauxs",
+                "description": "Request to update Evacuation_eauxs",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Evacuation_eaux token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_evacuation_eaux",
+                        "in": "path",
+                        "description": "id of the Evacuation_eauxs",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/evacuation_eauxs"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Evacuation_eauxs"
+                ],
+                "summary": "delete Evacuation_eauxs",
+                "description": "Request to delete Evacuation_eauxs",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Evacuation_eaux token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_evacuation_eaux",
+                        "in": "path",
+                        "description": "id of the Evacuation_eauxs",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/evacuation_eauxs"
+                        }
+                    }
+                }
+            }
+        },
+        "/evacuation_eauxs": {
+            "get": {
+                "tags": [
+                    "Evacuation_eauxs"
+                ],
+                "summary": "Get Evacuation_eauxs",
+                "description": "Request to get Evacuation_eauxs",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "evacuation_eaux Response",
+                        "schema": {
+                            "$ref": "#/definitions/evacuation_eauxs"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Evacuation_eauxs"
+                ],
+                "summary": "Add evacuation_eaux",
+                "description": "Request to add Evacuation_eauxs",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "evacuation_eaux Response",
+                        "schema": {
+                            "$ref": "#/definitions/evacuation_eauxs"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Evacuation_eauxs"
+                ],
+                "summary": "delete Evacuation_eauxs",
+                "description": "Request to delete Evacuation_eauxs",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the evacuation_eaux",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "evacuation_eaux Response",
+                        "schema": {
+                            "$ref": "#/definitions/evacuation_eauxs"
+                        }
+                    }
+                }
+            }
+        },
+        "/filieres_agrees/{id_filieres_agree}": {
+            "get": {
+                "tags": [
+                    "Filieres_agrees"
+                ],
+                "summary": "Get Filieres_agree",
+                "description": "Request to get Filieres_agree by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_filieres_agree",
+                        "in": "path",
+                        "description": "id_filieres_agree",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Filieres_agree Response",
+                        "schema": {
+                            "$ref": "#/definitions/filieres_agrees"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Filieres_agrees"
+                ],
+                "summary": "update Filieres_agrees",
+                "description": "Request to update Filieres_agrees",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Filieres_agree token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_filieres_agree",
+                        "in": "path",
+                        "description": "id of the Filieres_agrees",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/filieres_agrees"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Filieres_agrees"
+                ],
+                "summary": "delete Filieres_agrees",
+                "description": "Request to delete Filieres_agrees",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Filieres_agree token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_filieres_agree",
+                        "in": "path",
+                        "description": "id of the Filieres_agrees",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/filieres_agrees"
+                        }
+                    }
+                }
+            }
+        },
+        "/filieres_agrees": {
+            "get": {
+                "tags": [
+                    "Filieres_agrees"
+                ],
+                "summary": "Get Filieres_agrees",
+                "description": "Request to get Filieres_agrees",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "filieres_agree Response",
+                        "schema": {
+                            "$ref": "#/definitions/filieres_agrees"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Filieres_agrees"
+                ],
+                "summary": "Add filieres_agree",
+                "description": "Request to add Filieres_agrees",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "filieres_agree Response",
+                        "schema": {
+                            "$ref": "#/definitions/filieres_agrees"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Filieres_agrees"
+                ],
+                "summary": "delete Filieres_agrees",
+                "description": "Request to delete Filieres_agrees",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the filieres_agree",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "filieres_agree Response",
+                        "schema": {
+                            "$ref": "#/definitions/filieres_agrees"
+                        }
+                    }
+                }
+            }
+        },
+        "/installations/{id_installation}": {
+            "get": {
+                "tags": [
+                    "Installations"
+                ],
+                "summary": "Get Installation",
+                "description": "Request to get Installation by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_installation",
+                        "in": "path",
+                        "description": "id_installation",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Installation Response",
+                        "schema": {
+                            "$ref": "#/definitions/installations"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Installations"
+                ],
+                "summary": "update Installations",
+                "description": "Request to update Installations",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Installation token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_installation",
+                        "in": "path",
+                        "description": "id of the Installations",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/installations"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Installations"
+                ],
+                "summary": "delete Installations",
+                "description": "Request to delete Installations",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Installation token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_installation",
+                        "in": "path",
+                        "description": "id of the Installations",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/installations"
+                        }
+                    }
+                }
+            }
+        },
+        "/installations": {
+            "get": {
+                "tags": [
+                    "Installations"
+                ],
+                "summary": "Get Installations",
+                "description": "Request to get Installations",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "installation Response",
+                        "schema": {
+                            "$ref": "#/definitions/installations"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Installations"
+                ],
+                "summary": "Add installation",
+                "description": "Request to add Installations",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "installation Response",
+                        "schema": {
+                            "$ref": "#/definitions/installations"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Installations"
+                ],
+                "summary": "delete Installations",
+                "description": "Request to delete Installations",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the installation",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "installation Response",
+                        "schema": {
+                            "$ref": "#/definitions/installations"
+                        }
+                    }
+                }
+            }
+        },
+        "/param_admins/{id_param_admin}": {
+            "get": {
+                "tags": [
+                    "Param_admins"
+                ],
+                "summary": "Get Param_admin",
+                "description": "Request to get Param_admin by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_admin",
+                        "in": "path",
+                        "description": "id_param_admin",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Param_admin Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_admins"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Param_admins"
+                ],
+                "summary": "update Param_admins",
+                "description": "Request to update Param_admins",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Param_admin token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_admin",
+                        "in": "path",
+                        "description": "id of the Param_admins",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_admins"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Param_admins"
+                ],
+                "summary": "delete Param_admins",
+                "description": "Request to delete Param_admins",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Param_admin token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_admin",
+                        "in": "path",
+                        "description": "id of the Param_admins",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_admins"
+                        }
+                    }
+                }
+            }
+        },
+        "/param_admins": {
+            "get": {
+                "tags": [
+                    "Param_admins"
+                ],
+                "summary": "Get Param_admins",
+                "description": "Request to get Param_admins",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_admin Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_admins"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Param_admins"
+                ],
+                "summary": "Add param_admin",
+                "description": "Request to add Param_admins",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_admin Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_admins"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Param_admins"
+                ],
+                "summary": "delete Param_admins",
+                "description": "Request to delete Param_admins",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the param_admin",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_admin Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_admins"
+                        }
+                    }
+                }
+            }
+        },
+        "/param_listes/{id_param_liste}": {
+            "get": {
+                "tags": [
+                    "Param_listes"
+                ],
+                "summary": "Get Param_liste",
+                "description": "Request to get Param_liste by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_liste",
+                        "in": "path",
+                        "description": "id_param_liste",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Param_liste Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_listes"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Param_listes"
+                ],
+                "summary": "update Param_listes",
+                "description": "Request to update Param_listes",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Param_liste token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_liste",
+                        "in": "path",
+                        "description": "id of the Param_listes",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_listes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Param_listes"
+                ],
+                "summary": "delete Param_listes",
+                "description": "Request to delete Param_listes",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Param_liste token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_liste",
+                        "in": "path",
+                        "description": "id of the Param_listes",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_listes"
+                        }
+                    }
+                }
+            }
+        },
+        "/param_listes": {
+            "get": {
+                "tags": [
+                    "Param_listes"
+                ],
+                "summary": "Get Param_listes",
+                "description": "Request to get Param_listes",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_liste Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_listes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Param_listes"
+                ],
+                "summary": "Add param_liste",
+                "description": "Request to add Param_listes",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_liste Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_listes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Param_listes"
+                ],
+                "summary": "delete Param_listes",
+                "description": "Request to delete Param_listes",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the param_liste",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_liste Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_listes"
+                        }
+                    }
+                }
+            }
+        },
+        "/param_tarifs/{id_param_tarif}": {
+            "get": {
+                "tags": [
+                    "Param_tarifs"
+                ],
+                "summary": "Get Param_tarif",
+                "description": "Request to get Param_tarif by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_tarif",
+                        "in": "path",
+                        "description": "id_param_tarif",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Param_tarif Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_tarifs"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Param_tarifs"
+                ],
+                "summary": "update Param_tarifs",
+                "description": "Request to update Param_tarifs",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Param_tarif token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_tarif",
+                        "in": "path",
+                        "description": "id of the Param_tarifs",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_tarifs"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Param_tarifs"
+                ],
+                "summary": "delete Param_tarifs",
+                "description": "Request to delete Param_tarifs",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Param_tarif token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_param_tarif",
+                        "in": "path",
+                        "description": "id of the Param_tarifs",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_tarifs"
+                        }
+                    }
+                }
+            }
+        },
+        "/param_tarifs": {
+            "get": {
+                "tags": [
+                    "Param_tarifs"
+                ],
+                "summary": "Get Param_tarifs",
+                "description": "Request to get Param_tarifs",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_tarif Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_tarifs"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Param_tarifs"
+                ],
+                "summary": "Add param_tarif",
+                "description": "Request to add Param_tarifs",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_tarif Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_tarifs"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Param_tarifs"
+                ],
+                "summary": "delete Param_tarifs",
+                "description": "Request to delete Param_tarifs",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the param_tarif",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "param_tarif Response",
+                        "schema": {
+                            "$ref": "#/definitions/param_tarifs"
+                        }
+                    }
+                }
+            }
+        },
+        "/pretraitements/{id_pretraitement}": {
+            "get": {
+                "tags": [
+                    "Pretraitements"
+                ],
+                "summary": "Get Pretraitement",
+                "description": "Request to get Pretraitement by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_pretraitement",
+                        "in": "path",
+                        "description": "id_pretraitement",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Pretraitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/pretraitements"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Pretraitements"
+                ],
+                "summary": "update Pretraitements",
+                "description": "Request to update Pretraitements",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Pretraitement token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_pretraitement",
+                        "in": "path",
+                        "description": "id of the Pretraitements",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/pretraitements"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pretraitements"
+                ],
+                "summary": "delete Pretraitements",
+                "description": "Request to delete Pretraitements",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Pretraitement token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_pretraitement",
+                        "in": "path",
+                        "description": "id of the Pretraitements",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/pretraitements"
+                        }
+                    }
+                }
+            }
+        },
+        "/pretraitements": {
+            "get": {
+                "tags": [
+                    "Pretraitements"
+                ],
+                "summary": "Get Pretraitements",
+                "description": "Request to get Pretraitements",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "pretraitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/pretraitements"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Pretraitements"
+                ],
+                "summary": "Add pretraitement",
+                "description": "Request to add Pretraitements",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "pretraitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/pretraitements"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Pretraitements"
+                ],
+                "summary": "delete Pretraitements",
+                "description": "Request to delete Pretraitements",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the pretraitement",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "pretraitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/pretraitements"
+                        }
+                    }
+                }
+            }
+        },
+        "/traitements/{id_traitement}": {
+            "get": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "Get Traitement",
+                "description": "Request to get Traitement by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_traitement",
+                        "in": "path",
+                        "description": "id_traitement",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Traitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/traitements"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "update Traitements",
+                "description": "Request to update Traitements",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Traitement token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_traitement",
+                        "in": "path",
+                        "description": "id of the Traitements",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/traitements"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "delete Traitements",
+                "description": "Request to delete Traitements",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Traitement token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_traitement",
+                        "in": "path",
+                        "description": "id of the Traitements",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/traitements"
+                        }
+                    }
+                }
+            }
+        },
+        "/traitements": {
+            "get": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "Get Traitements",
+                "description": "Request to get Traitements",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort_order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "traitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/traitements"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "Add traitement",
+                "description": "Request to add Traitements",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "traitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/traitements"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Traitements"
+                ],
+                "summary": "delete Traitements",
+                "description": "Request to delete Traitements",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the traitement",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "traitement Response",
+                        "schema": {
+                            "$ref": "#/definitions/traitements"
+                        }
+                    }
+                }
+            }
+        },
+        "/Versions": {
+            "get": {
+                "tags": [
+                    "Versions"
+                ],
+                "summary": "Get versions",
+                "description": "Request to get versions",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/Versions"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "/composanttypefeaturestyles": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/composanttypefeaturestyles"
+                }
+            ]
+        },
+        "/composants": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/composants"
+                }
+            ]
+        },
+        "/controles": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/controles"
+                }
+            ]
+        },
+        "/entreprises": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/entreprises"
+                }
+            ]
+        },
+        "/evacuation_eauxs": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/evacuation_eauxs"
+                }
+            ]
+        },
+        "/filieres_agrees": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/filieres_agrees"
+                }
+            ]
+        },
+        "/installations": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/installations"
+                }
+            ]
+        },
+        "/param_admins": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/param_admins"
+                }
+            ]
+        },
+        "/param_listes": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/param_listes"
+                }
+            ]
+        },
+        "/param_tarifs": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/param_tarifs"
+                }
+            ]
+        },
+        "/pretraitements": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/pretraitements"
+                }
+            ]
+        },
+        "/traitements": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/traitements"
+                }
+            ]
+        },
+        "/Versions": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Versions"
+                }
+            ]
+        }
+    },
+    "tags": [
+        {
+            "name": "ComposantTypeFeatureStyles",
+            "description": "Operations about ComposantTypeFeatureStyles"
+        },
+        {
+            "name": "Composants",
+            "description": "Operations about Composants"
+        },
+        {
+            "name": "Controles",
+            "description": "Operations about Controles"
+        },
+        {
+            "name": "Entreprises",
+            "description": "Operations about Entreprises"
+        },
+        {
+            "name": "Evacuation_eauxs",
+            "description": "Operations about Evacuation_eauxs"
+        },
+        {
+            "name": "Filieres_agrees",
+            "description": "Operations about Filieres_agrees"
+        },
+        {
+            "name": "Installations",
+            "description": "Operations about Installations"
+        },
+        {
+            "name": "Param_admins",
+            "description": "Operations about Param_admins"
+        },
+        {
+            "name": "Param_listes",
+            "description": "Operations about Param_listes"
+        },
+        {
+            "name": "Param_tarifs",
+            "description": "Operations about Param_tarifs"
+        },
+        {
+            "name": "Pretraitements",
+            "description": "Operations about Pretraitements"
+        },
+        {
+            "name": "Traitements",
+            "description": "Operations about Traitements"
+        },
+        {
+            "name": "Versions",
+            "description": "Operations about versions"
+        }
+    ]
+}

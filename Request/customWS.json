@@ -1,0 +1,619 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "CustomWS Test Rest",
+        "description": "All features to access server operation for CustomWS",
+        "version": "1.0.0"
+    },
+    "host": "medoc",
+    "basePath": "/rest/customWS",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json",
+        "application/xml",
+        "text/html"
+    ],
+    "paths": {
+        "/monuments/{id_monument}": {
+            "get": {
+                "tags": [
+                    "Monuments"
+                ],
+                "summary": "Get Monument",
+                "description": "Request to get Monument by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_monument",
+                        "in": "path",
+                        "description": "Monument ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/Monuments"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Monuments"
+                ],
+                "summary": "update Monuments",
+                "description": "Request to update Monuments",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Composant token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_monument",
+                        "in": "path",
+                        "description": "id of the monument",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "nom",
+                        "in": "query",
+                        "description": "monument nom",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code_ville",
+                        "in": "query",
+                        "description": "monument code_ville",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/monuments"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Monuments"
+                ],
+                "summary": "delete Monuments",
+                "description": "Request to delete Monuments",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Monuments token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "id_monument",
+                        "in": "path",
+                        "description": "id of the Monuments",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/monument"
+                        }
+                    }
+                }
+            }
+        },
+        "/monuments": {
+            "get": {
+                "tags": [
+                    "Monuments"
+                ],
+                "summary": "Get Monuments",
+                "description": "Request to get Monuments",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "default": "4"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/monuments"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Monuments"
+                ],
+                "summary": "Add monuments",
+                "description": "Request to add monument",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "nom",
+                        "in": "query",
+                        "description": "monument nom",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code_ville",
+                        "in": "query",
+                        "description": "monument code_ville",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "monument Response",
+                        "schema": {
+                            "$ref": "#/definitions/monuments"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Monuments"
+                ],
+                "summary": "delete Monuments",
+                "description": "Request to delete Monuments",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the monuments",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Monuments Response",
+                        "schema": {
+                            "$ref": "#/definitions/monuments"
+                        }
+                    }
+                }
+            }
+        },
+        "/villes/{code}": {
+            "get": {
+                "tags": [
+                    "Villes"
+                ],
+                "summary": "Get Ville",
+                "description": "Request to get Ville by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "Maps ID",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/villes"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Villes"
+                ],
+                "summary": "update Villes",
+                "description": "Request to update Villes",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Composant token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "id of the ville",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "nom",
+                        "in": "query",
+                        "description": "ville nom",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pop2017",
+                        "in": "query",
+                        "description": "ville pop2017",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "geom",
+                        "in": "query",
+                        "description": "ville geom",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/villes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Villes"
+                ],
+                "summary": "delete Villes",
+                "description": "Request to delete Villes",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "Villes token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "path",
+                        "description": "id of the Villes",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/villes"
+                        }
+                    }
+                }
+            }
+        },
+        "/villes": {
+            "get": {
+                "tags": [
+                    "Villes"
+                ],
+                "summary": "Get Villes",
+                "description": "Request to get Villes",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "default": "4"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/villes"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Villes"
+                ],
+                "summary": "Add ville",
+                "description": "Request to add ville",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "code",
+                        "in": "query",
+                        "description": "ville code",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "nom",
+                        "in": "query",
+                        "description": "ville nom",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "pop2017",
+                        "in": "query",
+                        "description": "ville pop2017",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "geom",
+                        "in": "query",
+                        "description": "ville geom",
+                        "required": false,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ville Response",
+                        "schema": {
+                            "$ref": "#/definitions/villes"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Villes"
+                ],
+                "summary": "delete Villes",
+                "description": "Request to delete Villes",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the villes",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Villes Response",
+                        "schema": {
+                            "$ref": "#/definitions/villes"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {}
+}
