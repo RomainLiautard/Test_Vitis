@@ -1,0 +1,55 @@
+Tests
+
+var t = parseInt(pm.environment.get("time"));
+console.log(t);
+t += parseInt(pm.response.responseTime);
+console.log(t);
+pm.environment.set("time",t);
+
+var jsonData = pm.response.json();
+
+if(jsonData.status === 0){
+    if (jsonData.errorMessage !== null){
+        var ErrorMess = jsonData.errorMessage;
+        console.log(ErrorMess);
+        pm.test(ErrorMess, function () {});
+    }
+    else{
+        var ErrorMess = jsonData.error;
+        console.log(ErrorMess);
+        pm.test(ErrorMess, function () {});
+    }
+}
+else{
+    pm.test("Status equal 1", function () {
+    pm.expect(jsonData.status).to.eql(1);
+    });
+    pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);});
+    
+    //Do stuff here
+   
+}
+
+
+
+
+pm.test("Received token equal saved one", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.token).to.eql(pm.environment.get("token"));
+});
+
+pm.test("More than one user", function () {
+    var jsonData = pm.response.json();
+    pm.expect(jsonData.list_count).to.above(1);
+});
+
+var jsonData = pm.response.json();
+pm.environment.set("token", jsonData.token);
+
+var ErrorMess = jsonData.errorMessage;
+pm.test(ErrorMess, function () {});
+
+var ErrorMess = jsonData.error;
+pm.test(ErrorMess, function () {});
+

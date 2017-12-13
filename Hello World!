@@ -1,0 +1,80 @@
+Hello Wolrd!
+
+privatetoken
+	GET/ Get private token (Admin)
+		Reset user
+		Reset password
+
+		Save Token
+		Save admin_id
+
+privatetoken
+	GET/ Get private token (Admin)
+		Reset user
+		Reset password
+
+		Save Token
+		Save admin_id
+
+privatetoken
+	GET/ Get token
+		verify if Token == returned token
+			{{Token}} == returned Token
+
+users
+	POST/ Add user
+		Save user_id
+			{{login}} = {{name}} = {{password}} = {{password_confirm}} = user0
+			{{user_id}} = returned user_id
+			
+	GET/ Get all users
+		Verify if user_id exist
+			returned status == 1
+	PUT/ Update user
+		Add random info to all params
+			
+	GET/ Get one user
+		Check if all params are != null
+	DELETE/ Delete user
+		Suppr last created user
+	POST/ Add user
+		Create a full filled params user
+
+privileges
+	GET/ Get privileges
+		Check if count == 9
+	PUT/ Update privileges
+		????
+	GET/ Get privileges
+		Check for a param in paticular
+
+groups
+	POST/ Add group
+		Create a group without user and save group_id
+	GET/ Get group
+		Verify if group exist
+	PUT/ Update group
+		Add user to the group
+	GET/ Get group
+		Verify user had been add
+	DELETE/ Delete group
+		Delete group
+	GET/ Get groups
+		Get all groups
+	POST/ Add groups
+		Add two groups and save their ID
+	DELETE/ Delete groups
+		Suppr the two added groups (id_1|id_2)
+
+Redo Everthing with basic user then delete him
+
+
+
+With admin account :
+
+Get private token of admin account. Next request set to Get token.
+Get token verify if token received equal saved one.
+Add "Basic_user" account and store user_id.
+Add 3 group name "Test_Group" + number(N) and store their name and id ("group_name" + (N) and "group_id" + (N)). Last group_id (group_id3) is store in environment group_id.
+Update name to "Test_Group2" at group_id3 
+Get groups and check if there're more than 5 groups ( 3 created + 2 already in place) or only more than 3 ?
