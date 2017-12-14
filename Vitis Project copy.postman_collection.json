@@ -19,12 +19,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "9213d2bd-9f47-4be7-81bf-2cd456e77c0e",
+										"id": "68d2fadb-2323-44ff-936e-eadd0ab8ceff",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -57,16 +57,14 @@
 											"    pm.environment.set(\"admin_id\",jsonData.user_id);",
 											"    ",
 											"    postman.setNextRequest(\"Get token\");",
-											"}",
-											"",
-											""
+											"}"
 										]
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "628ea579-899c-498b-a09d-1fa584cf4d7f",
+										"id": "f18bd064-d083-45c1-a3f3-a2df8e531289",
 										"type": "text/javascript",
 										"exec": [
 											"pm.environment.set(\"user\", \"admin\");",
@@ -75,7 +73,9 @@
 											"",
 											"pm.environment.set(\"time\",0);",
 											"pm.environment.set(\"bool\", \"admin\");",
-											"pm.environment.set(\"i\",0);"
+											"pm.environment.set(\"i_domain\",0);",
+											"pm.environment.set(\"i_group\", 0);",
+											""
 										]
 									}
 								}
@@ -134,12 +134,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "69deca12-ee94-49c1-84a8-214aefa3cb35",
+										"id": "23161240-318f-43ff-9718-8781aa3ad289",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -180,12 +180,12 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "8a193e56-90bc-4525-a0dd-3d2e8a2216d2",
+										"id": "1399e644-271b-422d-9cc9-05e2c20a52fc",
 										"type": "text/javascript",
 										"exec": [
-											"//pm.environment.set(\"user\", \"admin\");",
 											"pm.environment.set(\"bool\", \"user\");",
-											""
+											"pm.environment.set(\"i_domain\",0);",
+											"pm.environment.set(\"i_group\", 0);"
 										]
 									}
 								}
@@ -244,12 +244,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "34b89369-0540-4856-8fa1-ad2c9fcc0f90",
+										"id": "71cd52ae-c01c-45e9-95ea-0f578400e53e",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -325,17 +325,49 @@
 							"response": []
 						},
 						{
+							"name": "Get public token",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/publictoken",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"publictoken"
+									]
+								},
+								"description": "Request to get a token"
+							},
+							"response": []
+						},
+						{
 							"name": "Add User",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
-										"id": "dc1d6b22-1bf4-4488-8c91-d79a695dfbb5",
-										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -372,14 +404,14 @@
 											"",
 											"",
 											""
-										]
+										],
+										"id": "717cf06b-d053-4f6f-824d-05781d9867da",
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "69d3947f-bfb0-4510-bb55-fff574aae85b",
-										"type": "text/javascript",
 										"exec": [
 											"pm.environment.set(\"login\", \"Basic_user\");",
 											"pm.environment.set(\"name\", \"Basic_user\");",
@@ -391,7 +423,9 @@
 											"pm.environment.set(\"department\",\"\");",
 											"pm.environment.set(\"groups\", \"\"); //18 = Cadastre",
 											"pm.environment.set(\"privileges\",\"vitis_user\");"
-										]
+										],
+										"id": "eafbf8d5-6dc0-4d50-90f7-70e95f121afe",
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -499,12 +533,12 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "d2261c07-3b6b-498e-864f-81c6bcc90d32",
+										"id": "fa6f5a7f-7693-4256-8630-7394b401401c",
 										"type": "text/javascript",
 										"exec": [
-											"var ii = pm.environment.get(\"i\");",
-											"var g_name = \"Test_Group\".concat(ii);",
-											"var env_g_name = \"group_name\".concat(ii);",
+											"var i_g = pm.environment.get(\"i_group\");",
+											"var g_name = \"Test_Group\".concat(i_g);",
+											"var env_g_name = \"group_name\".concat(i_g);",
 											"console.log(g_name);",
 											"",
 											"pm.environment.set(env_g_name,g_name);",
@@ -515,17 +549,17 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "bd34b18a-de09-4d0c-8301-df3b1b4d03a2",
+										"id": "b2d79a1e-ab0b-43fc-bd31-e9ec5508718b",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
 											"var jsonData = pm.response.json();",
-											"var ii = pm.environment.get(\"i\");",
+											"var i_g = pm.environment.get(\"i_group\");",
 											"",
 											"if(jsonData.status === 0){",
 											"    if (jsonData.errorMessage !== null){",
@@ -548,7 +582,7 @@
 											"    ",
 											"    //Do stuff here",
 											"    ",
-											"    var g_id = \"group_id\".concat(ii);",
+											"    var g_id = \"group_id\".concat(i_g);",
 											"    console.log(\"group_id = \" + jsonData.group_id);",
 											"    pm.environment.set(g_id, jsonData.group_id);",
 											"    pm.environment.set(\"group_id\", jsonData.group_id);",
@@ -556,9 +590,9 @@
 											"    ",
 											"}",
 											"",
-											"if(ii < 2){",
-											"        ii++;",
-											"        pm.environment.set(\"i\", ii);",
+											"if(i_g < 2){",
+											"        i_g++;",
+											"        pm.environment.set(\"i_group\", i_g);",
 											"        postman.setNextRequest(\"Add Group\");",
 											"}",
 											"",
@@ -621,9 +655,10 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "f921532d-db42-4f8f-ad26-cb5396682385",
+										"id": "ead88754-aea1-4098-97b7-2806019a2872",
 										"type": "text/javascript",
 										"exec": [
+											"pm.environment.set(\"idList\", pm.environment.get(\"user_id\")+'|'+pm.environment.get(\"admin_id\"));",
 											"pm.environment.set(\"name\", \"Test_Group_2\");",
 											"pm.environment.set(\"group_name\",pm.environment.get(\"name\"));",
 											""
@@ -633,12 +668,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "5f6ba933-01be-4202-bf9a-dce9604079a8",
+										"id": "0c50e82b-2c85-4f4b-bb7e-49a367d6289b",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -683,7 +718,7 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/groups/:group_id?token={{token}}&name={{name}}&users={{user_id}}|{{admin_id}}",
+									"raw": "https://medoc/rest/vitis/groups/:group_id?token={{token}}&name={{name}}&users={{idList}}",
 									"protocol": "https",
 									"host": [
 										"medoc"
@@ -707,7 +742,7 @@
 										},
 										{
 											"key": "users",
-											"value": "{{user_id}}|{{admin_id}}",
+											"value": "{{idList}}",
 											"equals": true
 										}
 									],
@@ -728,12 +763,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "a79a8f15-89bb-4e60-9582-701cb3a02e79",
+										"id": "004c8f4d-016b-4d17-b114-6ba77831c84a",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -823,12 +858,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "80deae74-68ca-4783-8ca3-e152eeb020b3",
+										"id": "0d76fe9e-3f44-4479-b05d-61b2ecc859be",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -909,12 +944,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "ed4157b7-ac6a-43c6-b261-4901a060818b",
+										"id": "69a0b8ab-992c-473b-8154-7f7067556936",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -947,14 +982,16 @@
 											"            }",
 											"        }",
 											"    pm.test(\"Delete confirm\", function () { ",
-											"        var res = \"Test_Group2\";",
+											"        var res = null;",
 											"        for(var i in jsonData.groups){",
 											"            if(jsonData.groups[i].name == \"Test_Group_2\"){",
 											"                console.log(\"Good\");",
-											"                res = jsonData.groups[i].group_id;",
+											"                res = pm.environment.get(\"group_id\");",
+											"                pm.expect(\"Group id : \" + res).not.to.eql(\"Group id : \" + parseInt(pm.environment.get(\"group_id\")));",
 											"            }",
 											"        }",
-											"        pm.expect(\"Group id : \" + res).not.to.eql(\"Group id : \" +(pm.environment.get(\"group_id\")));",
+											"        console.log(\"Group id : \" + res);",
+											"        console.log(\"Group id : \" + parseInt(pm.environment.get(\"group_id\")));",
 											"    });",
 											"",
 											"}"
@@ -1042,12 +1079,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "39d1d267-9ba8-4249-a0b3-7384047bacea",
+										"id": "b5ea891a-c6dd-45d2-a0f1-bb02270b231b",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -1077,6 +1114,16 @@
 											"}"
 										]
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "33a038c6-c33e-4d20-a081-c414375fefd2",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"idList\", pm.environment.get(\"group_id0\")+'|'+pm.environment.get(\"group_id1\"));"
+										]
+									}
 								}
 							],
 							"request": {
@@ -1093,7 +1140,7 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/groups/?token={{token}}&idList={{group_id0}}|{{group_id1}}",
+									"raw": "https://medoc/rest/vitis/groups/?token={{token}}&idList={{idList}}",
 									"protocol": "https",
 									"host": [
 										"medoc"
@@ -1112,7 +1159,7 @@
 										},
 										{
 											"key": "idList",
-											"value": "{{group_id0}}|{{group_id1}}",
+											"value": "{{idList}}",
 											"equals": true
 										}
 									]
@@ -1284,12 +1331,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "949ed826-a125-4c02-98bc-dde7d8ab3395",
+										"id": "03f690e9-b8b6-4057-875d-83fea75f30f4",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t+= parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -1322,7 +1369,7 @@
 											"        pm.expect(jsonData.users[0].email).to.eql(pm.environment.get(\"email\"));",
 											"        pm.expect(jsonData.users[0].company).to.eql(pm.environment.get(\"company\"));",
 											"        pm.expect(jsonData.users[0].department).to.eql(pm.environment.get(\"department\"));",
-											"        pm.expect(jsonData.users[0].groups).to.eql(+(pm.environment.get(\"groups\")));",
+											"        pm.expect(jsonData.users[0].groups).to.eql(parseInt(pm.environment.get(\"groups\")));",
 											"        pm.expect(jsonData.users[0].privileges).to.eql(pm.environment.get(\"privileges\"));",
 											"    });",
 											"",
@@ -1385,24 +1432,65 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "810a04e4-4e24-4915-bcc2-ac561852fec5",
+										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
-											"pm.test(\"Status equal 1\", function () {",
+											"if(pm.response.to.have.status(200)){",
 											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData.status).to.eql(1);",
-											"});",
 											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"id": "00bc6c24-2d10-4201-9651-597f64bb75f9",
-										"type": "text/javascript"
+											"    if(jsonData.status === 0){",
+											"        if (jsonData.errorMessage !== null){",
+											"            var ErrorMess = jsonData.errorMessage;",
+											"            console.log(ErrorMess);",
+											"            pm.test(ErrorMess, function () {});",
+											"        }",
+											"        else{",
+											"            var ErrorMess = jsonData.error;",
+											"            console.log(ErrorMess);",
+											"            pm.test(ErrorMess, function () {});",
+											"        }",
+											"    }",
+											"    else{",
+											"        pm.test(\"Status equal 1\", function () {",
+											"        pm.expect(jsonData.status).to.eql(1);",
+											"        });",
+											"        pm.test(\"Status code is 200\", function () {",
+											"        pm.response.to.have.status(200);});",
+											"        ",
+											"        //Do stuff here",
+											"       ",
+											"    }",
+											"    var b = pm.environment.get(\"bool\");",
+											"    if(b == \"user\"){",
+											"        pm.environment.set(\"user_id\",pm.environment.get(\"tmpo_uID\"));",
+											"        pm.environment.unset(\"tmpo_uID\");",
+											"        ",
+											"    }",
+											"}else{",
+											"    postman.setNextRequest(\"Get Privilege\");",
+											"}",
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "1c074021-9c7c-41ca-a211-77cd2bf105d8",
+										"type": "text/javascript",
+										"exec": [
+											"console.log(pm.environment.get(\"user_id\"));",
+											"var b = pm.environment.get(\"bool\");",
+											"if(b == \"user\"){",
+											"    pm.environment.set(\"tmpo_uID\",pm.environment.get(\"user_id\"));",
+											"}"
+										]
 									}
 								}
 							],
@@ -1433,9 +1521,9 @@
 									],
 									"query": [
 										{
-											"equals": true,
 											"key": "token",
-											"value": "{{token}}"
+											"value": "{{token}}",
+											"equals": true
 										}
 									],
 									"variable": [
@@ -1455,12 +1543,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "47a11acd-44d0-45c5-bcd1-b1de8d51a422",
+										"id": "f2a6388d-4802-4d63-9796-2ec6ffdc5d5b",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -1554,12 +1642,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "cc732cbc-c6ef-45c7-97fb-5552cd13f5cd",
+										"id": "2fdcf67f-d233-41cf-b65e-dad424aafa3b",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -1653,12 +1741,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "7aba1d32-b2d5-4182-8516-d2d5a82ce0b4",
+										"id": "c23b5812-2fdb-4f22-b87f-a6f9957a9765",
 										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -1765,15 +1853,2835 @@
 							"response": []
 						},
 						{
+							"name": "Add Domain",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "92ad4a25-4ca0-48a1-b21c-cf3a7ca647f6",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t+= parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"var i_d = pm.environment.get(\"i_domain\");",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    ",
+											"    var d_id = \"domain_id\".concat(i_d);",
+											"    console.log(\"domain_id = \" + jsonData.domain_id);",
+											"    pm.environment.set(d_id, jsonData.domain_id);",
+											"    pm.environment.set(\"domain_id\", jsonData.domain_id);",
+											"",
+											"    ",
+											"}",
+											"",
+											"if(i_d < 2){",
+											"        i_d++;",
+											"        pm.environment.set(\"i_domain\", i_d);",
+											"        postman.setNextRequest(\"Add Domain\");",
+											"}",
+											"",
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "74da26e3-3eaa-42a3-8c79-1c3e8a89757c",
+										"type": "text/javascript",
+										"exec": [
+											"var i_d = pm.environment.get(\"i_domain\");",
+											"var d_name = \"Domain_\".concat(i_d);",
+											"var env_d_name = \"domain\".concat(i_d);",
+											"console.log(d_name);",
+											"",
+											"pm.environment.set(env_d_name,d_name);",
+											"pm.environment.set(\"domain\",d_name);",
+											"pm.environment.set(\"alias\",d_name);",
+											"pm.environment.set(\"server\",d_name);",
+											"pm.environment.set(\"port\",parseInt(i_d) + 100);"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "token",
+											"type": "text",
+											"value": "{{token}}"
+										},
+										{
+											"key": "domain",
+											"type": "text",
+											"value": "{{domain}}"
+										},
+										{
+											"key": "alias",
+											"type": "text",
+											"value": "{{alias}}"
+										},
+										{
+											"key": "server",
+											"type": "text",
+											"value": "{{server}}"
+										},
+										{
+											"key": "port",
+											"type": "text",
+											"value": "{{port}}"
+										},
+										{
+											"key": "dn_search_user",
+											"type": "text",
+											"value": "{{dn_search_user}}"
+										},
+										{
+											"key": "filter_user",
+											"type": "text",
+											"value": "{{filter_user}}"
+										},
+										{
+											"key": "dn_search_group",
+											"type": "text",
+											"value": "{{dn_search_group}}"
+										},
+										{
+											"key": "filter_group",
+											"type": "text",
+											"value": "{{filter_group}}"
+										},
+										{
+											"key": "login",
+											"type": "text",
+											"value": "{{login}}"
+										},
+										{
+											"key": "password",
+											"type": "text",
+											"value": "{{password}}"
+										},
+										{
+											"key": "type",
+											"type": "text",
+											"value": "AD"
+										},
+										{
+											"key": "verify_rights",
+											"type": "text",
+											"value": "{{verify_rights}}"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/domains",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"domains"
+									]
+								},
+								"description": "Request to add domain"
+							},
+							"response": []
+						},
+						{
+							"name": "Update Domain",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "673ef214-fb75-4576-b99a-74af42ee2a4c",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"        pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"    //Do stuff here",
+											"}"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "58457ddd-ef69-4427-b087-b85067a22ef6",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"domain\",\"Domain2\");",
+											"pm.environment.set(\"dn_search_user\",\"Some_user\");",
+											"pm.environment.set(\"filter_user\",\"A_user\");",
+											"pm.environment.set(\"dn_search_group\",\"Some_group\");",
+											"pm.environment.set(\"filter_group\",\"A_group\");",
+											"pm.environment.set(\"login\",\"root\");",
+											"pm.environment.set(\"password\",\"toor\");"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}&domain={{domain}}&alias={{alias}}&server={{server}}&port={{port}}&dn_search_user={{dn_search_user}}&filter_user={{filter_user}}&dn_search_group={{dn_search_group}}&filter_group={{filter_group}}&login={{login}}&password={{password}}&type=AD&verify_rights={{verify_rights}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"domains",
+										":domain_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "domain",
+											"value": "{{domain}}",
+											"equals": true
+										},
+										{
+											"key": "alias",
+											"value": "{{alias}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{port}}",
+											"equals": true
+										},
+										{
+											"key": "dn_search_user",
+											"value": "{{dn_search_user}}",
+											"equals": true
+										},
+										{
+											"key": "filter_user",
+											"value": "{{filter_user}}",
+											"equals": true
+										},
+										{
+											"key": "dn_search_group",
+											"value": "{{dn_search_group}}",
+											"equals": true
+										},
+										{
+											"key": "filter_group",
+											"value": "{{filter_group}}",
+											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"equals": true
+										},
+										{
+											"key": "type",
+											"value": "AD",
+											"equals": true
+										},
+										{
+											"key": "verify_rights",
+											"value": "{{verify_rights}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "domain_id",
+											"value": "{{domain_id}}"
+										}
+									]
+								},
+								"description": "Request to update domain"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Domain",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "b04a7b66-67a4-44f5-b373-16e8e40311df",
+										"type": "text/javascript",
+										"exec": [
+											"// Unchanged yet",
+											"",
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t+= parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"        pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"    ",
+											"    //Do stuff here",
+											"    pm.test(\"Update confirm\", function () {",
+											"        var jsonData = pm.response.json();",
+											"        //console.log(jsonData.groups[0].name);",
+											"        pm.expect(jsonData.domains[0].dn_search_user).to.eql(pm.environment.get(\"dn_search_user\"));",
+											"        pm.expect(jsonData.domains[0].filter_user).to.eql(pm.environment.get(\"filter_user\"));",
+											"        pm.expect(jsonData.domains[0].dn_search_group).to.eql(pm.environment.get(\"dn_search_group\"));",
+											"        pm.expect(jsonData.domains[0].filter_group).to.eql(pm.environment.get(\"filter_group\"));",
+											"        pm.expect(jsonData.domains[0].login).to.eql(pm.environment.get(\"login\"));",
+											"        pm.expect(jsonData.domains[0].password).to.eql(pm.environment.get(\"password\"));",
+											"        ",
+											"    });",
+											"",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"domains",
+										":domain_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "domain_id",
+											"value": "{{domain_id}}"
+										}
+									]
+								},
+								"description": "Request to get Domain by id"
+							},
+							"response": []
+						},
+						{
+							"name": "delete Domain",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0cacb60d-f643-4d2f-8373-9d1a06a4d6ae",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"domains",
+										":domain_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "domain_id",
+											"value": "{{domain_id}}"
+										}
+									]
+								},
+								"description": "Request to delete Domain"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Domains",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "8eef362d-1852-457d-b181-529f58a8afb2",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t+= parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    ",
+											"    pm.test(\"Delete confirm\", function () { ",
+											"        var res = null;",
+											"        for(var i in jsonData.domains){",
+											"            if(jsonData.domains[i].name == \"Domain2\"){",
+											"                console.log(\"Good\");",
+											"                res = pm.environment.get(\"domain_id\");",
+											"                pm.expect(\"Domain id : \" + res).not.to.eql(\"Domain id : \" + parseInt(pm.environment.get(\"domain_id\")));",
+											"            }",
+											"        }",
+											"        console.log(\"Group id : \" + res);",
+											"        console.log(\"Group id : \" + parseInt(pm.environment.get(\"domain_id\")));",
+											"    });",
+											"",
+											"",
+											"}",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/domains?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"domains"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "order_by",
+											"value": "{{order_by}}",
+											"equals": true
+										},
+										{
+											"key": "sort_order",
+											"value": "{{sort_order}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{limit}}",
+											"equals": true
+										},
+										{
+											"key": "offset",
+											"value": "{{offset}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{filter}}",
+											"equals": true
+										},
+										{
+											"key": "distinct",
+											"value": "{{distinct}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get Domains"
+							},
+							"response": []
+						},
+						{
+							"name": "delete Domain",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "86412da5-a9b6-4e7e-90b5-6dca4d153956",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}",
+											"",
+											"pm.environment.set(\"domain\",\"\");",
+											"pm.environment.set(\"alias\",\"\");",
+											"pm.environment.set(\"server\",\"\");",
+											"pm.environment.set(\"port\",\"\");",
+											"pm.environment.set(\"domain\",\"\");",
+											"pm.environment.set(\"dn_search_user\",\"\");",
+											"pm.environment.set(\"filter_user\",\"\");",
+											"pm.environment.set(\"dn_search_group\",\"\");",
+											"pm.environment.set(\"filter_group\",\"\");",
+											"pm.environment.set(\"login\",\"\");",
+											"pm.environment.set(\"password\",\"\");"
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "934594ac-7b6f-4a41-8d70-0dd50d86cc24",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"idList\", pm.environment.get(\"domain_id0\")+'|'+pm.environment.get(\"domain_id1\"));"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/domains/?token={{token}}&idList={{idList}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"domains",
+										""
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "idList",
+											"value": "{{idList}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to delete Domain"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "genericquerys",
+					"description": "Folder for genericquerys",
+					"item": [
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "bef805c7-d64f-4657-bf28-302d9ff0e6ae",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"var i_q = pm.environment.get(\"max_query\");",
+											"",
+											"//should be 0 instead of 1",
+											"if(jsonData.status === 1){ ",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    if(jsonData.genericquerys[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"database\",jsonData.genericquerys[0].database);",
+											"    }",
+											"    ",
+											"    /*var tab=[];",
+											"",
+											"    for (var i in jsonData.genericquerys){",
+											"        //console.log(jsonData.genericquerys[i].database);",
+											"        tab.push(jsonData.genericquerys[i].database);",
+											"        i_q++;",
+											"    }",
+											"    //console.log(tab);",
+											"    pm.environment.set(\"databases\",tab);",
+											"    var t = [];",
+											"    t = pm.environment.get(\"databases\");",
+											"    //console.log(t);",
+											"    pm.environment.set(\"max_query\",i_q);*/",
+											"}",
+											"",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys/databases?token={{token}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys",
+										"databases"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Get the dtabases list"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "6e205e15-9474-4b14-b5c4-ff411f882e0f",
+										"type": "text/javascript",
+										"exec": [
+											"/*var tmp = pm.environment.get(\"databases\");",
+											"var dbs = tmp.split(',');",
+											"console.log(dbs);",
+											"var i_q = pm.environment.get(\"i_query\");",
+											"pm.environment.set(\"database\",dbs[i_q]);*/"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "d5f9fdc5-006b-4f18-a19e-e0f26b69e068",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"        pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"        pm.response.to.have.status(200);",
+											"    });",
+											"    ",
+											"    if(jsonData.genericquerys[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"schema\",jsonData.genericquerys[0].schema_name);",
+											"    }",
+											"    //Do stuff here",
+											"    /*var i_q = pm.environment.get(\"i_query\");",
+											"    var max_q = pm.environment.get(\"max_query\");",
+											"    if(i_q < 5){",
+											"        i_q++;",
+											"        pm.environment.set(\"i_query\",i_q);",
+											"    }*/",
+											"}",
+											""
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys/:database/schemas?token={{token}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys",
+										":database",
+										"schemas"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "database",
+											"value": "{{database}}"
+										}
+									]
+								},
+								"description": "Get the database schemas"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "13400b66-36ff-4dec-a883-34804445d8b2",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    if(jsonData.genericquerys[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"table_name\",jsonData.genericquerys[0].table_name);",
+											"    }",
+											"}",
+											"   ",
+											"   ",
+											"   ",
+											"   "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&table={{table}}&filter={{filter}}&limit={{limit}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{port}}",
+											"equals": true
+										},
+										{
+											"key": "sgbd",
+											"value": "{{sgbd}}",
+											"equals": true
+										},
+										{
+											"key": "database",
+											"value": "{{database}}",
+											"equals": true
+										},
+										{
+											"key": "schema",
+											"value": "{{schema}}",
+											"equals": true
+										},
+										{
+											"key": "table",
+											"value": "{{table}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{filter}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{limit}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to query a schema. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "fee9b1ba-6748-43d1-b853-1fc373d33122",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys/:table_name/columns?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys",
+										":table_name",
+										"columns"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{port}}",
+											"equals": true
+										},
+										{
+											"key": "sgbd",
+											"value": "{{sgbd}}",
+											"equals": true
+										},
+										{
+											"key": "database",
+											"value": "{{database}}",
+											"equals": true
+										},
+										{
+											"key": "schema",
+											"value": "{{schema}}",
+											"equals": true
+										},
+										{
+											"key": "encoding",
+											"value": "{{encoding}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "table_name",
+											"value": "{{table_name}}"
+										}
+									]
+								},
+								"description": "Request to query. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "9ddfdce1-f346-45fb-8e60-cad044f1a5ba",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys",
+										":table_name"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{password}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{port}}",
+											"equals": true
+										},
+										{
+											"key": "sgbd",
+											"value": "{{sgbd}}",
+											"equals": true
+										},
+										{
+											"key": "database",
+											"value": "{{database}}",
+											"equals": true
+										},
+										{
+											"key": "schema",
+											"value": "{{schema}}",
+											"equals": true
+										},
+										{
+											"key": "encoding",
+											"value": "{{encoding}}",
+											"equals": true
+										},
+										{
+											"key": "order_by",
+											"value": "{{order_by}}",
+											"equals": true
+										},
+										{
+											"key": "sort_order",
+											"value": "{{sort_order}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{limit}}",
+											"equals": true
+										},
+										{
+											"key": "offset",
+											"value": "{{offset}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{filter}}",
+											"equals": true
+										},
+										{
+											"key": "distinct",
+											"value": "{{distinct}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "table_name",
+											"value": "{{table_name}}"
+										}
+									]
+								},
+								"description": "Request to query a table. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "modes",
+					"description": "Folder for modes",
+					"item": [
+						{
+							"name": "Get Mode",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "ed7d6fdc-14f0-47ed-97b7-2cd03626c806",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"        pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"        pm.response.to.have.status(200);",
+											"        ",
+											"    });",
+											"    ",
+											"    //Do stuff here",
+											"    ",
+											"    if(jsonData.modes[0]!==null && jsonData.modes[1]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"mode_id_0\",jsonData.modes[0].mode_id);",
+											"        pm.environment.set(\"mode_id_1\",jsonData.modes[1].mode_id);",
+											"    }",
+											"    ",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/modes/:mode_id?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"modes",
+										":mode_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "mode_id",
+											"value": "{{mode_id}}"
+										}
+									]
+								},
+								"description": "Request to get Mode by id"
+							},
+							"response": []
+						},
+						{
+							"name": "Sort modes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "edd7a262-6605-4996-9a69-b0f806018c9c",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"modes_id\", pm.environment.get(\"mode_id_1\")+'|'+pm.environment.get(\"mode_id_0\"));"
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "268787c2-dcd8-4738-a665-2b6ddac31923",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/modes/sorting?token={{token}}&modes_id={{modes_id}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"modes",
+										"sorting"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "modes_id",
+											"value": "{{modes_id}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to sort the modes of the application"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Modes",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "75d9a0e6-57f7-4ec6-9f97-2beb538b7f45",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/modes?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}&action={{action}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"modes"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "order_by",
+											"value": "{{order_by}}",
+											"equals": true
+										},
+										{
+											"key": "sort_order",
+											"value": "{{sort_order}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{limit}}",
+											"equals": true
+										},
+										{
+											"key": "offset",
+											"value": "{{offset}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{filter}}",
+											"equals": true
+										},
+										{
+											"key": "distinct",
+											"value": "{{distinct}}",
+											"equals": true
+										},
+										{
+											"key": "action",
+											"value": "{{action}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get Modes"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "phpinfo",
+					"description": "Folder for phpinfo",
+					"item": [
+						{
+							"name": "Get phpinfo",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "a547e362-73b0-4fee-8771-67af9c640dab",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/phpinfo?token={{token}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"phpinfo"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get phpinfo"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "tabs",
+					"description": "Folder for tabs",
+					"item": [
+						{
+							"name": "Get Tabs",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3bf13009-d94b-41e9-b346-739e256e80dd",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    if(jsonData.tabs[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"tab_id\",jsonData.tabs[0].tab_id);",
+											"    }",
+											"}",
+											"   ",
+											"   ",
+											"   ",
+											"   "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/tabs?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"tabs"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "order_by",
+											"value": "{{order_by}}",
+											"equals": true
+										},
+										{
+											"key": "sort_order",
+											"value": "{{sort_order}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{limit}}",
+											"equals": true
+										},
+										{
+											"key": "offset",
+											"value": "{{offset}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{filter}}",
+											"equals": true
+										},
+										{
+											"key": "distinct",
+											"value": "{{distinct}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get Tabs"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Tab",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "f3617310-8b60-4193-9679-9019bb593cbf",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"}",
+											"   ",
+											"   ",
+											"   ",
+											"   "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/tabs/:tab_id?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"tabs",
+										":tab_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "tab_id",
+											"value": "{{tab_id}}"
+										}
+									]
+								},
+								"description": "Request to get Tab by mode id"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "versions",
+					"description": "Folder for versions",
+					"item": [
+						{
+							"name": "Get versions",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "452bca3d-3e26-498e-9263-b09cbebef439",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"",
+											"}",
+											"   ",
+											"   ",
+											"   ",
+											"   "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/versions?token={{token}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"versions"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get versions"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "webservices",
+					"description": "Folder for webservices",
+					"item": [
+						{
+							"name": "Get WebServices",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "3a0cb67b-b7e3-4fdd-b890-ca1d358c5a84",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    if(jsonData.webservices[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"web_service\",jsonData.webservices[0].name);",
+											"    }",
+											"}",
+											"   ",
+											"   ",
+											"   ",
+											"   "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x_vm_json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/webservices?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"webservices"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get webservices"
+							},
+							"response": []
+						},
+						{
+							"name": "Get WebService",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "64b6123c-5cf8-4232-b279-957ea07b2c00",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x_vm_json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/webservices/:web_service?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"webservices",
+										":web_service"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "web_service",
+											"value": "{{web_service}}"
+										}
+									]
+								},
+								"description": "Request to get WebService by id"
+							},
+							"response": []
+						},
+						{
+							"name": "Get ressources list",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e6b863cc-fced-4d95-a50c-5c676bc3079a",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json, application/x_vm_json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/webservices/:web_service/ressources?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"webservices",
+										":web_service",
+										"ressources"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "web_service",
+											"value": "{{web_service}}"
+										}
+									]
+								},
+								"description": "Request to get ressources list"
+							},
+							"response": []
+						},
+						{
+							"name": "Get ressources infos",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "e7bb2c23-e0a0-4dd5-b1fa-c957a868f99a",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json, application/x_vm_json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/webservices/:web_service/ressources/:ressource?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"webservices",
+										":web_service",
+										"ressources",
+										":ressource"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "web_service",
+											"value": "{{web_service}}"
+										},
+										{
+											"key": "ressource",
+											"value": "{{ressource}}"
+										}
+									]
+								},
+								"description": "Request to get ressources infos"
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "vitissections",
+					"description": "Folder for vitissections",
+					"item": [
+						{
+							"name": "Get VitisSections",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "0c142997-dbd8-44b3-bcdb-a351497e9dbb",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"    if(jsonData.vitissections[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"section_id\",jsonData.vitissections[0].section_id);",
+											"    }",
+											"}",
+											"   ",
+											"   ",
+											"   ",
+											"   "
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/vitissections?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"vitissections"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "order_by",
+											"value": "{{order_by}}",
+											"equals": true
+										},
+										{
+											"key": "sort_order",
+											"value": "{{sort_order}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{limit}}",
+											"equals": true
+										},
+										{
+											"key": "offset",
+											"value": "{{offset}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{filter}}",
+											"equals": true
+										},
+										{
+											"key": "distinct",
+											"value": "{{distinct}}",
+											"equals": true
+										}
+									]
+								},
+								"description": "Request to get VitisSections"
+							},
+							"response": []
+						},
+						{
+							"name": "Get VitisSection",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "28372f39-53df-4488-b5b9-30df8df5f0e5",
+										"type": "text/javascript",
+										"exec": [
+											"var t = parseInt(pm.environment.get(\"time\"));",
+											"console.log(t);",
+											"t += parseInt(pm.response.responseTime);",
+											"console.log(t);",
+											"pm.environment.set(\"time\",t);",
+											"",
+											"var jsonData = pm.response.json();",
+											"",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "https://medoc/rest/vitis/vitissections/:section_id?token={{token}}&attributs={{attributs}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"vitissections",
+										":section_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "section_id",
+											"value": "{{section_id}}"
+										}
+									]
+								},
+								"description": "Request to get VitisSection by mode id"
+							},
+							"response": []
+						}
+					],
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"id": "b480f772-0450-4c13-ab41-ba7e9ad67724",
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"id": "6d6b4aca-2d26-40ce-9905-ef5895234294",
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "loop",
+					"description": "",
+					"item": [
+						{
 							"name": "Add User //loop with basic user",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
+										"id": "2690c799-0b85-4bda-a811-be5710cb9274",
+										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
@@ -1801,29 +4709,29 @@
 											"    ",
 											"    //Do stuff here",
 											"    console.log(b);",
-											"    if(b == \"admin\"){",
-											"        pm.environment.set(\"user_id\",jsonData.user_id);",
-											"        console.log(\"user_id =\" + jsonData.user_id);",
-											"    }",
-											"    if(b == \"admin\"){",
-											"        postman.setNextRequest(\"Get private token\");",
-											"    }",
+											"    ",
+											"}",
+											"",
+											"if(b == \"admin\"){",
+											"    pm.environment.set(\"user_id\",jsonData.user_id);",
+											"    console.log(\"user_id =\" + jsonData.user_id);",
+											"}",
+											"if(b == \"admin\"){",
+											"    postman.setNextRequest(\"Get private token\");",
 											"}",
 											"",
 											"",
 											"",
 											"",
-											"",
-											"",
 											""
-										],
-										"id": "a612365e-45f4-41d8-9724-c27712707e6d",
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "c2de2e10-0db8-4028-bc5b-fc57ad646c1f",
+										"type": "text/javascript",
 										"exec": [
 											"pm.environment.set(\"login\", \"Basic_user1\");",
 											"pm.environment.set(\"name\", \"Basic_user1\");",
@@ -1840,9 +4748,7 @@
 											"",
 											"",
 											""
-										],
-										"id": "c2de2e10-0db8-4028-bc5b-fc57ad646c1f",
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -1957,47 +4863,55 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "9bae0f17-c5f1-4939-b72a-a8125bf80e5d",
+										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
-											"",
 											"var jsonData = pm.response.json();",
-											"//console.log(jsonData.token);",
-											"pm.environment.set(\"token\", jsonData.token);",
-											"pm.environment.set(\"user\", \"\");",
-											"pm.environment.set(\"password\", \"\");",
 											"",
-											"",
-											"pm.test(\"Status equal 1\", function () {",
-											"    var jsonData = pm.response.json();",
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
 											"    pm.expect(jsonData.status).to.eql(1);",
-											"});",
-											"",
-											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});",
-											""
-										],
-										"id": "89c8d222-c108-4e00-aa45-7f672eeb5c56",
-										"type": "text/javascript"
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"    //console.log(jsonData.token);",
+											"    pm.environment.set(\"token\", jsonData.token);",
+											"    pm.environment.set(\"user\", \"\");",
+											"    pm.environment.set(\"password\", \"\");",
+											"}"
+										]
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "e95d9582-ebaf-4c62-82cc-cd53d53680ce",
+										"type": "text/javascript",
 										"exec": [
 											"pm.environment.set(\"user\", \"admin\");",
-											"pm.environment.set(\"password\", \"admin\");",
-											"pm.environment.set(\"time\",0);",
-											"pm.environment.set(\"bool\", \"admin\");"
-										],
-										"id": "ceb48ba5-9d21-4ddf-b624-f6b49b3fbca6",
-										"type": "text/javascript"
+											"pm.environment.set(\"password\", \"admin\");"
+										]
 									}
 								}
 							],
@@ -2055,24 +4969,40 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "1cdfb019-6d77-4a98-b6f8-c590627a3755",
+										"type": "text/javascript",
 										"exec": [
-											"var t = +(pm.environment.get(\"time\"));",
+											"var t = parseInt(pm.environment.get(\"time\"));",
 											"console.log(t);",
-											"t+= +(pm.response.responseTime);",
+											"t += parseInt(pm.response.responseTime);",
 											"console.log(t);",
 											"pm.environment.set(\"time\",t);",
 											"",
-											"pm.test(\"Status equal 1\", function () {",
-											"    var jsonData = pm.response.json();",
-											"    pm.expect(jsonData.status).to.eql(1);",
-											"});",
+											"var jsonData = pm.response.json();",
 											"",
-											"pm.test(\"Status code is 200\", function () {",
-											"    pm.response.to.have.status(200);",
-											"});"
-										],
-										"id": "00bc6c24-2d10-4201-9651-597f64bb75f9",
-										"type": "text/javascript"
+											"if(jsonData.status === 0){",
+											"    if (jsonData.errorMessage !== null){",
+											"        var ErrorMess = jsonData.errorMessage;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"    else{",
+											"        var ErrorMess = jsonData.error;",
+											"        console.log(ErrorMess);",
+											"        pm.test(ErrorMess, function () {});",
+											"    }",
+											"}",
+											"else{",
+											"    pm.test(\"Status equal 1\", function () {",
+											"    pm.expect(jsonData.status).to.eql(1);",
+											"    });",
+											"    pm.test(\"Status code is 200\", function () {",
+											"    pm.response.to.have.status(200);});",
+											"    ",
+											"    //Do stuff here",
+											"   ",
+											"}"
+										]
 									}
 								}
 							],
@@ -2103,9 +5033,9 @@
 									],
 									"query": [
 										{
-											"equals": true,
 											"key": "token",
-											"value": "{{token}}"
+											"value": "{{token}}",
+											"equals": true
 										}
 									],
 									"variable": [
@@ -2143,2658 +5073,6 @@
 						"id": "7b9d63f7-8991-4759-b916-b944f32121a0",
 						"type": "text/javascript"
 					}
-				}
-			]
-		},
-		{
-			"name": "Vitis",
-			"item": [
-				{
-					"name": "ActiveDirectory",
-					"description": "Folder for ActiveDirectory",
-					"item": [
-						{
-							"name": "Test connection to active directory",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/Test?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&object=person",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"Test"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "object",
-											"value": "person"
-										}
-									]
-								},
-								"description": "Request to test connection to active directory"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Active Directory tree of domain",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/Tree?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&object=person",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"Tree"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "object",
-											"value": "person"
-										}
-									]
-								},
-								"description": "Request to get active Directory tree of domain by id"
-							},
-							"response": []
-						},
-						{
-							"name": "Search Active Directory users",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/Users?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&search_account={{search_account}}&search_groups={{search_groups}}&search_department={{search_department}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"Users"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "search_account",
-											"value": "{{search_account}}"
-										},
-										{
-											"key": "search_groups",
-											"value": "{{search_groups}}"
-										},
-										{
-											"key": "search_department",
-											"value": "{{search_department}}"
-										}
-									]
-								},
-								"description": "Request to search active Directory users"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Active Directory users of branch",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/Users/:branch?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"Users",
-										":branch"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "branch",
-											"value": "{{branch}}"
-										}
-									]
-								},
-								"description": "Request to get active Directory users of branch by id"
-							},
-							"response": []
-						},
-						{
-							"name": "Search Active Directory groups",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/Groups?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&search_group={{search_group}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"Groups"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "search_group",
-											"value": "{{search_group}}"
-										}
-									]
-								},
-								"description": "Request to search active Directory groups"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Active Directory groups of branch",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/Groups/:branch?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"Groups",
-										":branch"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "branch",
-											"value": "{{branch}}"
-										}
-									]
-								},
-								"description": "Request to get active Directory groups of branch by id"
-							},
-							"response": []
-						},
-						{
-							"name": "Get groups of Active Directory user",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/ActiveDirectory/UserGroups/:user_id?token={{token}}&mixed_rights_management={{mixed_rights_management}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"ActiveDirectory",
-										"UserGroups",
-										":user_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "mixed_rights_management",
-											"value": "{{mixed_rights_management}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "user_id",
-											"value": "{{user_id}}"
-										}
-									]
-								},
-								"description": "Request to get the groupd of an active Directory user"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "accounts",
-					"description": "Folder for accounts",
-					"item": [
-						{
-							"name": "Send a mail to ask admin confirmation",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "token",
-											"type": "text",
-											"value": "{{token}}"
-										},
-										{
-											"key": "fullname",
-											"type": "text",
-											"value": "{{fullname}}"
-										},
-										{
-											"key": "password",
-											"type": "text",
-											"value": "{{password}}"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/accounts/:operation_id/:command",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"accounts",
-										":operation_id",
-										":command"
-									],
-									"variable": [
-										{
-											"key": "operation_id",
-											"value": "{{operation_id}}"
-										},
-										{
-											"key": "command",
-											"value": "{{command}}"
-										}
-									]
-								},
-								"description": "Send a mail to ask admin confirmation"
-							},
-							"response": []
-						},
-						{
-							"name": "Send a mail to ask admin confirmation",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "token",
-											"type": "text",
-											"value": "{{token}}"
-										},
-										{
-											"key": "username",
-											"type": "text",
-											"value": "{{username}}"
-										},
-										{
-											"key": "fullname",
-											"type": "text",
-											"value": "{{fullname}}"
-										},
-										{
-											"key": "password",
-											"type": "text",
-											"value": "{{password}}"
-										},
-										{
-											"key": "mail",
-											"type": "text",
-											"value": "{{mail}}"
-										},
-										{
-											"key": "company",
-											"type": "text",
-											"value": "{{company}}"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/accounts/:operation_id",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"accounts",
-										":operation_id"
-									],
-									"variable": [
-										{
-											"key": "operation_id",
-											"value": "{{operation_id}}"
-										}
-									]
-								},
-								"description": "Send a mail to ask admin confirmation"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "domains",
-					"description": "Folder for domains",
-					"item": [
-						{
-							"name": "Get Domain",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"domains",
-										":domain_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										}
-									]
-								},
-								"description": "Request to get Domain by id"
-							},
-							"response": []
-						},
-						{
-							"name": "Update Domain",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}&domain={{domain}}&alias={{alias}}&server={{server}}&port={{port}}&dn_search_user={{dn_search_user}}&filter_user={{filter_user}}&dn_search_group={{dn_search_group}}&filter_group={{filter_group}}&login={{login}}&password={{password}}&type=AD&verify_rights={{verify_rights}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"domains",
-										":domain_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain",
-											"value": "{{domain}}"
-										},
-										{
-											"key": "alias",
-											"value": "{{alias}}"
-										},
-										{
-											"key": "server",
-											"value": "{{server}}"
-										},
-										{
-											"key": "port",
-											"value": "{{port}}"
-										},
-										{
-											"key": "dn_search_user",
-											"value": "{{dn_search_user}}"
-										},
-										{
-											"key": "filter_user",
-											"value": "{{filter_user}}"
-										},
-										{
-											"key": "dn_search_group",
-											"value": "{{dn_search_group}}"
-										},
-										{
-											"key": "filter_group",
-											"value": "{{filter_group}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "type",
-											"value": "AD"
-										},
-										{
-											"key": "verify_rights",
-											"value": "{{verify_rights}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										}
-									]
-								},
-								"description": "Request to update domain"
-							},
-							"response": []
-						},
-						{
-							"name": "delete Domain",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"domains",
-										":domain_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "domain_id",
-											"value": "{{domain_id}}"
-										}
-									]
-								},
-								"description": "Request to delete Domain"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Domains",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/domains?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"domains"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "order_by",
-											"value": "{{order_by}}"
-										},
-										{
-											"key": "sort_order",
-											"value": "{{sort_order}}"
-										},
-										{
-											"key": "limit",
-											"value": "{{limit}}"
-										},
-										{
-											"key": "offset",
-											"value": "{{offset}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										},
-										{
-											"key": "filter",
-											"value": "{{filter}}"
-										},
-										{
-											"key": "distinct",
-											"value": "{{distinct}}"
-										}
-									]
-								},
-								"description": "Request to get Domains"
-							},
-							"response": []
-						},
-						{
-							"name": "Add Domain",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "token",
-											"type": "text",
-											"value": "{{token}}"
-										},
-										{
-											"key": "domain",
-											"type": "text",
-											"value": "{{domain}}"
-										},
-										{
-											"key": "alias",
-											"type": "text",
-											"value": "{{alias}}"
-										},
-										{
-											"key": "server",
-											"type": "text",
-											"value": "{{server}}"
-										},
-										{
-											"key": "port",
-											"type": "text",
-											"value": "{{port}}"
-										},
-										{
-											"key": "dn_search_user",
-											"type": "text",
-											"value": "{{dn_search_user}}"
-										},
-										{
-											"key": "filter_user",
-											"type": "text",
-											"value": "{{filter_user}}"
-										},
-										{
-											"key": "dn_search_group",
-											"type": "text",
-											"value": "{{dn_search_group}}"
-										},
-										{
-											"key": "filter_group",
-											"type": "text",
-											"value": "{{filter_group}}"
-										},
-										{
-											"key": "login",
-											"type": "text",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"type": "text",
-											"value": "{{password}}"
-										},
-										{
-											"key": "type",
-											"type": "text",
-											"value": "AD"
-										},
-										{
-											"key": "verify_rights",
-											"type": "text",
-											"value": "{{verify_rights}}"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/domains",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"domains"
-									]
-								},
-								"description": "Request to add domain"
-							},
-							"response": []
-						},
-						{
-							"name": "delete Domain",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/domains/?token={{token}}&idList={{idList}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"domains",
-										""
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "idList",
-											"value": "{{idList}}"
-										}
-									]
-								},
-								"description": "Request to delete Domain"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "publictoken",
-					"description": "Folder for publictoken",
-					"item": [
-						{
-							"name": "Get public token",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/publictoken",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"publictoken"
-									]
-								},
-								"description": "Request to get a token"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				}
-			]
-		},
-		{
-			"name": "Stand Alone Functions",
-			"item": [
-				{
-					"name": "Setup",
-					"item": [
-						{
-							"name": "Get private token (Admin)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"console.log(jsonData.token);",
-											"pm.environment.set(\"token\", jsonData.token);",
-											"pm.environment.set(\"user\", \"\");",
-											"pm.environment.set(\"password\", \"\");"
-										],
-										"id": "933f5216-9c9e-4b19-9225-0352defb6248",
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"pm.environment.set(\"user\", \"admin\");",
-											"pm.environment.set(\"password\", \"admin\");"
-										],
-										"id": "e60ae2dd-fd6b-48f7-b825-84a3f8044799",
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "user",
-											"type": "text",
-											"value": "{{user}}"
-										},
-										{
-											"key": "password",
-											"type": "text",
-											"value": "{{password}}"
-										},
-										{
-											"key": "duration",
-											"type": "text",
-											"value": "60"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/privatetoken",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"privatetoken"
-									]
-								},
-								"description": "Request to get a token"
-							},
-							"response": []
-						},
-						{
-							"name": "Get private token (User)",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"console.log(jsonData.token);",
-											"pm.environment.set(\"token\", jsonData.token);",
-											"pm.environment.set(\"user\", \"\");",
-											"pm.environment.set(\"password\", \"\");"
-										],
-										"id": "933f5216-9c9e-4b19-9225-0352defb6248",
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											"pm.environment.set(\"user\", \"\");",
-											"pm.environment.set(\"password\", \"\");"
-										],
-										"id": "c24e9d48-7bcd-4a7b-b2c2-a9f286440b7c",
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "user",
-											"type": "text",
-											"value": "{{user}}"
-										},
-										{
-											"key": "password",
-											"type": "text",
-											"value": "{{password}}"
-										},
-										{
-											"key": "duration",
-											"type": "text",
-											"value": "60"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/privatetoken",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"privatetoken"
-									]
-								},
-								"description": "Request to get a token"
-							},
-							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "4c2314ed-1b41-4171-af67-8a53bb1f3039",
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "fa98cdf3-8fbc-4746-8783-8e59b259dd0f",
-								"type": "text/javascript"
-							}
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "genericquerys",
-					"description": "Folder for genericquerys",
-					"item": [
-						{
-							"name": "Get Querys",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"var jsonData = pm.response.json();",
-											"var key = jsonData.genericquerys;",
-											"var tab=[];",
-											"for (var data in key){",
-											"    console.log(key[data].database);",
-											"    tab.push(key[data].database);",
-											"}",
-											"pm.environment.set(\"aaa\",tab);",
-											"//for(var key in jsonData){}",
-											"    ",
-											"",
-											"//for(var i = 0; i < jsonData.lenght; ++i){",
-											"//    console.log(jsonData.genericquerys[i]);",
-											"//}",
-											"",
-											"//pm.environment.set(\"token\", jsonData.token);",
-											"",
-											""
-										],
-										"id": "dd129883-e068-4faa-9bce-826414022045",
-										"type": "text/javascript"
-									}
-								}
-							],
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/databases?token={{token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"genericquerys",
-										"databases"
-									],
-									"query": [
-										{
-											"equals": true,
-											"key": "token",
-											"value": "{{token}}"
-										}
-									]
-								},
-								"description": "Get the dtabases list"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Querys",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:database/schemas?token={{token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"genericquerys",
-										":database",
-										"schemas"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "database",
-											"value": "{{database}}"
-										}
-									]
-								},
-								"description": "Get the database schemas"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Querys",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&table={{table}}&filter={{filter}}&limit={{limit}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"genericquerys"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "server",
-											"value": "{{server}}"
-										},
-										{
-											"key": "port",
-											"value": "{{port}}"
-										},
-										{
-											"key": "sgbd",
-											"value": "{{sgbd}}"
-										},
-										{
-											"key": "database",
-											"value": "{{database}}"
-										},
-										{
-											"key": "schema",
-											"value": "{{schema}}"
-										},
-										{
-											"key": "table",
-											"value": "{{table}}"
-										},
-										{
-											"key": "filter",
-											"value": "{{filter}}"
-										},
-										{
-											"key": "limit",
-											"value": "{{limit}}"
-										}
-									]
-								},
-								"description": "Request to query a schema. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Querys",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:table_name/columns?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"genericquerys",
-										":table_name",
-										"columns"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "server",
-											"value": "{{server}}"
-										},
-										{
-											"key": "port",
-											"value": "{{port}}"
-										},
-										{
-											"key": "sgbd",
-											"value": "{{sgbd}}"
-										},
-										{
-											"key": "database",
-											"value": "{{database}}"
-										},
-										{
-											"key": "schema",
-											"value": "{{schema}}"
-										},
-										{
-											"key": "encoding",
-											"value": "{{encoding}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "table_name",
-											"value": "{{table_name}}"
-										}
-									]
-								},
-								"description": "Request to query. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Querys",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"genericquerys",
-										":table_name"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "login",
-											"value": "{{login}}"
-										},
-										{
-											"key": "password",
-											"value": "{{password}}"
-										},
-										{
-											"key": "server",
-											"value": "{{server}}"
-										},
-										{
-											"key": "port",
-											"value": "{{port}}"
-										},
-										{
-											"key": "sgbd",
-											"value": "{{sgbd}}"
-										},
-										{
-											"key": "database",
-											"value": "{{database}}"
-										},
-										{
-											"key": "schema",
-											"value": "{{schema}}"
-										},
-										{
-											"key": "encoding",
-											"value": "{{encoding}}"
-										},
-										{
-											"key": "order_by",
-											"value": "{{order_by}}"
-										},
-										{
-											"key": "sort_order",
-											"value": "{{sort_order}}"
-										},
-										{
-											"key": "limit",
-											"value": "{{limit}}"
-										},
-										{
-											"key": "offset",
-											"value": "{{offset}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										},
-										{
-											"key": "filter",
-											"value": "{{filter}}"
-										},
-										{
-											"key": "distinct",
-											"value": "{{distinct}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "table_name",
-											"value": "{{table_name}}"
-										}
-									]
-								},
-								"description": "Request to query a table. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "logs",
-					"description": "Folder for logs",
-					"item": [
-						{
-							"name": "Get logs tree",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/logs?token={{token}}&application_name={{application_name}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"logs"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "application_name",
-											"value": "{{application_name}}"
-										}
-									]
-								},
-								"description": "Request to get the logs tree"
-							},
-							"response": []
-						},
-						{
-							"name": "delete log files",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/logs?token={{token}}&min_days={{min_days}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"logs"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "min_days",
-											"value": "{{min_days}}"
-										}
-									]
-								},
-								"description": "Request to delete log files from min_days"
-							},
-							"response": []
-						},
-						{
-							"name": "Get log file content",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/logs/:log_directory/file/:file_name?token={{token}}&folder={{folder}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"logs",
-										":log_directory",
-										"file",
-										":file_name"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "folder",
-											"value": "{{folder}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "log_directory",
-											"value": "{{log_directory}}"
-										},
-										{
-											"key": "file_name",
-											"value": "{{file_name}}"
-										}
-									]
-								},
-								"description": "Request to get the content of a log file"
-							},
-							"response": []
-						},
-						{
-							"name": "delete log files",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/logs/:log_directory/file/:file_name?token={{token}}&folder={{folder}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"logs",
-										":log_directory",
-										"file",
-										":file_name"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "folder",
-											"value": "{{folder}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "log_directory",
-											"value": "{{log_directory}}"
-										},
-										{
-											"key": "file_name",
-											"value": "{{file_name}}"
-										}
-									]
-								},
-								"description": "Request to delete log files"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "modes",
-					"description": "Folder for modes",
-					"item": [
-						{
-							"name": "Get Mode",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/modes/:mode_id?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"modes",
-										":mode_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "mode_id",
-											"value": "{{mode_id}}"
-										}
-									]
-								},
-								"description": "Request to get Mode by id"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Modes",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/modes?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}&action={{action}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"modes"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "order_by",
-											"value": "{{order_by}}"
-										},
-										{
-											"key": "sort_order",
-											"value": "{{sort_order}}"
-										},
-										{
-											"key": "limit",
-											"value": "{{limit}}"
-										},
-										{
-											"key": "offset",
-											"value": "{{offset}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										},
-										{
-											"key": "filter",
-											"value": "{{filter}}"
-										},
-										{
-											"key": "distinct",
-											"value": "{{distinct}}"
-										},
-										{
-											"key": "action",
-											"value": "{{action}}"
-										}
-									]
-								},
-								"description": "Request to get Modes"
-							},
-							"response": []
-						},
-						{
-							"name": "Sort modes",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/modes/sorting?token={{token}}&modes_id={{modes_id}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"modes",
-										"sorting"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "modes_id",
-											"value": "{{modes_id}}"
-										}
-									]
-								},
-								"description": "Request to sort the modes of the application"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "phpinfo",
-					"description": "Folder for phpinfo",
-					"item": [
-						{
-							"name": "Get phpinfo",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/phpinfo?token={{token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"phpinfo"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										}
-									]
-								},
-								"description": "Request to get phpinfo"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "properties",
-					"description": "Folder for properties",
-					"item": [
-						{
-							"name": "Get properties",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/properties?token={{token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"properties"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										}
-									]
-								},
-								"description": "Request to get properties"
-							},
-							"response": []
-						},
-						{
-							"name": "Update properties",
-							"request": {
-								"method": "PUT",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "token",
-											"type": "text",
-											"value": "{{token}}"
-										}
-									]
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/properties/:module_name",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"properties",
-										":module_name"
-									],
-									"variable": [
-										{
-											"key": "module_name",
-											"value": "{{module_name}}"
-										}
-									]
-								},
-								"description": "Request to update the properties"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "tabs",
-					"description": "Folder for tabs",
-					"item": [
-						{
-							"name": "Get Tab",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/tabs/:tab_id?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"tabs",
-										":tab_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "tab_id",
-											"value": "{{tab_id}}"
-										}
-									]
-								},
-								"description": "Request to get Tab by mode id"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Tabs",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/tabs?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"tabs"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "order_by",
-											"value": "{{order_by}}"
-										},
-										{
-											"key": "sort_order",
-											"value": "{{sort_order}}"
-										},
-										{
-											"key": "limit",
-											"value": "{{limit}}"
-										},
-										{
-											"key": "offset",
-											"value": "{{offset}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										},
-										{
-											"key": "filter",
-											"value": "{{filter}}"
-										},
-										{
-											"key": "distinct",
-											"value": "{{distinct}}"
-										}
-									]
-								},
-								"description": "Request to get Tabs"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "versions",
-					"description": "Folder for versions",
-					"item": [
-						{
-							"name": "Get versions",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/versions?token={{token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"versions"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										}
-									]
-								},
-								"description": "Request to get versions"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "vitissections",
-					"description": "Folder for vitissections",
-					"item": [
-						{
-							"name": "Get VitisSection",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/vitissections/:section_id?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"vitissections",
-										":section_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "section_id",
-											"value": "{{section_id}}"
-										}
-									]
-								},
-								"description": "Request to get VitisSection by mode id"
-							},
-							"response": []
-						},
-						{
-							"name": "Get VitisSections",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x-vm-json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/vitissections?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"vitissections"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "order_by",
-											"value": "{{order_by}}"
-										},
-										{
-											"key": "sort_order",
-											"value": "{{sort_order}}"
-										},
-										{
-											"key": "limit",
-											"value": "{{limit}}"
-										},
-										{
-											"key": "offset",
-											"value": "{{offset}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										},
-										{
-											"key": "filter",
-											"value": "{{filter}}"
-										},
-										{
-											"key": "distinct",
-											"value": "{{distinct}}"
-										}
-									]
-								},
-								"description": "Request to get VitisSections"
-							},
-							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "b480f772-0450-4c13-ab41-ba7e9ad67724",
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "6d6b4aca-2d26-40ce-9905-ef5895234294",
-								"type": "text/javascript"
-							}
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "webservices",
-					"description": "Folder for webservices",
-					"item": [
-						{
-							"name": "Get WebServices",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x_vm_json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/webservices?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"webservices"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									]
-								},
-								"description": "Request to get webservices"
-							},
-							"response": []
-						},
-						{
-							"name": "Get WebService",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json, application/x_vm_json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/webservices/:web_service?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"webservices",
-										":web_service"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "web_service",
-											"value": "{{web_service}}"
-										}
-									]
-								},
-								"description": "Request to get WebService by id"
-							},
-							"response": []
-						},
-						{
-							"name": "Get ressources list",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json, application/x_vm_json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/webservices/:web_service/ressources?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"webservices",
-										":web_service",
-										"ressources"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "web_service",
-											"value": "{{web_service}}"
-										}
-									]
-								},
-								"description": "Request to get ressources list"
-							},
-							"response": []
-						},
-						{
-							"name": "Get ressources infos",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/json, application/x_vm_json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
-								"url": {
-									"raw": "https://medoc/rest/vitis/webservices/:web_service/ressources/:ressource?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"webservices",
-										":web_service",
-										"ressources",
-										":ressource"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}"
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}"
-										}
-									],
-									"variable": [
-										{
-											"key": "web_service",
-											"value": "{{web_service}}"
-										},
-										{
-											"key": "ressource",
-											"value": "{{ressource}}"
-										}
-									]
-								},
-								"description": "Request to get ressources infos"
-							},
-							"response": []
-						}
-					],
-					"_postman_isSubFolder": true
 				}
 			]
 		}

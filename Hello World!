@@ -1,80 +1,105 @@
 Hello Wolrd!
 
-privatetoken
-	GET/ Get private token (Admin)
-		Reset user
-		Reset password
+Function delete userS always return 500
 
-		Save Token
-		Save admin_id
-
-privatetoken
-	GET/ Get private token (Admin)
-		Reset user
-		Reset password
-
-		Save Token
-		Save admin_id
-
-privatetoken
-	GET/ Get token
-		verify if Token == returned token
-			{{Token}} == returned Token
-
-users
-	POST/ Add user
-		Save user_id
-			{{login}} = {{name}} = {{password}} = {{password_confirm}} = user0
-			{{user_id}} = returned user_id
-			
-	GET/ Get all users
-		Verify if user_id exist
-			returned status == 1
-	PUT/ Update user
-		Add random info to all params
-			
-	GET/ Get one user
-		Check if all params are != null
-	DELETE/ Delete user
-		Suppr last created user
-	POST/ Add user
-		Create a full filled params user
-
-privileges
-	GET/ Get privileges
-		Check if count == 9
-	PUT/ Update privileges
-		????
-	GET/ Get privileges
-		Check for a param in paticular
-
-groups
-	POST/ Add group
-		Create a group without user and save group_id
-	GET/ Get group
-		Verify if group exist
-	PUT/ Update group
-		Add user to the group
-	GET/ Get group
-		Verify user had been add
-	DELETE/ Delete group
-		Delete group
-	GET/ Get groups
-		Get all groups
-	POST/ Add groups
-		Add two groups and save their ID
-	DELETE/ Delete groups
-		Suppr the two added groups (id_1|id_2)
-
-Redo Everthing with basic user then delete him
+Error on /genericquerys/databases
+	return 0 instead of 1
+Shit happen when trying all database name with /genericquerys/{database}/schema
+	template0 return error 500 + JSON with a space that put postman in the grave
+Error on /genericquerys/{table_name}
 
 
+			With admin account first then Basic_user1 :
 
-With admin account :
 
-Get private token of admin account. Next request set to Get token.
+Get private token of admin account. 
+	Next request set to Get token.
+	Init :
+		time, i_user(not yet) and i_group variables to 0
+	Set :
+		user = admin ; password = admin ; bool = admin 
+
 Get token verify if token received equal saved one.
-Add "Basic_user" account and store user_id.
-Add 3 group name "Test_Group" + number(N) and store their name and id ("group_name" + (N) and "group_id" + (N)). Last group_id (group_id3) is store in environment group_id.
-Update name to "Test_Group2" at group_id3 
-Get groups and check if there're more than 5 groups ( 3 created + 2 already in place) or only more than 3 ?
+
+Add a "Basic_user" account and store it's user_id.
+	Set :
+		login, name, password, password_confirm = Basic_user
+		privileges = vitis_user
+	Clear :
+		email, company, departement, groups
+	Should I add 3 users like for the "group" ? Do same tests with one and a delete userS with the two left ? 
+		Only if delete userS is repair
+
+Add 3 group named "Test_Group" + number(N, from 0 to 2) and store their name and id ("group_name" + (N) and "group_id" + (N)). 
+	Last group_id (group_id2) is store in environment group_id.
+
+Update name from "Test_Group2" to "Test_Group_2" at group_id2 
+
+Get group and check if last update had been made
+
+Delete group named "Test_Group_2"
+
+Get groups and check if "Test_Group_2" had been delete. 
+	Group list should not be empty
+
+Delete groupS remove "Test_Group0" and "Test_Group1"
+
+Update user with new variables
+	set :
+		email = Basic_user@corp.com ; company = corp ; departement = 11223 ; privileges = vitis_user|vitis_admin
+
+Get user check if update had been done on each updated field
+
+Delete user from it's id
+
+
+
+
+Get privilege info from vitis_admin
+
+Update privilege. Should obviously do something, but well... life is life
+
+Get privileges. Check what happen with update
+
+
+
+
+
+Post domains. Add 3 domain named "Domain_+(N)" from 0 to 2 
+	Save last domain_id, domain, alias, server and port
+	Should had a variable i_domain preset to 0
+	set :
+		domain, alias, server = "Domain_(N)"
+		port = i_domain + 100
+
+Update domain. add some info and change "Domain_2" to "Domain2"
+	set :
+		dn_search_user = Some_user ; filter_user = A_user ; dn_search_group = Some_group ; filter_group = A_group ; login = root ; password = toor
+
+Get domain. Confirm/Check modifications on "Domain2" and unset of password
+
+Delete domain = "Domain2"
+
+Get domainS. Check if delete function had been correctly done. 
+
+Delete domainS remove "Domain_0" and "Domain_1"
+
+Get querys // /genericquerys/databases
+	store all database name and count (i_query++) them
+		Nop, bad idea... + split doesn't work and if table empty, postman will stop running test
+		Anyway it's possible to chain all query test by getting a data from previous request
+
+
+
+
+
+
+
+
+
+Add user //loop with basic user ; save it's user id and set next request to "Get private token" if execute with admin else skip 
+	set :
+		login, name, user, password, password_confirm = Basic_user1
+		company = corp ; email = Basic_user1@corp.com ; departement = 22334 ; group = 1 // 1 = demo ; privileges = vitis_user
+
+// Cleaning

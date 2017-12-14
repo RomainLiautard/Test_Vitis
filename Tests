@@ -52,4 +52,3 @@ pm.test(ErrorMess, function () {});
 
 var ErrorMess = jsonData.error;
 pm.test(ErrorMess, function () {});
-
