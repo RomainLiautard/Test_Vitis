@@ -8,16 +8,18 @@ Shit happen when trying all database name with /genericquerys/{database}/schema
 	template0 return error 500 + JSON with a space that put postman in the grave
 Error on /genericquerys/{table_name}
 
+Error while running delete user request with basic user accout. returned JSOn is empty and postman can't handle it (test stop).
+
 
 			With admin account first then Basic_user1 :
 
 
-Get private token of admin account. 
+Get private token of admin account.
 	Next request set to Get token.
 	Init :
 		time, i_user(not yet) and i_group variables to 0
 	Set :
-		user = admin ; password = admin ; bool = admin 
+		user = admin ; password = admin ; bool = admin
 
 Get token verify if token received equal saved one.
 
@@ -27,19 +29,19 @@ Add a "Basic_user" account and store it's user_id.
 		privileges = vitis_user
 	Clear :
 		email, company, departement, groups
-	Should I add 3 users like for the "group" ? Do same tests with one and a delete userS with the two left ? 
+	Should I add 3 users like for the "group" ? Do same tests with one and a delete userS with the two left ?
 		Only if delete userS is repair
 
-Add 3 group named "Test_Group" + number(N, from 0 to 2) and store their name and id ("group_name" + (N) and "group_id" + (N)). 
+Add 3 group named "Test_Group" + number(N, from 0 to 2) and store their name and id ("group_name" + (N) and "group_id" + (N)).
 	Last group_id (group_id2) is store in environment group_id.
 
-Update name from "Test_Group2" to "Test_Group_2" at group_id2 
+Update name from "Test_Group2" to "Test_Group_2" at group_id2
 
 Get group and check if last update had been made
 
 Delete group named "Test_Group_2"
 
-Get groups and check if "Test_Group_2" had been delete. 
+Get groups and check if "Test_Group_2" had been delete.
 	Group list should not be empty
 
 Delete groupS remove "Test_Group0" and "Test_Group1"
@@ -65,7 +67,7 @@ Get privileges. Check what happen with update
 
 
 
-Post domains. Add 3 domain named "Domain_+(N)" from 0 to 2 
+Post domains. Add 3 domain named "Domain_+(N)" from 0 to 2
 	Save last domain_id, domain, alias, server and port
 	Should had a variable i_domain preset to 0
 	set :
@@ -80,7 +82,7 @@ Get domain. Confirm/Check modifications on "Domain2" and unset of password
 
 Delete domain = "Domain2"
 
-Get domainS. Check if delete function had been correctly done. 
+Get domainS. Check if delete function had been correctly done.
 
 Delete domainS remove "Domain_0" and "Domain_1"
 
@@ -97,7 +99,7 @@ Get querys // /genericquerys/databases
 
 
 
-Add user //loop with basic user ; save it's user id and set next request to "Get private token" if execute with admin else skip 
+Add user //loop with basic user ; save it's user id and set next request to "Get private token" if execute with admin else skip
 	set :
 		login, name, user, password, password_confirm = Basic_user1
 		company = corp ; email = Basic_user1@corp.com ; departement = 22334 ; group = 1 // 1 = demo ; privileges = vitis_user
