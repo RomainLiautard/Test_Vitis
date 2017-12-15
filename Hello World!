@@ -1,4 +1,4 @@
-Hello Wolrd!
+	Hello Wolrd!
 
 Function delete userS always return 500
 
@@ -9,6 +9,11 @@ Shit happen when trying all database name with /genericquerys/{database}/schema
 Error on /genericquerys/{table_name}
 
 Error while running delete user request with basic user accout. returned JSOn is empty and postman can't handle it (test stop).
+
+There's "Unchanged yet" at Get Domain request 1st test line. Why ?
+
+Error while running Update properties.
+	Admin account is kick out of vitis_admin privilege
 
 
 			With admin account first then Basic_user1 :
@@ -73,6 +78,8 @@ Post domains. Add 3 domain named "Domain_+(N)" from 0 to 2
 	set :
 		domain, alias, server = "Domain_(N)"
 		port = i_domain + 100
+
+//Active directory tests
 
 Update domain. add some info and change "Domain_2" to "Domain2"
 	set :
