@@ -2328,7 +2328,7 @@
 														{
 															"key": "password",
 															"type": "text",
-															"value": "{{password}}"
+															"value": "01234"
 														},
 														{
 															"key": "type",
@@ -3933,7 +3933,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "8f538f94-1310-4995-95cf-2defe13414c6",
+										"id": "6b116261-9f6d-44df-a71a-30740cbf0d57",
 										"type": "text/javascript",
 										"exec": [
 											"var t = parseInt(pm.environment.get(\"time\"));",
@@ -3956,12 +3956,12 @@
 											"if(jsonData.status === 0){",
 											"    if (jsonData.errorMessage !== null){",
 											"        var ErrorMess = jsonData.errorMessage;",
-											"        console.log(ErrorMess);",
+											"        console.log(\"ErrorMess : \" + ErrorMess);",
 											"        pm.test(ErrorMess, function () {});",
 											"    }",
 											"    else{",
 											"        var ErrorMess = jsonData.error;",
-											"        console.log(ErrorMess);",
+											"        console.log(\"Error : \" +ErrorMess);",
 											"        pm.test(ErrorMess, function () {});",
 											"    }",
 											"}",
@@ -4055,7 +4055,7 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "468a6f12-00c8-4e2e-8161-841d57cc105c",
+										"id": "58b2f724-5a35-4af7-85fe-853f08cb5c9f",
 										"type": "text/javascript",
 										"exec": [
 											"var t = parseInt(pm.environment.get(\"time\"));",
@@ -4095,6 +4095,11 @@
 											"    pm.response.to.have.status(200);});",
 											"    ",
 											"    //Do stuff here",
+											"    ",
+											"    if(jsonData.genericquerys[0]!==null){",
+											"        console.log(\"!null\");",
+											"        pm.environment.set(\"schema\",jsonData.genericquerys[0].schema_name);",
+											"    }",
 											"    /*var i_q = pm.environment.get(\"i_query\");",
 											"    var max_q = pm.environment.get(\"max_query\");",
 											"    if(i_q < 5){",
@@ -4491,6 +4496,20 @@
 											"}"
 										]
 									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "3985a7f3-679d-4691-b13c-823f790d165a",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"login\",\"\");",
+											"pm.environment.set(\"password\",\"\");",
+											"pm.environment.set(\"server\",\"\");",
+											"pm.environment.set(\"port\",\"\");",
+											""
+										]
+									}
 								}
 							],
 							"request": {
@@ -4510,7 +4529,7 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema=pg_catalog&encoding={{encoding}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 									"protocol": "https",
 									"host": [
 										"medoc"
@@ -4559,7 +4578,7 @@
 										},
 										{
 											"key": "schema",
-											"value": "{{schema}}",
+											"value": "pg_catalog",
 											"equals": true
 										},
 										{
@@ -4570,7 +4589,8 @@
 										{
 											"key": "order_by",
 											"value": "{{order_by}}",
-											"equals": true
+											"equals": true,
+											"disabled": true
 										},
 										{
 											"key": "sort_order",
@@ -4606,7 +4626,7 @@
 									"variable": [
 										{
 											"key": "table_name",
-											"value": "{{table_name}}"
+											"value": "pg_group"
 										}
 									]
 								},
