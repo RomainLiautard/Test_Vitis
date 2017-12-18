@@ -126,10 +126,10 @@
 											]
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/privatetoken",
+											"raw": "https://{{YourServer}}/rest/vitis/privatetoken",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -274,10 +274,10 @@
 											]
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/privatetoken",
+											"raw": "https://{{YourServer}}/rest/vitis/privatetoken",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -385,10 +385,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/privatetoken?token={{token}}",
+											"raw": "https://{{YourServer}}/rest/vitis/privatetoken?token={{token}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -477,10 +477,10 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/publictoken",
+											"raw": "https://{{YourServer}}/rest/vitis/publictoken",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -662,10 +662,10 @@
 											]
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/users",
+											"raw": "https://{{YourServer}}/rest/vitis/users",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -793,10 +793,10 @@
 											]
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/groups",
+											"raw": "https://{{YourServer}}/rest/vitis/groups",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -915,10 +915,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/groups/:group_id?token={{token}}&name={{name}}&users={{idList}}",
+											"raw": "https://{{YourServer}}/rest/vitis/groups/:group_id?token={{token}}&name={{name}}&users={{idList}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1024,10 +1024,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/groups/:group_id?token={{token}}&attributs={{attributs}}",
+											"raw": "https://{{YourServer}}/rest/vitis/groups/:group_id?token={{token}}&attributs={{attributs}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1131,10 +1131,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/groups/:group_id?token={{token}}",
+											"raw": "https://{{YourServer}}/rest/vitis/groups/:group_id?token={{token}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1247,10 +1247,10 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/groups?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+											"raw": "https://{{YourServer}}/rest/vitis/groups?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1387,10 +1387,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/groups/?token={{token}}&idList={{idList}}",
+											"raw": "https://{{YourServer}}/rest/vitis/groups/?token={{token}}&idList={{idList}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1504,10 +1504,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/users/:user_id?token={{token}}&login={{login}}&name={{name}}&email={{email}}&company={{company}}&department={{department}}&groups={{groups}}&privileges={{privileges}}&ip_constraint={{ip_constraint}}&password={{password}}&password_confirm={{password_confirm}}&restriction={{restriction}}",
+											"raw": "https://{{YourServer}}/rest/vitis/users/:user_id?token={{token}}&login={{login}}&name={{name}}&email={{email}}&company={{company}}&department={{department}}&groups={{groups}}&privileges={{privileges}}&ip_constraint={{ip_constraint}}&password={{password}}&password_confirm={{password_confirm}}&restriction={{restriction}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1664,10 +1664,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/users/:user_id?token={{token}}&attributs={{attributs}}",
+											"raw": "https://{{YourServer}}/rest/vitis/users/:user_id?token={{token}}&attributs={{attributs}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1785,10 +1785,10 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://medoc/rest/vitis/users/:user_id?token={{token}}",
+											"raw": "https://{{YourServer}}/rest/vitis/users/:user_id?token={{token}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1890,10 +1890,10 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/privileges/:rolname?token={{token}}&description={{description}}&users={{users}}",
+											"raw": "https://{{YourServer}}/rest/vitis/privileges/:rolname?token={{token}}&description={{description}}&users={{users}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -1998,10 +1998,10 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/privileges/:rolname?token={{token}}&description={{description}}&users={{users}}",
+											"raw": "https://{{YourServer}}/rest/vitis/privileges/:rolname?token={{token}}&description={{description}}&users={{users}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -2106,10 +2106,10 @@
 											"raw": ""
 										},
 										"url": {
-											"raw": "https://medoc/rest/vitis/privileges?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+											"raw": "https://{{YourServer}}/rest/vitis/privileges?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 											"protocol": "https",
 											"host": [
-												"medoc"
+												"{{YourServer}}"
 											],
 											"path": [
 												"rest",
@@ -2343,10 +2343,10 @@
 													]
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/domains",
+													"raw": "https://{{YourServer}}/rest/vitis/domains",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -2467,10 +2467,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/Test?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&object=person",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/Test?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&object=person",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -2580,10 +2580,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/Tree?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&object=person",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/Tree?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&object=person",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -2693,10 +2693,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/Users?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&search_account={{search_account}}&search_groups={{search_groups}}&search_department={{search_department}}",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/Users?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&search_account={{search_account}}&search_groups={{search_groups}}&search_department={{search_department}}",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -2816,10 +2816,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/Users/:branch?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/Users/:branch?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -2931,10 +2931,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/Groups?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&search_group={{search_group}}",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/Groups?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}&search_group={{search_group}}",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -3044,10 +3044,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/Groups/:branch?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/Groups/:branch?token={{token}}&domain_id={{domain_id}}&login={{login}}&password={{password}}",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -3159,10 +3159,10 @@
 													"raw": ""
 												},
 												"url": {
-													"raw": "https://medoc/rest/vitis/ActiveDirectory/UserGroups/:user_id?token={{token}}&mixed_rights_management={{mixed_rights_management}}",
+													"raw": "https://{{YourServer}}/rest/vitis/ActiveDirectory/UserGroups/:user_id?token={{token}}&mixed_rights_management={{mixed_rights_management}}",
 													"protocol": "https",
 													"host": [
-														"medoc"
+														"{{YourServer}}"
 													],
 													"path": [
 														"rest",
@@ -3289,10 +3289,10 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}&domain={{domain}}&alias={{alias}}&server={{server}}&port={{port}}&dn_search_user={{dn_search_user}}&filter_user={{filter_user}}&dn_search_group={{dn_search_group}}&filter_group={{filter_group}}&login={{login}}&password={{password}}&type=AD&verify_rights={{verify_rights}}",
+															"raw": "https://{{YourServer}}/rest/vitis/domains/:domain_id?token={{token}}&domain={{domain}}&alias={{alias}}&server={{server}}&port={{port}}&dn_search_user={{dn_search_user}}&filter_user={{filter_user}}&dn_search_group={{dn_search_group}}&filter_group={{filter_group}}&login={{login}}&password={{password}}&type=AD&verify_rights={{verify_rights}}",
 															"protocol": "https",
 															"host": [
-																"medoc"
+																"{{YourServer}}"
 															],
 															"path": [
 																"rest",
@@ -3461,10 +3461,10 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}&attributs={{attributs}}",
+															"raw": "https://{{YourServer}}/rest/vitis/domains/:domain_id?token={{token}}&attributs={{attributs}}",
 															"protocol": "https",
 															"host": [
-																"medoc"
+																"{{YourServer}}"
 															],
 															"path": [
 																"rest",
@@ -3571,10 +3571,10 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "https://medoc/rest/vitis/domains/:domain_id?token={{token}}",
+															"raw": "https://{{YourServer}}/rest/vitis/domains/:domain_id?token={{token}}",
 															"protocol": "https",
 															"host": [
-																"medoc"
+																"{{YourServer}}"
 															],
 															"path": [
 																"rest",
@@ -3684,10 +3684,10 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "https://medoc/rest/vitis/domains?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+															"raw": "https://{{YourServer}}/rest/vitis/domains?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 															"protocol": "https",
 															"host": [
-																"medoc"
+																"{{YourServer}}"
 															],
 															"path": [
 																"rest",
@@ -3839,10 +3839,10 @@
 															"raw": ""
 														},
 														"url": {
-															"raw": "https://medoc/rest/vitis/domains/?token={{token}}&idList={{idList}}",
+															"raw": "https://{{YourServer}}/rest/vitis/domains/?token={{token}}&idList={{idList}}",
 															"protocol": "https",
 															"host": [
-																"medoc"
+																"{{YourServer}}"
 															],
 															"path": [
 																"rest",
@@ -4012,10 +4012,10 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/databases?token={{token}}",
+									"raw": "https://{{YourServer}}/rest/vitis/genericquerys/databases?token={{token}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4129,10 +4129,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:database/schemas?token={{token}}",
+									"raw": "https://{{YourServer}}/rest/vitis/genericquerys/:database/schemas?token={{token}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4235,10 +4235,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&table={{table}}&filter={{filter}}&limit={{limit}}",
+									"raw": "https://{{YourServer}}/rest/vitis/genericquerys?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&table={{table}}&filter={{filter}}&limit={{limit}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4376,10 +4376,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:table_name/columns?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}",
+									"raw": "https://{{YourServer}}/rest/vitis/genericquerys/:table_name/columns?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema={{schema}}&encoding={{encoding}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4529,10 +4529,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema=pg_catalog&encoding={{encoding}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"raw": "https://{{YourServer}}/rest/vitis/genericquerys/:table_name?token={{token}}&login={{login}}&password={{password}}&server={{server}}&port={{port}}&sgbd={{sgbd}}&database={{database}}&schema=pg_catalog&encoding={{encoding}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4721,10 +4721,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/modes/:mode_id?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/modes/:mode_id?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4834,10 +4834,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/modes/sorting?token={{token}}&modes_id={{modes_id}}",
+									"raw": "https://{{YourServer}}/rest/vitis/modes/sorting?token={{token}}&modes_id={{modes_id}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -4931,10 +4931,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/modes?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}&action={{action}}",
+									"raw": "https://{{YourServer}}/rest/vitis/modes?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}&action={{action}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5069,10 +5069,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/phpinfo?token={{token}}",
+									"raw": "https://{{YourServer}}/rest/vitis/phpinfo?token={{token}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5174,10 +5174,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/tabs?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"raw": "https://{{YourServer}}/rest/vitis/tabs?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5303,10 +5303,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/tabs/:tab_id?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/tabs/:tab_id?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5417,10 +5417,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/versions?token={{token}}",
+									"raw": "https://{{YourServer}}/rest/vitis/versions?token={{token}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5522,10 +5522,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/webservices?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/webservices?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5618,10 +5618,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/webservices/:web_service?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/webservices/:web_service?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5721,10 +5721,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/webservices/:web_service/ressources?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/webservices/:web_service/ressources?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5825,10 +5825,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/webservices/:web_service/ressources/:ressource?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/webservices/:web_service/ressources/:ressource?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -5948,10 +5948,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/vitissections?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
+									"raw": "https://{{YourServer}}/rest/vitis/vitissections?token={{token}}&order_by={{order_by}}&sort_order={{sort_order}}&limit={{limit}}&offset={{offset}}&attributs={{attributs}}&filter={{filter}}&distinct={{distinct}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -6074,10 +6074,10 @@
 									"raw": ""
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/vitissections/:section_id?token={{token}}&attributs={{attributs}}",
+									"raw": "https://{{YourServer}}/rest/vitis/vitissections/:section_id?token={{token}}&attributs={{attributs}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -6311,10 +6311,10 @@
 									]
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/users",
+									"raw": "https://{{YourServer}}/rest/vitis/users",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -6435,10 +6435,10 @@
 									]
 								},
 								"url": {
-									"raw": "https://medoc/rest/vitis/privatetoken",
+									"raw": "https://{{YourServer}}/rest/vitis/privatetoken",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
@@ -6517,10 +6517,10 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/users/:user_id?token={{token}}",
+									"raw": "https://{{YourServer}}/rest/vitis/users/:user_id?token={{token}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{YourServer}}"
 									],
 									"path": [
 										"rest",
