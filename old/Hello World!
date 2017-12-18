@@ -112,7 +112,7 @@ Get domainS. Check if delete function had been correctly done.
 Delete domainS remove "Domain_0" and "Domain_1"
 
 Get querys // /genericquerys/databases //**2 ;
-	store all database name and count (i_query++) themf
+	store all database name and count (i_query++) them
 		Nop, bad idea... + split doesn't work and if table empty, postman will stop running test
 		Anyway it's possible to chain all query test by getting a data from previous request
 
