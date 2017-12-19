@@ -157,5 +157,65 @@
 				}
 			]
 		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b8b66cc7-5d55-4bcd-ad0e-f983c2e30e34",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "74753c0f-c7b1-4f09-9eec-611404a353c0",
+				"type": "text/javascript",
+				"exec": [
+					"var t = parseInt(pm.environment.get(\"time\"));",
+					"console.log(t);",
+					"t += parseInt(pm.response.responseTime);",
+					"console.log(t);",
+					"pm.environment.set(\"time\",t);",
+					"",
+					"if(pm.response.responseSize === 0){",
+					"    pm.test(\"Status equal 1\", function () {",
+					"    pm.expect(jsonData.status).to.eql(1);",
+					"    });",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);});",
+					"    return null;",
+					"}",
+					"",
+					"var jsonData = pm.response.json();",
+					"",
+					"if(jsonData.status === 0){",
+					"    if (jsonData.errorMessage !== null){",
+					"        var ErrorMess = jsonData.errorMessage;",
+					"        console.log(ErrorMess);",
+					"        pm.test(ErrorMess, function () {});",
+					"    }",
+					"    else{",
+					"        var ErrorMess = jsonData.error;",
+					"        console.log(ErrorMess);",
+					"        pm.test(ErrorMess, function () {});",
+					"    }",
+					"}",
+					"else{",
+					"    pm.test(\"Status equal 1\", function () {",
+					"    pm.expect(jsonData.status).to.eql(1);",
+					"    });",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);});",
+					"    ",
+					"    //Do stuff here",
+					"   ",
+					"}"
+				]
+			}
+		}
 	]
 }
