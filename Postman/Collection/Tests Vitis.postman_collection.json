@@ -19,12 +19,12 @@
 								{
 									"listen": "test",
 									"script": {
-										"id": "100054ce-0bc3-4905-9200-9c6fc0cfe51b",
+										"id": "a9e822f9-10f2-40f6-ac85-b75dae409bb4",
 										"type": "text/javascript",
 										"exec": [
 											"// Test la présence de réponse",
 											"if(pm.response.responseSize === 0){",
-											"    tests['No response'] = false",
+											"    tests['No response'] = false;",
 											"    return null;",
 											"}",
 											"",
@@ -138,6 +138,8 @@
 								{
 									"listen": "test",
 									"script": {
+										"id": "58822a9e-7319-4e11-8853-45c4a583f167",
+										"type": "text/javascript",
 										"exec": [
 											"// Test la présence de réponse",
 											"if(pm.response.responseSize === 0){",
@@ -154,24 +156,22 @@
 											"tests[\"privileges is ok\"] = jsonData.privileges instanceof Array",
 											"",
 											"// Variables",
-											"pm.environment.set(\"main_user_token\", jsonData.token);",
-											"pm.environment.set(\"main_user_id\",jsonData.user_id);",
+											"pm.environment.set(\"main_User_token\", jsonData.token);",
+											"pm.environment.set(\"main_User_id\",jsonData.user_id);",
 											"",
 											"// Passe directement à la requête Get token",
 											"// postman.setNextRequest(\"Get token\");"
-										],
-										"id": "85a09737-c871-436d-a5dd-bdfe9ac56a9c",
-										"type": "text/javascript"
+										]
 									}
 								},
 								{
 									"listen": "prerequest",
 									"script": {
+										"id": "6bd8e739-8151-4208-97aa-a70ed4f78467",
+										"type": "text/javascript",
 										"exec": [
 											"pm.environment.set(\"error_test\", false);"
-										],
-										"id": "6bd8e739-8151-4208-97aa-a70ed4f78467",
-										"type": "text/javascript"
+										]
 									}
 								}
 							],
@@ -746,25 +746,127 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "9e0aa723-42c5-4d2f-952a-d6ef58feb782",
+														"id": "47ca6ce2-8b5a-4bbe-ac7d-8d3c1f39d325",
 														"type": "text/javascript",
 														"exec": [
+															"//Test type",
+															"var TYPE = \"users\";",
 															"// Test la présence de réponse",
 															"if(pm.response.responseSize === 0){",
-															"    tests['No response'] = false",
+															"    tests['No response'] = false;",
 															"    return null;",
 															"}",
 															"",
 															"// Tests contenu",
 															"var jsonData = pm.response.json();",
-															"tests[\"users is ok\"] = jsonData.users instanceof Array",
+															"tests[\"users is ok\"] = jsonData.users instanceof Array;",
+															"",
+															"//Get parameters name for later tests",
+															"var order_by;",
+															"var filter;",
+															"    for(var Param in jsonData.users[0]){",
+															"        order_by = Param;",
+															"        filter = jsonData.users[0][Param];",
+															"        break;",
+															"    }",
+															"",
+															"//Tests order_by and sort_order",
+															"var Sort = true;",
+															"var varA, varB = null;",
+															"var OrdSortjsonData;",
+															"",
+															"//Send request with order_by variable name in ASC order",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, OrdSortResponse) {",
+															"    OrdSortjsonData = OrdSortResponse.json();",
+															"    ",
+															"//Check Sort",
+															"    for(var Parameter in OrdSortjsonData.users){",
+															"        varB = OrdSortjsonData.users[Parameter][order_by];",
+															"        if(varB !== null && varA !== null){",
+															"            if(varA > varB){ ",
+															"                Sort = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"        varA = varB;",
+															"    }",
+															"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(Sort).to.be.true});",
+															"});",
+															"",
+															"//Tests limit and offset",
+															"var MaxListCount, FirstParamName, LastParamName, ParamName, LimOffjsonData;",
+															"var Lim = true, Off = true;",
+															"",
+															"//Setup limit and offset check parameters",
+															"if(jsonData.list_count > 1){",
+															"    MaxListCount = parseInt(jsonData.list_count) - 1 ;",
+															"    FirstParamName = jsonData.users[0][order_by];",
+															"    LastParamName = jsonData.users[parseInt(MaxListCount)][order_by];",
+															"    MaxListCount--;",
+															"    ",
+															"//Send request with limit at MaxListCount -1 and offset at 1",
+															"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(MaxListCount) +\"&offset=1\", function (err, LimOffResponse) {",
+															"        LimOffjsonData = LimOffResponse.json();",
+															"    ",
+															"//Check limit and offset result",
+															"        for(var Parameter in LimOffjsonData.AttjsonData){",
+															"            ParamName = LimOffjsonData.users[Parameter][order_by];",
+															"            if(ParamName === FirstParamName){",
+															"                Off = false;",
+															"            }",
+															"            if(ParamName === LastParamName){",
+															"                Lim = false;",
+															"            }",
+															"        }",
+															"        pm.test(\"offset is ok\", function () {pm.expect(Off).to.be.true});",
+															"        pm.test(\"limit is ok\", function () {pm.expect(Lim).to.be.true});",
+															"    });",
+															"}",
+															"",
+															"//Test attributes",
+															"var AttjsonData;",
+															"var Att = true;",
+															"",
+															"//Send request to get only the order_by variable name attribute",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, AttResponse) {",
+															"    AttjsonData = AttResponse.json();",
+															"",
+															"//Check attribute ",
+															"    for(var Parameter in AttjsonData.users){",
+															"        for(var AttParam in AttjsonData.users[Parameter]){",
+															"            if(AttParam !== order_by){",
+															"                Att = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"attribute is ok\", function () {pm.expect(Att).to.be.true});",
+															"});",
+															"",
+															"//Test filter",
+															"var Fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+															"var FltrjsonData;",
+															"var Fltr = true;",
+															"",
+															"//Send request with filter argument",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+Fltrjson, function (err, FltrResponse) {",
+															"    FltrjsonData = FltrResponse.json();",
+															"",
+															"//Check filter",
+															"    for(var Parameter in FltrjsonData.users){",
+															"        for(var FltrParam in FltrjsonData.users[Parameter]){",
+															"            var tmp = FltrjsonData.users[Parameter][FltrParam];",
+															"            if(FltrParam === order_by && tmp !== filter){",
+															"                Fltr = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"filter is ok\", function () {pm.expect(Fltr).to.be.true});",
+															"});",
 															"",
 															"",
-															"var iTest = pm.environment.get(\"get_users_test_number\");",
-															"iTest = typeof(iTest) !== \"undefined\" ? parseInt(iTest) : 0;",
-															"",
-															"// Nettoyage variables ",
-															"pm.environment.unset(\"main_user_attributes\");",
+															"//Clean variables",
 															"pm.environment.unset(\"get_users_order_by\");",
 															"pm.environment.unset(\"get_users_sort_order\");",
 															"pm.environment.unset(\"get_users_limit\");",
@@ -774,85 +876,6 @@
 															"pm.environment.unset(\"get_users_distinct\");",
 															"",
 															"",
-															"tests[\"iTest: \"+iTest] = true;",
-															"tests[\"users get is ok\"] = jsonData.users.length > 0;",
-															"",
-															"// Tests de routine",
-															"// order_by",
-															"if (iTest === 1){",
-															"    var aUserNames = [];",
-															"    for (var i = 0; i < jsonData.users.length; i++) {",
-															"        aUserNames.push(jsonData.users[i]['name'])",
-															"    }",
-															"    var aUserNamesClone = aUserNames.slice(0);",
-															"    aUserNames.sort();",
-															"    tests[\"order_by is ok\"] = JSON.stringify(aUserNames) == JSON.stringify(aUserNamesClone);",
-															"}",
-															"// sort_order",
-															"if (iTest === 2){",
-															"    var aUserNames = [];",
-															"    for (var i = 0; i < jsonData.users.length; i++) {",
-															"        aUserNames.push(jsonData.users[i]['name'])",
-															"    }",
-															"    var aUserNamesClone = aUserNames.slice(0);",
-															"    aUserNames.reverse();",
-															"    tests[\"sort_order is ok\"] = JSON.stringify(aUserNames) == JSON.stringify(aUserNamesClone);",
-															"}",
-															"// limit",
-															"if (iTest === 3){",
-															"    tests[\"limit is ok\"] = jsonData.users.length == 1;",
-															"}",
-															"// offset",
-															"if (iTest === 4){",
-															"    // Reste à tester",
-															"    tests[\"offset is ok\"] = false;",
-															"}",
-															"// attributs",
-															"if (iTest === 5){",
-															"    tests[\"attributs is ok\"] = Object.keys(jsonData.users[0]).length == 2;",
-															"}",
-															"// filter",
-															"if (iTest === 6){",
-															"    tests[\"filter is ok\"] = jsonData.users.length == 1;",
-															"}",
-															"// distinct",
-															"if (iTest === 7){",
-															"    // Reste à tester",
-															"    tests[\"distinct is ok\"] = false;",
-															"}",
-															"",
-															"// Routine de test",
-															"if (iTest === 0){",
-															"    pm.environment.set(\"get_users_order_by\", \"name\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");",
-															"} else if (iTest === 1){",
-															"    pm.environment.set(\"get_users_sort_order\", \"DESC\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");",
-															"} else if (iTest === 2){",
-															"    pm.environment.set(\"get_users_limit\", \"1\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 3){",
-															"    pm.environment.set(\"get_users_offset\", \"\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 4){",
-															"    pm.environment.set(\"get_users_attributs\", \"user_id|login\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 5){",
-															"    pm.environment.set(\"get_users_filter\", JSON.stringify({'column':'login', 'compare_operator': '=', 'value': pm.environment.get(\"main_user_login\")}));",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 6){",
-															"    pm.environment.set(\"get_users_distinct\", \"\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else {",
-															"    pm.environment.unset(\"get_users_test_number\");",
-															"}",
 															""
 														]
 													}
@@ -1225,21 +1248,19 @@
 														{
 															"listen": "prerequest",
 															"script": {
-																"id": "12e5bdda-0b52-4c80-91b3-fceeb97534ab",
-																"type": "text/javascript",
 																"exec": [
 																	"pm.environment.set(\"main_user_login\", \"test_main_user_edited\");",
 																	"",
 																	"",
 																	""
-																]
+																],
+																"id": "12e5bdda-0b52-4c80-91b3-fceeb97534ab",
+																"type": "text/javascript"
 															}
 														},
 														{
 															"listen": "test",
 															"script": {
-																"id": "91834f0d-efad-454b-8a78-fe531741e29e",
-																"type": "text/javascript",
 																"exec": [
 																	"// Test la présence de réponse",
 																	"if(pm.response.responseSize === 0){",
@@ -1250,7 +1271,9 @@
 																	"// Tests contenu",
 																	"var jsonData = pm.response.json();",
 																	"tests[\"user_id is ok\"] = typeof(jsonData.user_id) === \"string\";"
-																]
+																],
+																"id": "91834f0d-efad-454b-8a78-fe531741e29e",
+																"type": "text/javascript"
 															}
 														}
 													],
@@ -1268,7 +1291,7 @@
 														],
 														"body": {},
 														"url": {
-															"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{token}}&login={{main_user_login}}",
+															"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{main_token}}&login={{main_user_login}}",
 															"protocol": "https",
 															"host": [
 																"{{host}}"
@@ -1282,7 +1305,7 @@
 															"query": [
 																{
 																	"key": "token",
-																	"value": "{{token}}",
+																	"value": "{{main_token}}",
 																	"equals": true
 																},
 																{
@@ -1291,63 +1314,63 @@
 																	"equals": true
 																},
 																{
+																	"equals": true,
 																	"key": "name",
 																	"value": "{{main_user_name}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "email",
 																	"value": "{{main_user_email}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "company",
 																	"value": "{{main_user_company}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "department",
 																	"value": "{{main_user_department}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "groups",
 																	"value": "{{main_user_groups}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "privileges",
 																	"value": "{{main_user_privileges}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "ip_constraint",
 																	"value": "{{main_user_ip_constraint}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "password",
 																	"value": "{{password}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "password_confirm",
 																	"value": "{{password_confirm}}",
-																	"equals": true,
 																	"disabled": true
 																},
 																{
+																	"equals": true,
 																	"key": "restriction",
 																	"value": "{{main_user_restriction}}",
-																	"equals": true,
 																	"disabled": true
 																}
 															],
@@ -3502,7 +3525,7 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "89ddb095-a03d-4ca3-90bd-3a486ddcbdaa",
+														"id": "c8ae8a9e-0732-496c-994f-697f1075742c",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
@@ -3867,7 +3890,7 @@
 													"variable": [
 														{
 															"key": "user_id",
-															"value": "{{main_user_id}}"
+															"value": "{{main_User_id}}"
 														}
 													]
 												},
@@ -3881,23 +3904,127 @@
 												{
 													"listen": "test",
 													"script": {
+														"id": "2aa5fb93-e038-45a2-87cc-8ed8b7be86d0",
+														"type": "text/javascript",
 														"exec": [
+															"//Test type",
+															"var TYPE = \"users\";",
 															"// Test la présence de réponse",
 															"if(pm.response.responseSize === 0){",
-															"    tests['No response'] = false",
+															"    tests['No response'] = false;",
 															"    return null;",
 															"}",
 															"",
 															"// Tests contenu",
 															"var jsonData = pm.response.json();",
-															"tests[\"users is ok\"] = jsonData.users instanceof Array",
+															"tests[\"users is ok\"] = jsonData.users instanceof Array;",
+															"",
+															"//Get parameters name for later tests",
+															"var order_by;",
+															"var filter;",
+															"    for(var Param in jsonData.users[0]){",
+															"        order_by = Param;",
+															"        filter = jsonData.users[0][Param];",
+															"        break;",
+															"    }",
+															"",
+															"//Tests order_by and sort_order",
+															"var Sort = true;",
+															"var varA, varB = null;",
+															"var OrdSortjsonData;",
+															"",
+															"//Send request with order_by variable name in ASC order",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, OrdSortResponse) {",
+															"    OrdSortjsonData = OrdSortResponse.json();",
+															"    ",
+															"//Check Sort",
+															"    for(var Parameter in OrdSortjsonData.users){",
+															"        varB = OrdSortjsonData.users[Parameter][order_by];",
+															"        if(varB !== null && varA !== null){",
+															"            if(varA > varB){ ",
+															"                Sort = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"        varA = varB;",
+															"    }",
+															"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(Sort).to.be.true});",
+															"});",
+															"",
+															"//Tests limit and offset",
+															"var MaxListCount, FirstParamName, LastParamName, ParamName, LimOffjsonData;",
+															"var Lim = true, Off = true;",
+															"",
+															"//Setup limit and offset check parameters",
+															"if(jsonData.list_count > 1){",
+															"    MaxListCount = parseInt(jsonData.list_count) - 1 ;",
+															"    FirstParamName = jsonData.users[0][order_by];",
+															"    LastParamName = jsonData.users[parseInt(MaxListCount)][order_by];",
+															"    MaxListCount--;",
+															"    ",
+															"//Send request with limit at MaxListCount -1 and offset at 1",
+															"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(MaxListCount) +\"&offset=1\", function (err, LimOffResponse) {",
+															"        LimOffjsonData = LimOffResponse.json();",
+															"    ",
+															"//Check limit and offset result",
+															"        for(var Parameter in LimOffjsonData.AttjsonData){",
+															"            ParamName = LimOffjsonData.users[Parameter][order_by];",
+															"            if(ParamName === FirstParamName){",
+															"                Off = false;",
+															"            }",
+															"            if(ParamName === LastParamName){",
+															"                Lim = false;",
+															"            }",
+															"        }",
+															"        pm.test(\"offset is ok\", function () {pm.expect(Off).to.be.true});",
+															"        pm.test(\"limit is ok\", function () {pm.expect(Lim).to.be.true});",
+															"    });",
+															"}",
+															"",
+															"//Test attributes",
+															"var AttjsonData;",
+															"var Att = true;",
+															"",
+															"//Send request to get only the order_by variable name attribute",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, AttResponse) {",
+															"    AttjsonData = AttResponse.json();",
+															"",
+															"//Check attribute ",
+															"    for(var Parameter in AttjsonData.users){",
+															"        for(var AttParam in AttjsonData.users[Parameter]){",
+															"            if(AttParam !== order_by){",
+															"                Att = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"attribute is ok\", function () {pm.expect(Att).to.be.true});",
+															"});",
+															"",
+															"//Test filter",
+															"var Fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+															"var FltrjsonData;",
+															"var Fltr = true;",
+															"",
+															"//Send request with filter argument",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/users?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+Fltrjson, function (err, FltrResponse) {",
+															"    FltrjsonData = FltrResponse.json();",
+															"",
+															"//Check filter",
+															"    for(var Parameter in FltrjsonData.users){",
+															"        for(var FltrParam in FltrjsonData.users[Parameter]){",
+															"            var tmp = FltrjsonData.users[Parameter][FltrParam];",
+															"            if(FltrParam === order_by && tmp !== filter){",
+															"                Fltr = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"filter is ok\", function () {pm.expect(Fltr).to.be.true});",
+															"});",
 															"",
 															"",
-															"var iTest = pm.environment.get(\"get_users_test_number\");",
-															"iTest = typeof(iTest) !== \"undefined\" ? parseInt(iTest) : 0;",
-															"",
-															"// Nettoyage variables ",
-															"pm.environment.unset(\"main_user_attributes\");",
+															"//Clean variables",
 															"pm.environment.unset(\"get_users_order_by\");",
 															"pm.environment.unset(\"get_users_sort_order\");",
 															"pm.environment.unset(\"get_users_limit\");",
@@ -3907,94 +4034,15 @@
 															"pm.environment.unset(\"get_users_distinct\");",
 															"",
 															"",
-															"tests[\"iTest: \"+iTest] = true;",
-															"tests[\"users get is ok\"] = jsonData.users.length > 0;",
-															"",
-															"// Tests de routine",
-															"// order_by",
-															"if (iTest === 1){",
-															"    var aUserNames = [];",
-															"    for (var i = 0; i < jsonData.users.length; i++) {",
-															"        aUserNames.push(jsonData.users[i]['name'])",
-															"    }",
-															"    var aUserNamesClone = aUserNames.slice(0);",
-															"    aUserNames.sort();",
-															"    tests[\"order_by is ok\"] = JSON.stringify(aUserNames) == JSON.stringify(aUserNamesClone);",
-															"}",
-															"// sort_order",
-															"if (iTest === 2){",
-															"    var aUserNames = [];",
-															"    for (var i = 0; i < jsonData.users.length; i++) {",
-															"        aUserNames.push(jsonData.users[i]['name'])",
-															"    }",
-															"    var aUserNamesClone = aUserNames.slice(0);",
-															"    aUserNames.reverse();",
-															"    tests[\"sort_order is ok\"] = JSON.stringify(aUserNames) == JSON.stringify(aUserNamesClone);",
-															"}",
-															"// limit",
-															"if (iTest === 3){",
-															"    tests[\"limit is ok\"] = jsonData.users.length == 1;",
-															"}",
-															"// offset",
-															"if (iTest === 4){",
-															"    // Reste à tester",
-															"    tests[\"offset is ok\"] = false;",
-															"}",
-															"// attributs",
-															"if (iTest === 5){",
-															"    tests[\"attributs is ok\"] = Object.keys(jsonData.users[0]).length == 2;",
-															"}",
-															"// filter",
-															"if (iTest === 6){",
-															"    tests[\"filter is ok\"] = jsonData.users.length == 1;",
-															"}",
-															"// distinct",
-															"if (iTest === 7){",
-															"    // Reste à tester",
-															"    tests[\"distinct is ok\"] = false;",
-															"}",
-															"",
-															"// Routine de test",
-															"if (iTest === 0){",
-															"    pm.environment.set(\"get_users_order_by\", \"name\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");",
-															"} else if (iTest === 1){",
-															"    pm.environment.set(\"get_users_sort_order\", \"DESC\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");",
-															"} else if (iTest === 2){",
-															"    pm.environment.set(\"get_users_limit\", \"1\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 3){",
-															"    pm.environment.set(\"get_users_offset\", \"\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 4){",
-															"    pm.environment.set(\"get_users_attributs\", \"user_id|login\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 5){",
-															"    pm.environment.set(\"get_users_filter\", JSON.stringify({'column':'login', 'compare_operator': '=', 'value': pm.environment.get(\"main_user_login\")}));",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else if (iTest === 6){",
-															"    pm.environment.set(\"get_users_distinct\", \"\");",
-															"    pm.environment.set(\"get_users_test_number\", iTest + 1);",
-															"    postman.setNextRequest(\"Get Users\");    ",
-															"} else {",
-															"    pm.environment.unset(\"get_users_test_number\");",
-															"}",
 															""
-														],
-														"id": "9e0aa723-42c5-4d2f-952a-d6ef58feb782",
-														"type": "text/javascript"
+														]
 													}
 												},
 												{
 													"listen": "prerequest",
 													"script": {
+														"id": "70eb3640-d9e4-4570-a7c2-0c9ecddc2366",
+														"type": "text/javascript",
 														"exec": [
 															"",
 															"if(typeof(pm.environment.get(\"main_user_attributes\")) == \"undefined\")",
@@ -4020,9 +4068,7 @@
 															"",
 															"if(typeof(pm.environment.get(\"get_users_distinct\")) == \"undefined\")",
 															"\tpm.environment.set(\"get_users_distinct\", \"\");"
-														],
-														"id": "70eb3640-d9e4-4570-a7c2-0c9ecddc2366",
-														"type": "text/javascript"
+														]
 													}
 												}
 											],
@@ -4678,13 +4724,12 @@
 													]
 												},
 												"url": {
-													"raw": "https:/{{host}}/rest/vitis/groups",
+													"raw": "https://{{host}}/rest/vitis/groups",
+													"protocol": "https",
 													"host": [
-														"https:"
+														"{{host}}"
 													],
-													"port": "",
 													"path": [
-														"{{host}}",
 														"rest",
 														"vitis",
 														"groups"
@@ -4915,9 +4960,11 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "8d592232-8712-4ff9-b53c-76bdab70537a",
+														"id": "adcaa0bc-6967-43de-a293-4f4f5c48c8ab",
 														"type": "text/javascript",
 														"exec": [
+															"//Test type",
+															"var TYPE = \"groups\";",
 															"// Test la présence de réponse",
 															"if(pm.response.responseSize === 0){",
 															"    tests['No response'] = false;",
@@ -4928,12 +4975,112 @@
 															"var jsonData = pm.response.json();",
 															"tests[\"groups is ok\"] = jsonData.groups instanceof Array;",
 															"",
+															"//Get parameters name for later tests",
+															"var order_by;",
+															"var filter;",
+															"    for(var Param in jsonData.groups[0]){",
+															"        order_by = Param;",
+															"        filter = jsonData.groups[0][Param];",
+															"        break;",
+															"    }",
 															"",
-															"var iTest = pm.environment.get(\"get_groups_test_number\");",
-															"iTest = typeof(iTest) !== \"undefined\" ? parseInt(iTest) : 0;",
+															"//Tests order_by and sort_order",
+															"var Sort = true;",
+															"var varA, varB = null;",
+															"var OrdSortjsonData;",
+															"",
+															"//Send request with order_by variable name in ASC order",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/groups?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, OrdSortResponse) {",
+															"    OrdSortjsonData = OrdSortResponse.json();",
+															"    ",
+															"//Check Sort",
+															"    for(var Parameter in OrdSortjsonData.groups){",
+															"        varB = OrdSortjsonData.groups[Parameter][order_by];",
+															"        if(varB !== null && varA !== null){",
+															"            if(varA > varB){ ",
+															"                Sort = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"        varA = varB;",
+															"    }",
+															"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(Sort).to.be.true});",
+															"});",
+															"",
+															"//Tests limit and offset",
+															"var MaxListCount, FirstParamName, LastParamName, ParamName, LimOffjsonData;",
+															"var Lim = true, Off = true;",
+															"",
+															"//Setup limit and offset check parameters",
+															"if(jsonData.list_count > 1){",
+															"    MaxListCount = parseInt(jsonData.list_count) - 1 ;",
+															"    FirstParamName = jsonData.groups[0][order_by];",
+															"    LastParamName = jsonData.groups[parseInt(MaxListCount)][order_by];",
+															"    MaxListCount--;",
+															"    ",
+															"//Send request with limit at MaxListCount -1 and offset at 1",
+															"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/groups?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(MaxListCount) +\"&offset=1\", function (err, LimOffResponse) {",
+															"        LimOffjsonData = LimOffResponse.json();",
+															"    ",
+															"//Check limit and offset result",
+															"        for(var Parameter in LimOffjsonData.AttjsonData){",
+															"            ParamName = LimOffjsonData.groups[Parameter][order_by];",
+															"            if(ParamName === FirstParamName){",
+															"                Off = false;",
+															"            }",
+															"            if(ParamName === LastParamName){",
+															"                Lim = false;",
+															"            }",
+															"        }",
+															"        pm.test(\"offset is ok\", function () {pm.expect(Off).to.be.true});",
+															"        pm.test(\"limit is ok\", function () {pm.expect(Lim).to.be.true});",
+															"    });",
+															"}",
+															"",
+															"//Test attributes",
+															"var AttjsonData;",
+															"var Att = true;",
+															"",
+															"//Send request to get only the order_by variable name attribute",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/groups?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, AttResponse) {",
+															"    AttjsonData = AttResponse.json();",
+															"",
+															"//Check attribute ",
+															"    for(var Parameter in AttjsonData.groups){",
+															"        for(var AttParam in AttjsonData.groups[Parameter]){",
+															"            if(AttParam !== order_by){",
+															"                Att = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"attribute is ok\", function () {pm.expect(Att).to.be.true});",
+															"});",
+															"",
+															"//Test filter",
+															"var Fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+															"var FltrjsonData;",
+															"var Fltr = true;",
+															"",
+															"//Send request with filter argument",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/groups?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+Fltrjson, function (err, FltrResponse) {",
+															"    FltrjsonData = FltrResponse.json();",
+															"",
+															"//Check filter",
+															"    for(var Parameter in FltrjsonData.groups){",
+															"        for(var FltrParam in FltrjsonData.groups[Parameter]){",
+															"            var tmp = FltrjsonData.groups[Parameter][FltrParam];",
+															"            if(FltrParam === order_by && tmp !== filter){",
+															"                Fltr = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"filter is ok\", function () {pm.expect(Fltr).to.be.true});",
+															"});",
 															"",
 															"",
-															"// Nettoyage variables ",
+															"//Clean variables",
 															"pm.environment.unset(\"get_groups_order_by\");",
 															"pm.environment.unset(\"get_groups_sort_order\");",
 															"pm.environment.unset(\"get_groups_limit\");",
@@ -4942,8 +5089,8 @@
 															"pm.environment.unset(\"get_groups_filter\");",
 															"pm.environment.unset(\"get_groups_distinct\");",
 															"",
-															"//{{get_groups_offset}} 0 (all)| 1 (all - first)| 2 (all - two first)| 3...",
-															"//{{get_groups_order_by}}"
+															"",
+															""
 														]
 													}
 												}
@@ -6756,6 +6903,161 @@
 									"item": [
 										{
 											"name": "Get Privileges",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "4b971e3c-a682-491a-82a6-a8bc3d80c648",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_privileges_order_by\", \"\");",
+															"pm.environment.set(\"get_privileges_sort_order\", \"\");",
+															"pm.environment.set(\"get_privileges_limit\", \"50\");",
+															"pm.environment.set(\"get_privileges_offset\", \"\");",
+															"pm.environment.set(\"get_privileges_attributs\", \"\");",
+															"pm.environment.set(\"get_privileges_filter\", \"\");",
+															"pm.environment.set(\"get_privileges_distinct\", \"\");"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "ef6cfb9e-56cf-4883-b20a-fcac1fa5a475",
+														"type": "text/javascript",
+														"exec": [
+															"//Test type",
+															"var TYPE = \"privileges\";",
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"// Tests contenu",
+															"var jsonData = pm.response.json();",
+															"tests[\"privileges is ok\"] = jsonData.privileges instanceof Array;",
+															"",
+															"//Get parameters name for later tests",
+															"var order_by;",
+															"var filter;",
+															"    for(var Param in jsonData.privileges[0]){",
+															"        order_by = Param;",
+															"        filter = jsonData.privileges[0][Param];",
+															"        break;",
+															"    }",
+															"",
+															"//Tests order_by and sort_order",
+															"var Sort = true;",
+															"var varA, varB = null;",
+															"var OrdSortjsonData;",
+															"",
+															"//Send request with order_by variable name in ASC order",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, OrdSortResponse) {",
+															"    OrdSortjsonData = OrdSortResponse.json();",
+															"    ",
+															"//Check Sort",
+															"    for(var Parameter in OrdSortjsonData.privileges){",
+															"        varB = OrdSortjsonData.privileges[Parameter][order_by];",
+															"        if(varB !== null && varA !== null){",
+															"            if(varA > varB){ ",
+															"                Sort = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"        varA = varB;",
+															"    }",
+															"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(Sort).to.be.true});",
+															"});",
+															"",
+															"//Tests limit and offset",
+															"var MaxListCount, FirstParamName, LastParamName, ParamName, LimOffjsonData;",
+															"var Lim = true, Off = true;",
+															"",
+															"//Setup limit and offset check parameters",
+															"if(jsonData.list_count > 1){",
+															"    MaxListCount = parseInt(jsonData.list_count) - 1 ;",
+															"    FirstParamName = jsonData.privileges[0][order_by];",
+															"    LastParamName = jsonData.privileges[parseInt(MaxListCount)][order_by];",
+															"    MaxListCount--;",
+															"    ",
+															"//Send request with limit at MaxListCount -1 and offset at 1",
+															"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(MaxListCount) +\"&offset=1\", function (err, LimOffResponse) {",
+															"        LimOffjsonData = LimOffResponse.json();",
+															"    ",
+															"//Check limit and offset result",
+															"        for(var Parameter in LimOffjsonData.AttjsonData){",
+															"            ParamName = LimOffjsonData.privileges[Parameter][order_by];",
+															"            if(ParamName === FirstParamName){",
+															"                Off = false;",
+															"            }",
+															"            if(ParamName === LastParamName){",
+															"                Lim = false;",
+															"            }",
+															"        }",
+															"        pm.test(\"offset is ok\", function () {pm.expect(Off).to.be.true});",
+															"        pm.test(\"limit is ok\", function () {pm.expect(Lim).to.be.true});",
+															"    });",
+															"}",
+															"",
+															"//Test attributes",
+															"var AttjsonData;",
+															"var Att = true;",
+															"",
+															"//Send request to get only the order_by variable name attribute",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, AttResponse) {",
+															"    AttjsonData = AttResponse.json();",
+															"",
+															"//Check attribute ",
+															"    for(var Parameter in AttjsonData.privileges){",
+															"        for(var AttParam in AttjsonData.privileges[Parameter]){",
+															"            if(AttParam !== order_by){",
+															"                Att = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"attribute is ok\", function () {pm.expect(Att).to.be.true});",
+															"});",
+															"",
+															"//Test filter",
+															"var Fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+															"var FltrjsonData;",
+															"var Fltr = true;",
+															"",
+															"//Send request with filter argument",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+Fltrjson, function (err, FltrResponse) {",
+															"    FltrjsonData = FltrResponse.json();",
+															"",
+															"//Check filter",
+															"    for(var Parameter in FltrjsonData.privileges){",
+															"        for(var FltrParam in FltrjsonData.privileges[Parameter]){",
+															"            var tmp = FltrjsonData.privileges[Parameter][FltrParam];",
+															"            if(FltrParam === order_by && tmp !== filter){",
+															"                Fltr = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"filter is ok\", function () {pm.expect(Fltr).to.be.true});",
+															"});",
+															"",
+															"",
+															"//Clean variables",
+															"pm.environment.unset(\"get_privileges_order_by\");",
+															"pm.environment.unset(\"get_privileges_sort_order\");",
+															"pm.environment.unset(\"get_privileges_limit\");",
+															"pm.environment.unset(\"get_privileges_offset\");",
+															"pm.environment.unset(\"get_privileges_attributs\");",
+															"pm.environment.unset(\"get_privileges_filter\");",
+															"pm.environment.unset(\"get_privileges_distinct\");",
+															"",
+															"",
+															""
+														]
+													}
+												}
+											],
 											"request": {
 												"method": "GET",
 												"header": [
@@ -6770,7 +7072,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges?token={{main_token}}&order_by={{get_privilege_order_by}}&sort_order={{get_privilege_sort_order}}&limit={{get_privilege_limit}}&offset={{get_privilege_offset}}&attributs={{get_privilege_attributs}}&filter={{get_privilege_filter}}&distinct={{get_privilege_distinct}}",
+													"raw": "https://{{host}}/rest/vitis/privileges?token={{main_token}}&order_by={{get_privileges_order_by}}&sort_order={{get_privileges_sort_order}}&limit={{get_privileges_limit}}&offset={{get_privileges_offset}}&attributs={{get_privileges_attributs}}&filter={{get_privileges_filter}}&distinct={{get_privileges_distinct}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -6788,37 +7090,37 @@
 														},
 														{
 															"key": "order_by",
-															"value": "{{get_privilege_order_by}}",
+															"value": "{{get_privileges_order_by}}",
 															"equals": true
 														},
 														{
 															"key": "sort_order",
-															"value": "{{get_privilege_sort_order}}",
+															"value": "{{get_privileges_sort_order}}",
 															"equals": true
 														},
 														{
 															"key": "limit",
-															"value": "{{get_privilege_limit}}",
+															"value": "{{get_privileges_limit}}",
 															"equals": true
 														},
 														{
 															"key": "offset",
-															"value": "{{get_privilege_offset}}",
+															"value": "{{get_privileges_offset}}",
 															"equals": true
 														},
 														{
 															"key": "attributs",
-															"value": "{{get_privilege_attributs}}",
+															"value": "{{get_privileges_attributs}}",
 															"equals": true
 														},
 														{
 															"key": "filter",
-															"value": "{{get_privilege_filter}}",
+															"value": "{{get_privileges_filter}}",
 															"equals": true
 														},
 														{
 															"key": "distinct",
-															"value": "{{get_privilege_distinct}}",
+															"value": "{{get_privileges_distinct}}",
 															"equals": true
 														}
 													]
@@ -6828,62 +7130,33 @@
 											"response": []
 										},
 										{
-											"name": "Update Privilege",
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "application/xml, application/json"
-													},
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													}
-												],
-												"body": {},
-												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{get_privilege_users}}",
-													"protocol": "https",
-													"host": [
-														"{{host}}"
-													],
-													"path": [
-														"rest",
-														"vitis",
-														"privileges",
-														":rolname"
-													],
-													"query": [
-														{
-															"key": "token",
-															"value": "{{main_user_token}}",
-															"equals": true
-														},
-														{
-															"key": "description",
-															"value": "{{get_privilege_description}}",
-															"equals": true
-														},
-														{
-															"key": "users",
-															"value": "{{get_privilege_users}}",
-															"equals": true
-														}
-													],
-													"variable": [
-														{
-															"key": "rolname",
-															"value": "{{get_privilege_rolname}}"
-														}
-													]
-												},
-												"description": "Request to update Privilege"
-											},
-											"response": []
-										},
-										{
 											"name": "Get Privilege",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "cd88d79c-030b-4c47-b3a3-4ba5570ff64f",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.unset(\"get_privilege_rolname\");",
+															"//pm.environment.set(\"get_privilege_description\",\"\");",
+															"//pm.environment.set(\"get_privilege_users\",);"
+														]
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "cf53e18b-2c3d-4c84-ae54-708aa57f749d",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_privilege_rolname\",\"vmap_admin\");",
+															"//pm.environment.set(\"get_privilege_description\",\"\");",
+															"//pm.environment.set(\"get_privilege_users\",);"
+														]
+													}
+												}
+											],
 											"request": {
 												"method": "GET",
 												"header": [
@@ -6898,7 +7171,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{get_privilege_users}}",
+													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_token}}&description={{get_privilege_description}}&users={{main_admin_id}}|{{main_User_id}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -6912,7 +7185,7 @@
 													"query": [
 														{
 															"key": "token",
-															"value": "{{main_user_token}}",
+															"value": "{{main_token}}",
 															"equals": true
 														},
 														{
@@ -6922,7 +7195,7 @@
 														},
 														{
 															"key": "users",
-															"value": "{{get_privilege_users}}",
+															"value": "{{main_admin_id}}|{{main_User_id}}",
 															"equals": true
 														}
 													],
@@ -6942,21 +7215,21 @@
 										{
 											"listen": "prerequest",
 											"script": {
-												"id": "935d835b-c1d8-4a6b-a412-d4dc6f48f84d",
-												"type": "text/javascript",
 												"exec": [
 													""
-												]
+												],
+												"id": "935d835b-c1d8-4a6b-a412-d4dc6f48f84d",
+												"type": "text/javascript"
 											}
 										},
 										{
 											"listen": "test",
 											"script": {
-												"id": "1417d0e5-129f-4736-99bb-abca0e33c568",
-												"type": "text/javascript",
 												"exec": [
 													""
-												]
+												],
+												"id": "1417d0e5-129f-4736-99bb-abca0e33c568",
+												"type": "text/javascript"
 											}
 										}
 									],
@@ -6968,6 +7241,161 @@
 									"item": [
 										{
 											"name": "Get Privileges (without rights)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "8a81ee19-b4c7-4af7-866a-3f9b54292bcf",
+														"type": "text/javascript",
+														"exec": [
+															"//Test type",
+															"var TYPE = \"privileges\";",
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"// Tests contenu",
+															"var jsonData = pm.response.json();",
+															"tests[\"privileges is ok\"] = jsonData.privileges instanceof Array;",
+															"",
+															"//Get parameters name for later tests",
+															"var order_by;",
+															"var filter;",
+															"    for(var Param in jsonData.privileges[0]){",
+															"        order_by = Param;",
+															"        filter = jsonData.privileges[0][Param];",
+															"        break;",
+															"    }",
+															"",
+															"//Tests order_by and sort_order",
+															"var Sort = true;",
+															"var varA, varB = null;",
+															"var OrdSortjsonData;",
+															"",
+															"//Send request with order_by variable name in ASC order",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, OrdSortResponse) {",
+															"    OrdSortjsonData = OrdSortResponse.json();",
+															"    ",
+															"//Check Sort",
+															"    for(var Parameter in OrdSortjsonData.privileges){",
+															"        varB = OrdSortjsonData.privileges[Parameter][order_by];",
+															"        if(varB !== null && varA !== null){",
+															"            if(varA > varB){ ",
+															"                Sort = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"        varA = varB;",
+															"    }",
+															"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(Sort).to.be.true});",
+															"});",
+															"",
+															"//Tests limit and offset",
+															"var MaxListCount, FirstParamName, LastParamName, ParamName, LimOffjsonData;",
+															"var Lim = true, Off = true;",
+															"",
+															"//Setup limit and offset check parameters",
+															"if(jsonData.list_count > 1){",
+															"    MaxListCount = parseInt(jsonData.list_count) - 1 ;",
+															"    FirstParamName = jsonData.privileges[0][order_by];",
+															"    LastParamName = jsonData.privileges[parseInt(MaxListCount)][order_by];",
+															"    MaxListCount--;",
+															"    ",
+															"//Send request with limit at MaxListCount -1 and offset at 1",
+															"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(MaxListCount) +\"&offset=1\", function (err, LimOffResponse) {",
+															"        LimOffjsonData = LimOffResponse.json();",
+															"    ",
+															"//Check limit and offset result",
+															"        for(var Parameter in LimOffjsonData.AttjsonData){",
+															"            ParamName = LimOffjsonData.privileges[Parameter][order_by];",
+															"            if(ParamName === FirstParamName){",
+															"                Off = false;",
+															"            }",
+															"            if(ParamName === LastParamName){",
+															"                Lim = false;",
+															"            }",
+															"        }",
+															"        pm.test(\"offset is ok\", function () {pm.expect(Off).to.be.true});",
+															"        pm.test(\"limit is ok\", function () {pm.expect(Lim).to.be.true});",
+															"    });",
+															"}",
+															"",
+															"//Test attributes",
+															"var AttjsonData;",
+															"var Att = true;",
+															"",
+															"//Send request to get only the order_by variable name attribute",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, AttResponse) {",
+															"    AttjsonData = AttResponse.json();",
+															"",
+															"//Check attribute ",
+															"    for(var Parameter in AttjsonData.privileges){",
+															"        for(var AttParam in AttjsonData.privileges[Parameter]){",
+															"            if(AttParam !== order_by){",
+															"                Att = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"attribute is ok\", function () {pm.expect(Att).to.be.true});",
+															"});",
+															"",
+															"//Test filter",
+															"var Fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+															"var FltrjsonData;",
+															"var Fltr = true;",
+															"",
+															"//Send request with filter argument",
+															"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/privileges?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+Fltrjson, function (err, FltrResponse) {",
+															"    FltrjsonData = FltrResponse.json();",
+															"",
+															"//Check filter",
+															"    for(var Parameter in FltrjsonData.privileges){",
+															"        for(var FltrParam in FltrjsonData.privileges[Parameter]){",
+															"            var tmp = FltrjsonData.privileges[Parameter][FltrParam];",
+															"            if(FltrParam === order_by && tmp !== filter){",
+															"                Fltr = false;",
+															"                break;",
+															"            }",
+															"        }",
+															"    }",
+															"pm.test(\"filter is ok\", function () {pm.expect(Fltr).to.be.true});",
+															"});",
+															"",
+															"",
+															"//Clean variables",
+															"pm.environment.unset(\"get_privileges_order_by\");",
+															"pm.environment.unset(\"get_privileges_sort_order\");",
+															"pm.environment.unset(\"get_privileges_limit\");",
+															"pm.environment.unset(\"get_privileges_offset\");",
+															"pm.environment.unset(\"get_privileges_attributs\");",
+															"pm.environment.unset(\"get_privileges_filter\");",
+															"pm.environment.unset(\"get_privileges_distinct\");",
+															"",
+															"",
+															""
+														]
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "90db27cf-d181-4018-91c4-1172a1372c08",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_privileges_order_by\", \"\");",
+															"pm.environment.set(\"get_privileges_sort_order\", \"\");",
+															"pm.environment.set(\"get_privileges_limit\", \"50\");",
+															"pm.environment.set(\"get_privileges_offset\", \"\");",
+															"pm.environment.set(\"get_privileges_attributs\", \"\");",
+															"pm.environment.set(\"get_privileges_filter\", \"\");",
+															"pm.environment.set(\"get_privileges_distinct\", \"\");"
+														]
+													}
+												}
+											],
 											"request": {
 												"method": "GET",
 												"header": [
@@ -6982,7 +7410,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges?token={{main_user_token}}&order_by={{get_privilege_order_by}}&sort_order={{get_privilege_sort_order}}&limit={{get_privilege_limit}}&offset={{get_privilege_offset}}&attributs={{get_privilege_attributs}}&filter={{get_privilege_filter}}&distinct={{get_privilege_distinct}}",
+													"raw": "https://{{host}}/rest/vitis/privileges?token={{main_user_token}}&order_by={{get_privileges_order_by}}&sort_order={{get_privileges_sort_order}}&limit={{get_privileges_limit}}&offset={{get_privileges_offset}}&attributs={{get_privileges_attributs}}&filter={{get_privileges_filter}}&distinct={{get_privileges_distinct}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -7000,37 +7428,37 @@
 														},
 														{
 															"key": "order_by",
-															"value": "{{get_privilege_order_by}}",
+															"value": "{{get_privileges_order_by}}",
 															"equals": true
 														},
 														{
 															"key": "sort_order",
-															"value": "{{get_privilege_sort_order}}",
+															"value": "{{get_privileges_sort_order}}",
 															"equals": true
 														},
 														{
 															"key": "limit",
-															"value": "{{get_privilege_limit}}",
+															"value": "{{get_privileges_limit}}",
 															"equals": true
 														},
 														{
 															"key": "offset",
-															"value": "{{get_privilege_offset}}",
+															"value": "{{get_privileges_offset}}",
 															"equals": true
 														},
 														{
 															"key": "attributs",
-															"value": "{{get_privilege_attributs}}",
+															"value": "{{get_privileges_attributs}}",
 															"equals": true
 														},
 														{
 															"key": "filter",
-															"value": "{{get_privilege_filter}}",
+															"value": "{{get_privileges_filter}}",
 															"equals": true
 														},
 														{
 															"key": "distinct",
-															"value": "{{get_privilege_distinct}}",
+															"value": "{{get_privileges_distinct}}",
 															"equals": true
 														}
 													]
@@ -7040,62 +7468,33 @@
 											"response": []
 										},
 										{
-											"name": "Update Privilege (without rights)",
-											"request": {
-												"method": "PUT",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "application/xml, application/json"
-													},
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													}
-												],
-												"body": {},
-												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{get_privilege_users}}",
-													"protocol": "https",
-													"host": [
-														"{{host}}"
-													],
-													"path": [
-														"rest",
-														"vitis",
-														"privileges",
-														":rolname"
-													],
-													"query": [
-														{
-															"key": "token",
-															"value": "{{main_user_token}}",
-															"equals": true
-														},
-														{
-															"key": "description",
-															"value": "{{get_privilege_description}}",
-															"equals": true
-														},
-														{
-															"key": "users",
-															"value": "{{get_privilege_users}}",
-															"equals": true
-														}
-													],
-													"variable": [
-														{
-															"key": "rolname",
-															"value": "{{get_privilege_rolname}}"
-														}
-													]
-												},
-												"description": "Request to update Privilege"
-											},
-											"response": []
-										},
-										{
 											"name": "Get Privilege (without rights)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "e477070e-7faa-4abe-bb32-c4ef282cc9a9",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.unset(\"get_privilege_rolname\");",
+															"//pm.environment.set(\"get_privilege_description\",\"\");",
+															"//pm.environment.set(\"get_privilege_users\",);"
+														]
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "fd5fa6dd-b584-4528-a330-2b7b098a8045",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_privilege_rolname\",\"vmap_admin\");",
+															"//pm.environment.set(\"get_privilege_description\",\"\");",
+															"//pm.environment.set(\"get_privilege_users\",);"
+														]
+													}
+												}
+											],
 											"request": {
 												"method": "GET",
 												"header": [
@@ -7110,7 +7509,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{get_privilege_users}}",
+													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{main_admin_id}}|{{main_User_id}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -7134,7 +7533,7 @@
 														},
 														{
 															"key": "users",
-															"value": "{{get_privilege_users}}",
+															"value": "{{main_admin_id}}|{{main_User_id}}",
 															"equals": true
 														}
 													],
@@ -7157,21 +7556,21 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "71bbeba9-5cc8-488d-bcfb-004982bb79ae",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "71bbeba9-5cc8-488d-bcfb-004982bb79ae",
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "9498abeb-9514-4296-b4a7-8eecb8dbd4a7",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "9498abeb-9514-4296-b4a7-8eecb8dbd4a7",
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -7186,15 +7585,14 @@
 										{
 											"listen": "test",
 											"script": {
-												"id": "e2279019-dc03-49e7-a80a-a65735d72f6d",
+												"id": "14acea38-e277-487e-822c-58892fd09851",
 												"type": "text/javascript",
 												"exec": [
 													"pm.environment.unset(\"main_token\");",
 													"pm.environment.unset(\"main_admin_id\");",
 													"pm.environment.unset(\"main_user_token\");",
 													"pm.environment.unset(\"main_user_id\");",
-													"",
-													"postman.setNextRequest(null);"
+													"pm.environment.unset(\"main_User_id\");"
 												]
 											}
 										}
@@ -7240,21 +7638,21 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "75515896-47e6-47c6-b56f-8f793ca1c20e",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "75515896-47e6-47c6-b56f-8f793ca1c20e",
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "5c7df45c-6925-4881-a22d-ffecac3c9bfd",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "5c7df45c-6925-4881-a22d-ffecac3c9bfd",
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -7482,21 +7880,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "dbf42ffc-c471-4183-b0b3-a09ba8e75bb6",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "dbf42ffc-c471-4183-b0b3-a09ba8e75bb6",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "9845cf64-cb61-4f4a-954f-c4987d1048ff",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "9845cf64-cb61-4f4a-954f-c4987d1048ff",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -11550,21 +11948,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "3c0d69c0-e95a-4422-80b0-c9898e123e91",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "3c0d69c0-e95a-4422-80b0-c9898e123e91",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "3dda0821-4496-484f-88b9-929c16366843",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "3dda0821-4496-484f-88b9-929c16366843",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -11713,21 +12111,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "087b19e4-7eee-4e89-8a38-d77256315f25",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "087b19e4-7eee-4e89-8a38-d77256315f25",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "8959d61e-4460-4544-8608-e20834c3196a",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "8959d61e-4460-4544-8608-e20834c3196a",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -11943,21 +12341,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "e7f7a4d5-f39f-4b97-a737-042de2395a11",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "e7f7a4d5-f39f-4b97-a737-042de2395a11",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "83f56e75-f6bf-4bbd-b5d0-1bca94cd20f1",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "83f56e75-f6bf-4bbd-b5d0-1bca94cd20f1",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12059,21 +12457,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "7b87f66c-4f8c-488c-929a-898d8bfe4ad4",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "7b87f66c-4f8c-488c-929a-898d8bfe4ad4",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "3c94ae36-1394-4de5-9066-5c7b20321ea9",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "3c94ae36-1394-4de5-9066-5c7b20321ea9",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12444,21 +12842,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "80fe1934-e470-453a-ac94-1189916331fc",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "80fe1934-e470-453a-ac94-1189916331fc",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "0c0abdf6-b52f-4321-b881-c557c5ff5488",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "0c0abdf6-b52f-4321-b881-c557c5ff5488",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12733,21 +13131,21 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "cdd93756-d371-4315-b425-062192201088",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "cdd93756-d371-4315-b425-062192201088",
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "07ef0b5c-9e55-4d8f-9f02-a9eaa8840e38",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "07ef0b5c-9e55-4d8f-9f02-a9eaa8840e38",
+										"type": "text/javascript"
 									}
 								}
 							],
@@ -12758,21 +13156,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "306c624b-f6a2-4edb-80c6-16826387154f",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "306c624b-f6a2-4edb-80c6-16826387154f",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "0bc7f9e4-f9b1-4b8d-97dd-64490eafa761",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "0bc7f9e4-f9b1-4b8d-97dd-64490eafa761",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -12955,21 +13353,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "a3614a31-2d5c-4f14-b8e0-7c1078351166",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "a3614a31-2d5c-4f14-b8e0-7c1078351166",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "1d77acd7-645f-411d-b47e-d28fd8ccff36",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "1d77acd7-645f-411d-b47e-d28fd8ccff36",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -13103,21 +13501,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "8f4a710f-7a5c-43c1-8ca0-d5e925d77656",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "8f4a710f-7a5c-43c1-8ca0-d5e925d77656",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "bc4b80af-246f-4701-a2b5-c36056a428ef",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "bc4b80af-246f-4701-a2b5-c36056a428ef",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -13251,21 +13649,21 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "1760fcfc-6695-49e0-8f53-a1b40c80a9e2",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "1760fcfc-6695-49e0-8f53-a1b40c80a9e2",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "543f4508-10aa-4655-8c47-9d78daac2247",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "543f4508-10aa-4655-8c47-9d78daac2247",
+								"type": "text/javascript"
 							}
 						}
 					],
@@ -13318,25 +13716,135 @@
 						{
 							"listen": "prerequest",
 							"script": {
-								"id": "127f279d-800c-4856-99ff-177112fda876",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "127f279d-800c-4856-99ff-177112fda876",
+								"type": "text/javascript"
 							}
 						},
 						{
 							"listen": "test",
 							"script": {
-								"id": "84978b67-f5ca-4a59-8677-011673ec4223",
-								"type": "text/javascript",
 								"exec": [
 									""
-								]
+								],
+								"id": "84978b67-f5ca-4a59-8677-011673ec4223",
+								"type": "text/javascript"
 							}
 						}
 					],
 					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Update Privilege",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{get_privilege_users}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"rest",
+								"vitis",
+								"privileges",
+								":rolname"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{main_user_token}}",
+									"equals": true
+								},
+								{
+									"key": "description",
+									"value": "{{get_privilege_description}}",
+									"equals": true
+								},
+								{
+									"key": "users",
+									"value": "{{get_privilege_users}}",
+									"equals": true
+								}
+							],
+							"variable": [
+								{
+									"key": "rolname",
+									"value": "{{get_privilege_rolname}}"
+								}
+							]
+						},
+						"description": "Request to update Privilege"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Privilege (without rights)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{get_privilege_users}}",
+							"protocol": "https",
+							"host": [
+								"{{host}}"
+							],
+							"path": [
+								"rest",
+								"vitis",
+								"privileges",
+								":rolname"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{main_user_token}}",
+									"equals": true
+								},
+								{
+									"key": "description",
+									"value": "{{get_privilege_description}}",
+									"equals": true
+								},
+								{
+									"key": "users",
+									"value": "{{get_privilege_users}}",
+									"equals": true
+								}
+							],
+							"variable": [
+								{
+									"key": "rolname",
+									"value": "{{get_privilege_rolname}}"
+								}
+							]
+						},
+						"description": "Request to update Privilege"
+					},
+					"response": []
 				}
 			]
 		}
