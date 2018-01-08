@@ -644,110 +644,12 @@
 									"name": "Get User",
 									"item": [
 										{
-											"name": "Get User",
-											"event": [
-												{
-													"listen": "test",
-													"script": {
-														"id": "2b7c2beb-c1c4-4070-a939-e9463540cf22",
-														"type": "text/javascript",
-														"exec": [
-															"// Test la présence de réponse",
-															"if(pm.response.responseSize === 0){",
-															"    tests['No response'] = false",
-															"    return null;",
-															"}",
-															"",
-															"// Tests contenu",
-															"var jsonData = pm.response.json();",
-															"tests[\"users is ok\"] = jsonData.users instanceof Array",
-															"tests[\"users get is ok\"] = jsonData.users.length === 1;",
-															"tests[\"user_id is ok\"] = jsonData.users[0].user_id === parseInt(pm.environment.get(\"main_user_id\"));",
-															"tests[\"login is ok\"] = jsonData.users[0].login === pm.environment.get(\"main_user_login\");",
-															"tests[\"name is ok\"] = jsonData.users[0].name === pm.environment.get(\"main_user_name\");",
-															"tests[\"email is ok\"] = jsonData.users[0].email === pm.environment.get(\"main_user_email\");   ",
-															"tests[\"company is ok\"] = jsonData.users[0].company === pm.environment.get(\"main_user_company\");",
-															"tests[\"department is ok\"] = jsonData.users[0].department === pm.environment.get(\"main_user_department\");",
-															"tests[\"ip_constraint is ok\"] = jsonData.users[0].ip_constraint === pm.environment.get(\"main_user_ip_constraint\");",
-															"tests[\"restriction is ok\"] = jsonData.users[0].restriction === pm.environment.get(\"main_user_restriction\");",
-															"tests[\"groups is ok\"] = jsonData.users[0].groups === pm.environment.get(\"main_user_groups\");",
-															"tests[\"privileges is ok\"] = jsonData.users[0].privileges === pm.environment.get(\"main_user_privileges\");",
-															"",
-															"// Nettoyage variables ",
-															"pm.environment.unset(\"main_user_attributes\");",
-															""
-														]
-													}
-												},
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "d59d8802-00a7-4a9e-83ff-79b93b2a19d4",
-														"type": "text/javascript",
-														"exec": [
-															"pm.environment.set(\"main_user_attributes\", \"\");"
-														]
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "application/xml, application/json, application/x-vm-json"
-													},
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													}
-												],
-												"body": {
-													"mode": "raw",
-													"raw": ""
-												},
-												"url": {
-													"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{main_token}}&attributs={{main_user_attributes}}",
-													"protocol": "https",
-													"host": [
-														"{{host}}"
-													],
-													"path": [
-														"rest",
-														"vitis",
-														"users",
-														":user_id"
-													],
-													"query": [
-														{
-															"key": "token",
-															"value": "{{main_token}}",
-															"equals": true
-														},
-														{
-															"key": "attributs",
-															"value": "{{main_user_attributes}}",
-															"equals": true
-														}
-													],
-													"variable": [
-														{
-															"key": "user_id",
-															"value": "{{main_user_id}}"
-														}
-													]
-												},
-												"description": "Test: vérifie le précédent PUT"
-											},
-											"response": []
-										},
-										{
 											"name": "Get Users",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "0a5ec891-8467-49d6-91e9-f205f9224222",
+														"id": "f943a962-ba84-4ec1-9c97-20f40f165e60",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
@@ -766,7 +668,7 @@
 															"    for(var param in jsonData.users[0]){",
 															"        order_by = param;",
 															"        filter = jsonData.users[0][param];",
-															"        if(jsonData.tabs[0][param] !== null){",
+															"        if(jsonData.users[0][param] !== null){",
 															"            break;",
 															"        }",
 															"    }",
@@ -866,6 +768,12 @@
 															"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
 															"});",
 															"",
+															"//Save variable for without 's' next test",
+															"var varibla;",
+															"for(var param in jsonData.users[0]){",
+															"    variable = \"get_users_\" + param;",
+															"    pm.environment.set(variable,jsonData.users[0][param]);",
+															"}",
 															"",
 															"//Clean variables",
 															"pm.environment.unset(\"get_users_order_by\");",
@@ -980,6 +888,106 @@
 															"key": "distinct",
 															"value": "{{get_users_distinct}}",
 															"equals": true
+														}
+													]
+												},
+												"description": "Test: vérifie le précédent PUT"
+											},
+											"response": []
+										},
+										{
+											"name": "Get User",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "c2642384-e38d-4c05-be89-39cb2d09417c",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"group is ok\"] = jsonData.users instanceof Array;",
+															"",
+															"var variable;",
+															"for(var param in jsonData.users[0]){",
+															"    variable = \"get_users_\" + param;",
+															"    if(jsonData.users[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.users[0][param] == pm.environment.get(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.users[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.users[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        console.log(param+ \" : \"+ jsonData.users[0][param] + \" : \"+ pm.environment.get(variable))",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"    pm.environment.unset(variable);",
+															"}",
+															"",
+															"// Nettoyage variables ",
+															"pm.environment.unset(\"main_user_attributes\");"
+														]
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "d59d8802-00a7-4a9e-83ff-79b93b2a19d4",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"main_user_attributes\", \"\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json, application/x-vm-json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{main_token}}&attributs={{main_user_attributes}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"users",
+														":user_id"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{main_user_attributes}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "{{get_users_user_id}}"
 														}
 													]
 												},
@@ -3805,23 +3813,23 @@
 											"response": []
 										},
 										{
-											"name": "Get User (without rights)",
+											"name": "Get Simple User (without rights)",
 											"event": [
 												{
 													"listen": "test",
 													"script": {
-														"id": "4c4589c9-a17d-4750-8db2-e426cbd502a5",
+														"id": "1b3210a8-ab2b-4642-b116-5c82455dcbff",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
 															"if(pm.response.responseSize === 0){",
-															"    tests['No response'] = false",
+															"    tests['No response'] = false;",
 															"    return null;",
 															"}",
 															"var jsonData = pm.response.json();",
 															"",
 															"// Tests contenu",
-															"tests[\"users is ok\"] = jsonData.users instanceof Array",
+															"/*tests[\"users is ok\"] = jsonData.users instanceof Array;",
 															"tests[\"users get is ok\"] = jsonData.users.length === 1;",
 															"tests[\"user_id is ok\"] = jsonData.users[0].user_id === parseInt(pm.environment.get(\"main_user_id\"));",
 															"tests[\"login is ok\"] = jsonData.users[0].login === pm.environment.get(\"main_user_login\");",
@@ -3832,75 +3840,37 @@
 															"tests[\"ip_constraint is ok\"] = jsonData.users[0].ip_constraint === pm.environment.get(\"main_user_ip_constraint\");",
 															"tests[\"restriction is ok\"] = jsonData.users[0].restriction === pm.environment.get(\"main_user_restriction\");",
 															"tests[\"groups is ok\"] = jsonData.users[0].groups === pm.environment.get(\"main_user_groups\");",
-															"tests[\"privileges is ok\"] = jsonData.users[0].privileges === pm.environment.get(\"main_user_privileges\");",
-															"",
-															"// Nettoyage variables ",
-															"pm.environment.unset(\"main_user_attributes\");",
-															"/*",
-															"var o;",
-															"function checkVariable(objArr){",
-															"    for(var parameter in objArr){",
-															"    /*console.log(parameter + \" : \" + typeof(parameter) + \" : \" + objArr[parameter]);",
-															"        if(objArr[parameter] instanceof Array || typeof(objArr[parameter]) === \"object\"){",
-															"            //console.log(\"HELLO\");",
-															"            console.log(\"1 : \" + parameter + \" : \" + typeof(parameter) + \" : \" + objArr[parameter]);",
-															"// variable is a instance of an array",
-															"            if(objArr[parameter] !== null || typeof(objArr[parameter]) === \"object\"){",
-															"                console.log(\"2 : \" + parameter);",
-															"                checkVariable(objArr[parameter]);",
-															"            }",
-															"        }",
-															"        /*else if(parameter !== \"status\"){",
-															"            console.log(\"HELLO2\");",
-															"                console.log(parameter+ \" : \"+ typeof(objArr[parameter]));",
-															"            if(typeof(objArr[parameter]) !== \"object\" || objArr[parameter] === null){",
-															"                //console.log(\"HELLO\");",
-															"                ",
-															"            }",
-															"            //console.log(\"3 : \" + typeof(objArr[parameter]));",
-															"            ",
-															"        }",
-															"        ",
-															"        ",
-															"    ",
-															"        if(parameter !== \"status\" && parameter !== null){",
-															"            //console.log(parameter);",
-															"            if(typeof(objArr[parameter]) === \"object\"){",
-															"                //checkVariable(objArr[parameter]);",
-															"                //console.log(\"LOOP\");",
-															"            }",
-															"            else{ //if(typeof(objArr[parameter]) === null){",
-															"                //console.log(\"CONTINUE\");",
-															"            }",
-															"            //.log(typeof(parameter));",
-															"        }",
-															"        ",
-															"        if(parameter !== null){",
-															"            if(typeof(objArr[parameter]) === \"object\"){",
-															"                checkVariable(objArr[parameter]);",
-															"            }",
-															"            if(objArr[parameter] !== null && objArr[parameter] !== \"\" && typeof(objArr[parameter]) !== \"object\"){",
-															"                tests[parameter + \" parameter was return filled with \"+ typeof(objArr[parameter]) +\" data type\"] = true;",
-															"            }",
-															"            else{",
-															"                tests[\"! Warning ! \" + parameter + \" parameter was return filled with null or empty argument\"] = false;",
-															"            }",
+															"tests[\"privileges is ok\"] = jsonData.users[0].privileges === pm.environment.get(\"main_user_privileges\");*/",
+															"pm.environment.set(\"error_test\", false);",
+															"/*var variable;",
+															"for(var param in jsonData.users[0]){",
+															"    variable = \"get_users_\" + param;",
+															"    if(jsonData.users[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.users[0][param] == pm.environment.get(variable);",
 															"        }else{",
-															"            tests[\"! Warning ! Request return null parameter\"] = false;",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.users[0][param])] = true;",
 															"        }",
+															"    }else if(jsonData.users[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
 															"    }",
+															"    pm.environment.unset(variable);",
 															"}",
-															"",
-															"checkVariable(jsonData);*/"
+															"*/",
+															"// Nettoyage variables ",
+															"pm.environment.unset(\"main_user_attributes\");"
 														]
 													}
 												},
 												{
 													"listen": "prerequest",
 													"script": {
-														"id": "d59d8802-00a7-4a9e-83ff-79b93b2a19d4",
+														"id": "b3460667-c957-4afe-a836-1e9b3993d842",
 														"type": "text/javascript",
 														"exec": [
+															"pm.environment.set(\"error_test\", true);",
 															"pm.environment.set(\"main_user_attributes\", \"\");"
 														]
 													}
@@ -3920,7 +3890,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{main_user_token}}",
+													"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{main_user_token}}&attributs={{main_user_attributes}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -3940,8 +3910,119 @@
 														{
 															"key": "attributs",
 															"value": "{{main_user_attributes}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "user_id",
+															"value": "{{main_user_id}}"
+														}
+													]
+												},
+												"description": "Test: vérifie le précédent PUT"
+											},
+											"response": []
+										},
+										{
+											"name": "Get Other User (without rights)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"var jsonData = pm.response.json();",
+															"",
+															"// Tests contenu",
+															"/*tests[\"users is ok\"] = jsonData.users instanceof Array;",
+															"tests[\"users get is ok\"] = jsonData.users.length === 1;",
+															"tests[\"user_id is ok\"] = jsonData.users[0].user_id === parseInt(pm.environment.get(\"main_user_id\"));",
+															"tests[\"login is ok\"] = jsonData.users[0].login === pm.environment.get(\"main_user_login\");",
+															"tests[\"name is ok\"] = jsonData.users[0].name === pm.environment.get(\"main_user_name\");",
+															"tests[\"email is ok\"] = jsonData.users[0].email === pm.environment.get(\"main_user_email\");   ",
+															"tests[\"company is ok\"] = jsonData.users[0].company === pm.environment.get(\"main_user_company\");",
+															"tests[\"department is ok\"] = jsonData.users[0].department === pm.environment.get(\"main_user_department\");",
+															"tests[\"ip_constraint is ok\"] = jsonData.users[0].ip_constraint === pm.environment.get(\"main_user_ip_constraint\");",
+															"tests[\"restriction is ok\"] = jsonData.users[0].restriction === pm.environment.get(\"main_user_restriction\");",
+															"tests[\"groups is ok\"] = jsonData.users[0].groups === pm.environment.get(\"main_user_groups\");",
+															"tests[\"privileges is ok\"] = jsonData.users[0].privileges === pm.environment.get(\"main_user_privileges\");*/",
+															"pm.environment.set(\"error_test\", false);",
+															"/*var variable;",
+															"for(var param in jsonData.users[0]){",
+															"    variable = \"get_users_\" + param;",
+															"    if(jsonData.users[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.users[0][param] == pm.environment.get(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.users[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.users[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"    pm.environment.unset(variable);",
+															"}",
+															"*/",
+															"// Nettoyage variables ",
+															"pm.environment.unset(\"main_user_attributes\");"
+														],
+														"id": "1b3210a8-ab2b-4642-b116-5c82455dcbff",
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															"pm.environment.set(\"error_test\", true);",
+															"pm.environment.set(\"main_user_attributes\", \"\");"
+														],
+														"id": "b3460667-c957-4afe-a836-1e9b3993d842",
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json, application/x-vm-json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/users/:user_id?token={{main_user_token}}&attributs={{main_user_attributes}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"users",
+														":user_id"
+													],
+													"query": [
+														{
 															"equals": true,
-															"disabled": true
+															"key": "token",
+															"value": "{{main_user_token}}"
+														},
+														{
+															"equals": true,
+															"key": "attributs",
+															"value": "{{main_user_attributes}}"
 														}
 													],
 													"variable": [
@@ -3961,7 +4042,7 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "7bb699ff-461f-4fb8-b424-d5aef214a516",
+														"id": "8fa2f6aa-9c09-4c77-8b56-62985572e153",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
@@ -3980,7 +4061,7 @@
 															"    for(var param in jsonData.users[0]){",
 															"        order_by = param;",
 															"        filter = jsonData.users[0][param];",
-															"        if(jsonData.tabs[0][param] !== null){",
+															"        if(jsonData.users[0][param] !== null){",
 															"            break;",
 															"        }",
 															"    }",
@@ -4079,6 +4160,8 @@
 															"    }",
 															"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
 															"});",
+															"",
+															"//Save variable for without 's' next test",
 															"",
 															"",
 															"//Clean variables",
@@ -4893,95 +4976,6 @@
 									"description": "",
 									"item": [
 										{
-											"name": "Get Group",
-											"event": [
-												{
-													"listen": "prerequest",
-													"script": {
-														"id": "ce205b89-230c-4eae-81de-d4e1f00a3ab0",
-														"type": "text/javascript",
-														"exec": [
-															"pm.environment.set(\"main_group_attributes\", \"\");"
-														]
-													}
-												},
-												{
-													"listen": "test",
-													"script": {
-														"id": "47d56fb3-1faf-4777-b32a-dc7b58086759",
-														"type": "text/javascript",
-														"exec": [
-															"// Test la présence de réponse",
-															"if(pm.response.responseSize === 0){",
-															"    tests['No response'] = false;",
-															"    return null;",
-															"}",
-															"",
-															"// Tests contenu",
-															"var jsonData = pm.response.json();",
-															"tests[\"group is ok\"] = jsonData.groups instanceof Array;",
-															"tests[\"group get is ok\"] = jsonData.groups.length === 1;",
-															"tests[\"nb_members is ok\"] = jsonData.groups[0].nb_members === 1;",
-															"tests[\"group_id is ok\"] = jsonData.groups[0].group_id === parseInt(pm.environment.get(\"main_group_id\"));",
-															"tests[\"name is ok\"] = jsonData.groups[0].name === pm.environment.get(\"main_group_name\");",
-															"tests[\"group users is ok\"] = jsonData.groups[0].users === parseInt(pm.environment.get(\"main_admin_id\"));",
-															"tests[\"groups users_label is ok\"] = jsonData.groups[0].users_label === pm.environment.get(\"admin_user\");",
-															"",
-															"// Nettoyage variables ",
-															"pm.environment.unset(\"main_group_attributes\");"
-														]
-													}
-												}
-											],
-											"request": {
-												"method": "GET",
-												"header": [
-													{
-														"key": "Accept",
-														"value": "application/xml, application/json"
-													},
-													{
-														"key": "Content-Type",
-														"value": "application/json"
-													}
-												],
-												"body": {},
-												"url": {
-													"raw": "https://{{host}}/rest/vitis/groups/:group_id?token={{main_token}}&attributs={{main_group_attributes}}",
-													"protocol": "https",
-													"host": [
-														"{{host}}"
-													],
-													"path": [
-														"rest",
-														"vitis",
-														"groups",
-														":group_id"
-													],
-													"query": [
-														{
-															"key": "token",
-															"value": "{{main_token}}",
-															"equals": true
-														},
-														{
-															"key": "attributs",
-															"value": "{{main_group_attributes}}",
-															"equals": true
-														}
-													],
-													"variable": [
-														{
-															"key": "group_id",
-															"value": "{{main_group_id}}"
-														}
-													]
-												},
-												"description": "Request to get Group by id"
-											},
-											"response": []
-										},
-										{
 											"name": "Get Groups",
 											"event": [
 												{
@@ -5016,7 +5010,7 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "c12d2781-1cc6-4ec3-b06b-0363179a2d25",
+														"id": "845800b1-edff-441a-82b8-a170ccf1b847",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
@@ -5035,7 +5029,7 @@
 															"    for(var param in jsonData.groups[0]){",
 															"        order_by = param;",
 															"        filter = jsonData.groups[0][param];",
-															"        if(jsonData.tabs[0][param] !== null){",
+															"        if(jsonData.groups[0][param] !== null){",
 															"            break;",
 															"        }",
 															"    }",
@@ -5135,6 +5129,11 @@
 															"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
 															"});",
 															"",
+															"//Save variable for without 's' next test",
+															"for(var param in jsonData.groups[0]){",
+															"    var variable = \"get_groups_\" + param;",
+															"    pm.environment.set(variable,jsonData.groups[0][param]);",
+															"}",
 															"",
 															"//Clean variables",
 															"pm.environment.unset(\"get_groups_order_by\");",
@@ -5219,6 +5218,105 @@
 													]
 												},
 												"description": "Request to get Groups"
+											},
+											"response": []
+										},
+										{
+											"name": "Get Group",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "ce205b89-230c-4eae-81de-d4e1f00a3ab0",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"main_group_attributes\", \"\");"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "ed8ea7ce-0cb2-4878-be87-4e90b1aab816",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"group is ok\"] = jsonData.groups instanceof Array;",
+															"",
+															"var variable;",
+															"for(var param in jsonData.groups[0]){",
+															"    variable = \"get_groups_\" + param;",
+															"    if(jsonData.groups[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.groups[0][param] == pm.environment.get(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.groups[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.groups[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"    pm.environment.unset(variable);",
+															"}",
+															"",
+															"// Nettoyage variables",
+															"pm.environment.unset(\"main_group_attributes\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/groups/:group_id?token={{main_token}}&attributs={{main_group_attributes}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"groups",
+														":group_id"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{main_group_attributes}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "group_id",
+															"value": "{{get_groups_group_id}}"
+														}
+													]
+												},
+												"description": "Request to get Group by id"
 											},
 											"response": []
 										}
@@ -6979,7 +7077,7 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "89088727-a2d0-42e6-8874-c0a77c812c9d",
+														"id": "1d69319b-256e-4e1f-99ca-ed27249a4c41",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
@@ -6998,7 +7096,7 @@
 															"    for(var param in jsonData.privileges[0]){",
 															"        order_by = param;",
 															"        filter = jsonData.privileges[0][param];",
-															"        if(jsonData.tabs[0][param] !== null){",
+															"        if(jsonData.privileges[0][param] !== null){",
 															"            break;",
 															"        }",
 															"    }",
@@ -7098,6 +7196,11 @@
 															"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
 															"});",
 															"",
+															"//Save variable for without 's' next test",
+															"for(var param in jsonData.privileges[0]){",
+															"    var variable = \"get_privileges_\" + param;",
+															"    pm.environment.set(variable,jsonData.privileges[0][param]);",
+															"}",
 															"",
 															"//Clean variables",
 															"pm.environment.unset(\"get_privileges_order_by\");",
@@ -7191,24 +7294,44 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "cd88d79c-030b-4c47-b3a3-4ba5570ff64f",
+														"id": "bdc442f6-4a40-45a0-a1e1-1bf8b2434515",
 														"type": "text/javascript",
 														"exec": [
-															"pm.environment.unset(\"get_privilege_rolname\");",
-															"//pm.environment.set(\"get_privilege_description\",\"\");",
-															"//pm.environment.set(\"get_privilege_users\",);"
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"tab is ok\"] = jsonData.privileges instanceof Array;",
+															"",
+															"var variable;",
+															"for(var param in jsonData.privileges[0]){",
+															"    variable = \"get_privileges_\" + param;",
+															"    if(jsonData.privileges[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.privileges[0][param] == pm.environment.get(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.privileges[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.privileges[0][param] == null && pm.environment.get(variable) == \"\"){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"    pm.environment.unset(variable);",
+															"}"
 														]
 													}
 												},
 												{
 													"listen": "prerequest",
 													"script": {
-														"id": "cf53e18b-2c3d-4c84-ae54-708aa57f749d",
+														"id": "5df770c7-af7e-469e-b7d9-23fd0984a8fd",
 														"type": "text/javascript",
 														"exec": [
-															"pm.environment.set(\"get_privilege_rolname\",\"vmap_admin\");",
-															"//pm.environment.set(\"get_privilege_description\",\"\");",
-															"//pm.environment.set(\"get_privilege_users\",);"
+															""
 														]
 													}
 												}
@@ -7227,7 +7350,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_token}}&description={{get_privilege_description}}&users={{main_admin_id}}|{{main_User_id}}",
+													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_token}}&description={{get_privileges_description}}&users={{main_admin_id}}|{{main_User_id}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -7246,7 +7369,7 @@
 														},
 														{
 															"key": "description",
-															"value": "{{get_privilege_description}}",
+															"value": "{{get_privileges_description}}",
 															"equals": true
 														},
 														{
@@ -7258,7 +7381,7 @@
 													"variable": [
 														{
 															"key": "rolname",
-															"value": "{{get_privilege_rolname}}"
+															"value": "{{get_privileges_rolname}}"
 														}
 													]
 												},
@@ -7301,7 +7424,7 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "a72ce6a4-42da-44bd-8f77-f6b2b3919823",
+														"id": "d660d389-5dd3-48f3-a5b7-fed958c97531",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
@@ -7320,7 +7443,7 @@
 															"    for(var param in jsonData.privileges[0]){",
 															"        order_by = param;",
 															"        filter = jsonData.privileges[0][param];",
-															"        if(jsonData.tabs[0][param] !== null){",
+															"        if(jsonData.privileges[0][param] !== null){",
 															"            break;",
 															"        }",
 															"    }",
@@ -7420,6 +7543,11 @@
 															"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
 															"});",
 															"",
+															"//Save variable for without 's' next test",
+															"for(var param in jsonData.privileges[0]){",
+															"    var variable = \"get_privileges_\" + param;",
+															"    pm.environment.set(variable,jsonData.privileges[0][param]);",
+															"}",
 															"",
 															"//Clean variables",
 															"pm.environment.unset(\"get_privileges_order_by\");",
@@ -7529,24 +7657,44 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "e477070e-7faa-4abe-bb32-c4ef282cc9a9",
+														"id": "97024be1-de50-4f09-b88f-1e76f62ea039",
 														"type": "text/javascript",
 														"exec": [
-															"pm.environment.unset(\"get_privilege_rolname\");",
-															"//pm.environment.set(\"get_privilege_description\",\"\");",
-															"//pm.environment.set(\"get_privilege_users\",);"
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"tab is ok\"] = jsonData.privileges instanceof Array;",
+															"",
+															"var variable;",
+															"for(var param in jsonData.privileges[0]){",
+															"    variable = \"get_privileges_\" + param;",
+															"    if(jsonData.privileges[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.privileges[0][param] == pm.environment.get(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.privileges[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.privileges[0][param] == null && pm.environment.get(variable) == \"\"){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"    pm.environment.unset(variable);",
+															"}"
 														]
 													}
 												},
 												{
 													"listen": "prerequest",
 													"script": {
-														"id": "fd5fa6dd-b584-4528-a330-2b7b098a8045",
+														"id": "ea019af9-5f8a-4f03-94ae-9bd4d9163f66",
 														"type": "text/javascript",
 														"exec": [
-															"pm.environment.set(\"get_privilege_rolname\",\"vmap_admin\");",
-															"//pm.environment.set(\"get_privilege_description\",\"\");",
-															"//pm.environment.set(\"get_privilege_users\",);"
+															""
 														]
 													}
 												}
@@ -7565,7 +7713,7 @@
 												],
 												"body": {},
 												"url": {
-													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privilege_description}}&users={{main_admin_id}}|{{main_User_id}}",
+													"raw": "https://{{host}}/rest/vitis/privileges/:rolname?token={{main_user_token}}&description={{get_privileges_description}}&users={{main_admin_id}}|{{main_User_id}}",
 													"protocol": "https",
 													"host": [
 														"{{host}}"
@@ -7584,7 +7732,7 @@
 														},
 														{
 															"key": "description",
-															"value": "{{get_privilege_description}}",
+															"value": "{{get_privileges_description}}",
 															"equals": true
 														},
 														{
@@ -7596,7 +7744,7 @@
 													"variable": [
 														{
 															"key": "rolname",
-															"value": "{{get_privilege_rolname}}"
+															"value": "{{get_privileges_rolname}}"
 														}
 													]
 												},
@@ -7709,16 +7857,14 @@
 												{
 													"listen": "test",
 													"script": {
-														"id": "7c455ac0-a330-4d7a-b219-3cd6e53b520a",
+														"id": "9946da07-975e-4043-b91e-696718eb2969",
 														"type": "text/javascript",
 														"exec": [
 															"// Test la présence de réponse",
 															"if(pm.response.responseSize === 0){",
 															"    tests['No response'] = false;",
 															"    return null;",
-															"}",
-															"",
-															"//tests[\"phpinfo is denied\"] = "
+															"}"
 														]
 													}
 												}
@@ -7767,37 +7913,298 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"id": "dbf42ffc-c471-4183-b0b3-a09ba8e75bb6",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "dbf42ffc-c471-4183-b0b3-a09ba8e75bb6",
+										"type": "text/javascript"
 									}
 								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "9845cf64-cb61-4f4a-954f-c4987d1048ff",
-										"type": "text/javascript",
 										"exec": [
 											""
-										]
+										],
+										"id": "9845cf64-cb61-4f4a-954f-c4987d1048ff",
+										"type": "text/javascript"
 									}
 								}
 							],
 							"_postman_isSubFolder": true
 						},
 						{
-							"name": "Genericquerys - NTY",
-							"description": "Folder for genericquerys",
+							"name": "Vitissections",
+							"description": "Folder for vitissections",
 							"item": [
 								{
-									"name": "Get Querys",
+									"name": "Get VitisSections",
 									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "b7f72eaf-96ff-4735-b5d6-a1a0cd35bf0d",
+												"type": "text/javascript",
+												"exec": [
+													"pm.environment.set(\"get_vitissections_order_by\", \"\");",
+													"pm.environment.set(\"get_vitissections_sort_order\", \"\");",
+													"pm.environment.set(\"get_vitissections_limit\", \"50\");",
+													"pm.environment.set(\"get_vitissections_offset\", \"\");",
+													"pm.environment.set(\"get_vitissections_attributs\", \"\");",
+													"pm.environment.set(\"get_vitissections_filter\", \"\");",
+													"pm.environment.set(\"get_vitissections_distinct\", \"\");"
+												]
+											}
+										},
 										{
 											"listen": "test",
 											"script": {
-												"id": "7cc21c10-175b-4d57-bcf1-94536c8c8dcc",
+												"id": "d34af2e8-726e-4239-886a-a4466940b035",
+												"type": "text/javascript",
+												"exec": [
+													"// Test la présence de réponse",
+													"if(pm.response.responseSize === 0){",
+													"    tests['No response'] = false;",
+													"    return null;",
+													"}",
+													"",
+													"// Tests contenu",
+													"var jsonData = pm.response.json();",
+													"tests[\"vitissections is ok\"] = jsonData.vitissections instanceof Array;",
+													"",
+													"//Get parameters name for later tests",
+													"var order_by;",
+													"",
+													"var filter;",
+													"    for(var param in jsonData.vitissections[0]){",
+													"        order_by = param;",
+													"        filter = jsonData.vitissections[0][param];",
+													"        if(jsonData.vitissections[0][param] !== null){",
+													"            break;",
+													"        }",
+													"    }",
+													"",
+													"//Tests order_by and sort_order",
+													"var sort = true;",
+													"var varA, varB = null;",
+													"var ordsortjsonData;",
+													"",
+													"//Send request with order_by variable name in ASC order",
+													"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, ordsortResponse) {",
+													"    ordsortjsonData = ordsortResponse.json();",
+													"    ",
+													"//Check sort",
+													"    for(var parameter in ordsortjsonData.vitissections){",
+													"        varB = ordsortjsonData.vitissections[parameter][order_by];",
+													"        if(varB !== null && varA !== null){",
+													"            if(varA > varB){ ",
+													"                sort = false;",
+													"                break;",
+													"            }",
+													"        }",
+													"        varA = varB;",
+													"    }",
+													"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(sort).to.be.true});",
+													"});",
+													"",
+													"//Tests limit and offset",
+													"var maxListCount, firstparamName, lastparamName, paramName, limoffjsonData;",
+													"var lim = true, off = true;",
+													"",
+													"//Setup limit and offset check parameters",
+													"if(jsonData.list_count > 1){",
+													"    maxListCount = parseInt(jsonData.list_count) - 1 ;",
+													"    firstparamName = jsonData.vitissections[0][order_by];",
+													"    lastparamName = jsonData.vitissections[parseInt(maxListCount)][order_by];",
+													"    maxListCount--;",
+													"    ",
+													"//Send request with limit at maxListCount -1 and offset at 1",
+													"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(maxListCount) +\"&offset=1\", function (err, limoffResponse) {",
+													"        limoffjsonData = limoffResponse.json();",
+													"    ",
+													"//Check limit and offset result",
+													"        for(var parameter in limoffjsonData.attjsonData){",
+													"            paramName = limoffjsonData.vitissections[parameter][order_by];",
+													"            if(paramName === firstparamName){",
+													"                off = false;",
+													"            }",
+													"            if(paramName === lastparamName){",
+													"                lim = false;",
+													"            }",
+													"        }",
+													"        pm.test(\"offset is ok\", function () {pm.expect(off).to.be.true});",
+													"        pm.test(\"limit is ok\", function () {pm.expect(lim).to.be.true});",
+													"    });",
+													"}",
+													"",
+													"//Test attributes",
+													"var attjsonData;",
+													"var att = true;",
+													"",
+													"//Send request to get only the order_by variable name attribute",
+													"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, attResponse) {",
+													"    attjsonData = attResponse.json();",
+													"",
+													"//Check attribute ",
+													"    for(var parameter in attjsonData.vitissections){",
+													"        for(var attparam in attjsonData.vitissections[parameter]){",
+													"            if(attparam !== order_by){",
+													"                att = false;",
+													"                break;",
+													"            }",
+													"        }",
+													"    }",
+													"pm.test(\"attribute is ok\", function () {pm.expect(att).to.be.true});",
+													"});",
+													"",
+													"//Test filter",
+													"var fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+													"var fltrjsonData;",
+													"var fltr = true;",
+													"",
+													"//Send request with filter argument",
+													"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+fltrjson, function (err, fltrResponse) {",
+													"    fltrjsonData = fltrResponse.json();",
+													"",
+													"//Check filter",
+													"    for(var parameter in fltrjsonData.vitissections){",
+													"        for(var fltrparam in fltrjsonData.vitissections[parameter]){",
+													"            var tmp = fltrjsonData.vitissections[parameter][fltrparam];",
+													"            if(fltrparam === order_by && tmp !== filter){",
+													"                fltr = false;",
+													"                break;",
+													"            }",
+													"        }",
+													"    }",
+													"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
+													"});",
+													"",
+													"for(var param in jsonData.vitissections[0]){",
+													"    var variable, path;",
+													"    if(jsonData.vitissections[0][param] !== null){",
+													"        varaible = jsonData.vitissections[0][param];",
+													"        path = \"get_vitissection_\" + param;",
+													"        pm.environment.set(path,variable);",
+													"    }",
+													"}",
+													"",
+													"//Save variable for without 's' next test",
+													"for(var param in jsonData.vitissections[0]){",
+													"    var variable = \"get_vitissections_\" + param;",
+													"    pm.environment.set(variable,jsonData.vitissections[0][param]);",
+													"}",
+													"",
+													"//Clean variables",
+													"pm.environment.unset(\"get_vitissections_order_by\");",
+													"pm.environment.unset(\"get_vitissections_sort_order\");",
+													"pm.environment.unset(\"get_vitissections_limit\");",
+													"pm.environment.unset(\"get_vitissections_offset\");",
+													"pm.environment.unset(\"get_vitissections_attributs\");",
+													"pm.environment.unset(\"get_vitissections_filter\");",
+													"pm.environment.unset(\"get_vitissections_distinct\");",
+													"",
+													"",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml, application/json, application/x-vm-json"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {},
+										"url": {
+											"raw": "https://medoc/rest/vitis/vitissections?token={{main_token}}",
+											"protocol": "https",
+											"host": [
+												"medoc"
+											],
+											"path": [
+												"rest",
+												"vitis",
+												"vitissections"
+											],
+											"query": [
+												{
+													"key": "token",
+													"value": "{{main_token}}",
+													"equals": true
+												},
+												{
+													"key": "order_by",
+													"value": "{{get_vitissections_order_by}}",
+													"equals": true,
+													"disabled": true
+												},
+												{
+													"key": "sort_order",
+													"value": "{{get_vitissections_sort_order}}",
+													"equals": true,
+													"disabled": true
+												},
+												{
+													"key": "limit",
+													"value": "{{get_vitissections_limit}}",
+													"equals": true,
+													"disabled": true
+												},
+												{
+													"key": "offset",
+													"value": "{{get_vitissections_offset}}",
+													"equals": true,
+													"disabled": true
+												},
+												{
+													"key": "attributs",
+													"value": "{{get_vitissections_attributs}}",
+													"equals": true,
+													"disabled": true
+												},
+												{
+													"key": "filter",
+													"value": "{{get_vitissections_filter}}",
+													"equals": true,
+													"disabled": true
+												},
+												{
+													"key": "distinct",
+													"value": "{{get_vitissections_distinct}}",
+													"equals": true,
+													"disabled": true
+												}
+											]
+										},
+										"description": "Request to get VitisSections"
+									},
+									"response": []
+								},
+								{
+									"name": "Get VitisSection",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "7a663ac6-7e08-428a-8313-bdfea563575b",
+												"type": "text/javascript",
+												"exec": [
+													"",
+													"pm.environment.set(\"get_vitissection_attributs\",\"\");"
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "99e294b0-0a5d-47be-bd0e-b65a9e9d492b",
 												"type": "text/javascript",
 												"exec": [
 													"// Test la présence de réponse",
@@ -7807,76 +8214,26 @@
 													"}",
 													"",
 													"var jsonData = pm.response.json();",
-													"pm.environment.set(\"get_querys_database\",jsonData.genericquerys[0].database);",
-													""
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/xml, application/json, application/x-vm-json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://{{host}}/rest/vitis/genericquerys/databases?token={{main_token}}",
-											"protocol": "https",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"genericquerys",
-												"databases"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												}
-											]
-										},
-										"description": "Get the dtabases list"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Querys",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "f85bb565-700a-48a2-8f0e-7f45eda11605",
-												"type": "text/javascript",
-												"exec": [
-													"if(pm.response.responseSize === 0){",
-													"    tests['No response'] = false;",
-													"    return null;",
+													"tests[\"vitissections is ok\"] = jsonData.vitissections instanceof Array;",
+													"",
+													"var variable;",
+													"for(var param in jsonData.vitissections[0]){",
+													"    variable = \"get_vitissections_\" + param;",
+													"    if(jsonData.vitissections[0][param] != null){",
+													"        if(pm.environment.get(variable) != null){",
+													"            tests[param+ \" is ok\"] = jsonData.vitissections[0][param] == pm.environment.get(variable);",
+													"        }else{",
+													"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.vitissections[0][param])] = true;",
+													"        }",
+													"    }else if(jsonData.vitissections[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+													"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+													"    }else{",
+													"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+													"    }",
+													"    pm.environment.unset(variable);",
 													"}",
 													"",
-													"var jsonData = pm.response.json();",
-													"pm.environment.set(\"get_querys_schema\",jsonData.genericquerys[0].schema_name);",
-													""
-												]
-											}
-										},
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "df09e061-675e-4524-9946-3e5f7d317e0e",
-												"type": "text/javascript",
-												"exec": [
-													""
+													"pm.environment.unset(\"get_vitissection_attributs\");"
 												]
 											}
 										}
@@ -7886,7 +8243,7 @@
 										"header": [
 											{
 												"key": "Accept",
-												"value": "application/xml, application/json, application/x-vm-json"
+												"value": "application/xml, application/json"
 											},
 											{
 												"key": "Content-Type",
@@ -7895,68 +8252,7 @@
 										],
 										"body": {},
 										"url": {
-											"raw": "https://{{host}}/rest/vitis/genericquerys/:database/schemas?token={{main_token}}",
-											"protocol": "https",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"genericquerys",
-												":database",
-												"schemas"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												}
-											],
-											"variable": [
-												{
-													"key": "database",
-													"value": "{{get_querys_database}}"
-												}
-											]
-										},
-										"description": "Get the database schemas"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Querys",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "d1b9737f-c687-44fb-9680-727f3fb65e62",
-												"type": "text/javascript",
-												"exec": [
-													"if(pm.response.responseSize === 0){",
-													"    tests['No response'] = false;",
-													"    return null;",
-													"}"
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/xml, application/json, application/x-vm-json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://medoc/rest/vitis/genericquerys?token={{main_token}}&login={{get_querys_login}}&password={{get_querys_password}}&server={{get_querys_server}}&port={{get_querys_port}}&database={{get_querys_database}}&schema={{get_querys_schema}}&table={{get_querys_table}}&filter={{get_querys_filter}}&limit={{get_querys_limit}}",
+											"raw": "https://medoc/rest/vitis/vitissections/:section_id?token={{main_token}}",
 											"protocol": "https",
 											"host": [
 												"medoc"
@@ -7964,304 +8260,30 @@
 											"path": [
 												"rest",
 												"vitis",
-												"genericquerys"
+												"vitissections",
+												":section_id"
 											],
 											"query": [
 												{
 													"key": "token",
 													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "login",
-													"value": "{{get_querys_login}}",
-													"equals": true
-												},
-												{
-													"key": "password",
-													"value": "{{get_querys_password}}",
-													"equals": true
-												},
-												{
-													"key": "server",
-													"value": "{{get_querys_server}}",
-													"equals": true
-												},
-												{
-													"key": "port",
-													"value": "{{get_querys_port}}",
-													"equals": true
-												},
-												{
-													"key": "sgbd",
-													"value": "{{get_querys_sgbd}}",
-													"equals": true,
-													"disabled": true
-												},
-												{
-													"key": "database",
-													"value": "{{get_querys_database}}",
-													"equals": true
-												},
-												{
-													"key": "schema",
-													"value": "{{get_querys_schema}}",
-													"equals": true
-												},
-												{
-													"key": "table",
-													"value": "{{get_querys_table}}",
-													"equals": true
-												},
-												{
-													"key": "filter",
-													"value": "{{get_querys_filter}}",
-													"equals": true
-												},
-												{
-													"key": "limit",
-													"value": "{{get_querys_limit}}",
-													"equals": true
-												}
-											]
-										},
-										"description": "Request to query a schema. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Querys",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "70bb3fe1-3ba9-44f3-bb72-3caa6c62dbb9",
-												"type": "text/javascript",
-												"exec": [
-													"if(pm.response.responseSize === 0){",
-													"    tests['No response'] = false;",
-													"    return null;",
-													"}"
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/xml, application/json, application/x-vm-json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{main_token}}&login={{get_querys_login}}&password={{get_querys_password}}&server={{get_querys_server}}&port={{get_querys_port}}&sgbd={{get_querys_sgbd}}&database={{get_querys_database}}&schema={{get_querys_schema}}&encoding={{get_querys_encoding}}&order_by={{get_querys_order_by}}&sort_order={{get_querys_sort_order}}&limit={{get_querys_limit}}&offset={{get_querys_offset}}&attributs={{get_querys_attributs}}&filter={{get_querys_filter}}&distinct={{get_querys_distinct}}",
-											"protocol": "https",
-											"host": [
-												"medoc"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"genericquerys",
-												":table_name"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "login",
-													"value": "{{get_querys_login}}",
-													"equals": true
-												},
-												{
-													"key": "password",
-													"value": "{{get_querys_password}}",
-													"equals": true
-												},
-												{
-													"key": "server",
-													"value": "{{get_querys_server}}",
-													"equals": true
-												},
-												{
-													"key": "port",
-													"value": "{{get_querys_port}}",
-													"equals": true
-												},
-												{
-													"key": "sgbd",
-													"value": "{{get_querys_sgbd}}",
-													"equals": true
-												},
-												{
-													"key": "database",
-													"value": "{{get_querys_database}}",
-													"equals": true
-												},
-												{
-													"key": "schema",
-													"value": "{{get_querys_schema}}",
-													"equals": true
-												},
-												{
-													"key": "encoding",
-													"value": "{{get_querys_encoding}}",
-													"equals": true
-												},
-												{
-													"key": "order_by",
-													"value": "{{get_querys_order_by}}",
-													"equals": true
-												},
-												{
-													"key": "sort_order",
-													"value": "{{get_querys_sort_order}}",
-													"equals": true
-												},
-												{
-													"key": "limit",
-													"value": "{{get_querys_limit}}",
-													"equals": true
-												},
-												{
-													"key": "offset",
-													"value": "{{get_querys_offset}}",
 													"equals": true
 												},
 												{
 													"key": "attributs",
-													"value": "{{get_querys_attributs}}",
-													"equals": true
-												},
-												{
-													"key": "filter",
-													"value": "{{get_querys_filter}}",
-													"equals": true
-												},
-												{
-													"key": "distinct",
-													"value": "{{get_querys_distinct}}",
-													"equals": true
+													"value": "{{get_vitissection_attributs}}",
+													"equals": true,
+													"disabled": true
 												}
 											],
 											"variable": [
 												{
-													"key": "table_name",
-													"value": "{{get_querys_table_name}}"
+													"key": "section_id",
+													"value": "{{get_vitissections_section_id}}"
 												}
 											]
 										},
-										"description": "Request to query a table. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
-									},
-									"response": []
-								},
-								{
-									"name": "Get Querys",
-									"event": [
-										{
-											"listen": "test",
-											"script": {
-												"id": "086bdc2d-f727-4adf-a602-2c0cb53a66c6",
-												"type": "text/javascript",
-												"exec": [
-													"if(pm.response.responseSize === 0){",
-													"    tests['No response'] = false;",
-													"    return null;",
-													"}"
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/xml, application/json, application/x-vm-json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://medoc/rest/vitis/genericquerys/:table_name/columns?token={{main_token}}&login={{get_querys_login}}&password={{get_querys_password}}&server={{get_querys_server}}&port={{get_querys_port}}&sgbd={{get_querys_sgbd}}&database={{get_querys_database}}&schema={{get_querys_schema}}&encoding={{get_querys_encoding}}",
-											"protocol": "https",
-											"host": [
-												"medoc"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"genericquerys",
-												":table_name",
-												"columns"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "login",
-													"value": "{{get_querys_login}}",
-													"equals": true
-												},
-												{
-													"key": "password",
-													"value": "{{get_querys_password}}",
-													"equals": true
-												},
-												{
-													"key": "server",
-													"value": "{{get_querys_server}}",
-													"equals": true
-												},
-												{
-													"key": "port",
-													"value": "{{get_querys_port}}",
-													"equals": true
-												},
-												{
-													"key": "sgbd",
-													"value": "{{get_querys_sgbd}}",
-													"equals": true
-												},
-												{
-													"key": "database",
-													"value": "{{get_querys_database}}",
-													"equals": true
-												},
-												{
-													"key": "schema",
-													"value": "{{get_querys_schema}}",
-													"equals": true
-												},
-												{
-													"key": "encoding",
-													"value": "{{get_querys_encoding}}",
-													"equals": true
-												}
-											],
-											"variable": [
-												{
-													"key": "table_name",
-													"value": "{{table_name}}"
-												}
-											]
-										},
-										"description": "Request to query. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
+										"description": "Request to get VitisSection by mode id"
 									},
 									"response": []
 								}
@@ -8273,7 +8295,7 @@
 										"exec": [
 											""
 										],
-										"id": "80fe1934-e470-453a-ac94-1189916331fc",
+										"id": "1760fcfc-6695-49e0-8f53-a1b40c80a9e2",
 										"type": "text/javascript"
 									}
 								},
@@ -8283,7 +8305,1233 @@
 										"exec": [
 											""
 										],
-										"id": "0c0abdf6-b52f-4321-b881-c557c5ff5488",
+										"id": "543f4508-10aa-4655-8c47-9d78daac2247",
+										"type": "text/javascript"
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Tabs",
+							"description": "Folder for tabs",
+							"item": [
+								{
+									"name": "Get Tabs",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "32a17c20-a312-411f-a790-6e743db96658",
+												"type": "text/javascript",
+												"exec": [
+													"pm.environment.set(\"get_tabs_order_by\", \"\");",
+													"pm.environment.set(\"get_tabs_sort_order\", \"\");",
+													"pm.environment.set(\"get_tabs_limit\", \"50\");",
+													"pm.environment.set(\"get_tabs_offset\", \"\");",
+													"pm.environment.set(\"get_tabs_attributs\", \"\");",
+													"pm.environment.set(\"get_tabs_filter\", \"\");",
+													"pm.environment.set(\"get_tabs_distinct\", \"\");"
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "0f1ce1a2-0dbb-4c8c-814d-bd067f043d2d",
+												"type": "text/javascript",
+												"exec": [
+													"// Test la présence de réponse",
+													"if(pm.response.responseSize === 0){",
+													"    tests['No response'] = false;",
+													"    return null;",
+													"}",
+													"",
+													"// Tests contenu",
+													"var jsonData = pm.response.json();",
+													"tests[\"tabs is ok\"] = jsonData.tabs instanceof Array;",
+													"",
+													"//Get parameters name for later tests",
+													"var order_by;",
+													"",
+													"var filter;",
+													"    for(var param in jsonData.tabs[0]){",
+													"        order_by = param;",
+													"        filter = jsonData.tabs[0][param];",
+													"        if(jsonData.tabs[0][param] !== null){",
+													"            break;",
+													"        }",
+													"    }",
+													"",
+													"//Tests order_by and sort_order",
+													"var sort = true;",
+													"var varA, varB = null;",
+													"var ordsortjsonData;",
+													"",
+													"//Send request with order_by variable name in ASC order",
+													"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, ordsortResponse) {",
+													"    ordsortjsonData = ordsortResponse.json();",
+													"    ",
+													"//Check sort",
+													"    for(var parameter in ordsortjsonData.tabs){",
+													"        varB = ordsortjsonData.tabs[parameter][order_by];",
+													"        if(varB !== null && varA !== null){",
+													"            if(varA > varB){ ",
+													"                sort = false;",
+													"                break;",
+													"            }",
+													"        }",
+													"        varA = varB;",
+													"    }",
+													"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(sort).to.be.true});",
+													"});",
+													"",
+													"//Tests limit and offset",
+													"var maxListCount, firstparamName, lastparamName, paramName, limoffjsonData;",
+													"var lim = true, off = true;",
+													"",
+													"//Setup limit and offset check parameters",
+													"if(jsonData.list_count > 1){",
+													"    maxListCount = parseInt(jsonData.list_count) - 1 ;",
+													"    firstparamName = jsonData.tabs[0][order_by];",
+													"    lastparamName = jsonData.tabs[parseInt(maxListCount)][order_by];",
+													"    maxListCount--;",
+													"    ",
+													"//Send request with limit at maxListCount -1 and offset at 1",
+													"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(maxListCount) +\"&offset=1\", function (err, limoffResponse) {",
+													"        limoffjsonData = limoffResponse.json();",
+													"    ",
+													"//Check limit and offset result",
+													"        for(var parameter in limoffjsonData.attjsonData){",
+													"            paramName = limoffjsonData.tabs[parameter][order_by];",
+													"            if(paramName === firstparamName){",
+													"                off = false;",
+													"            }",
+													"            if(paramName === lastparamName){",
+													"                lim = false;",
+													"            }",
+													"        }",
+													"        pm.test(\"offset is ok\", function () {pm.expect(off).to.be.true});",
+													"        pm.test(\"limit is ok\", function () {pm.expect(lim).to.be.true});",
+													"    });",
+													"}",
+													"",
+													"//Test attributes",
+													"var attjsonData;",
+													"var att = true;",
+													"",
+													"//Send request to get only the order_by variable name attribute",
+													"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, attResponse) {",
+													"    attjsonData = attResponse.json();",
+													"",
+													"//Check attribute ",
+													"    for(var parameter in attjsonData.tabs){",
+													"        for(var attparam in attjsonData.tabs[parameter]){",
+													"            if(attparam !== order_by){",
+													"                att = false;",
+													"                break;",
+													"            }",
+													"        }",
+													"    }",
+													"pm.test(\"attribute is ok\", function () {pm.expect(att).to.be.true});",
+													"});",
+													"",
+													"//Test filter",
+													"var fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
+													"var fltrjsonData;",
+													"var fltr = true;",
+													"",
+													"//Send request with filter argument",
+													"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+fltrjson, function (err, fltrResponse) {",
+													"    fltrjsonData = fltrResponse.json();",
+													"",
+													"//Check filter",
+													"    for(var parameter in fltrjsonData.tabs){",
+													"        for(var fltrparam in fltrjsonData.tabs[parameter]){",
+													"            var tmp = fltrjsonData.tabs[parameter][fltrparam];",
+													"            if(fltrparam === order_by && tmp !== filter){",
+													"                fltr = false;",
+													"                break;",
+													"            }",
+													"        }",
+													"    }",
+													"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
+													"});",
+													"",
+													"//Save variable for without 's' next test",
+													"for(var param in jsonData.tabs[0]){",
+													"    var variable = \"get_tabs_\" + param;",
+													"    pm.environment.set(variable,jsonData.tabs[0][param]);",
+													"}",
+													"",
+													"//Clean variables",
+													"pm.environment.unset(\"get_tabs_order_by\");",
+													"pm.environment.unset(\"get_tabs_sort_order\");",
+													"pm.environment.unset(\"get_tabs_limit\");",
+													"pm.environment.unset(\"get_tabs_offset\");",
+													"pm.environment.unset(\"get_tabs_attributs\");",
+													"pm.environment.unset(\"get_tabs_filter\");",
+													"pm.environment.unset(\"get_tabs_distinct\");",
+													"",
+													"",
+													""
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml, application/json, application/x-vm-json"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {},
+										"url": {
+											"raw": "https://{{host}}/rest/vitis/tabs?token={{main_token}}&order_by={{get_tabs_order_by}}&sort_order={{get_tabs_sort_order}}&limit={{get_tabs_limit}}&offset={{get_tabs_offset}}&attributs={{get_tabs_attributs}}&filter={{get_tabs_filter}}&distinct={{get_tabs_distinct}}",
+											"protocol": "https",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"rest",
+												"vitis",
+												"tabs"
+											],
+											"query": [
+												{
+													"key": "token",
+													"value": "{{main_token}}",
+													"equals": true
+												},
+												{
+													"key": "order_by",
+													"value": "{{get_tabs_order_by}}",
+													"equals": true
+												},
+												{
+													"key": "sort_order",
+													"value": "{{get_tabs_sort_order}}",
+													"equals": true
+												},
+												{
+													"key": "limit",
+													"value": "{{get_tabs_limit}}",
+													"equals": true
+												},
+												{
+													"key": "offset",
+													"value": "{{get_tabs_offset}}",
+													"equals": true
+												},
+												{
+													"key": "attributs",
+													"value": "{{get_tabs_attributs}}",
+													"equals": true
+												},
+												{
+													"key": "filter",
+													"value": "{{get_tabs_filter}}",
+													"equals": true
+												},
+												{
+													"key": "distinct",
+													"value": "{{get_tabs_distinct}}",
+													"equals": true
+												}
+											]
+										},
+										"description": "Request to get Tabs"
+									},
+									"response": []
+								},
+								{
+									"name": "Get Tab",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "ec94d655-641d-44b2-a7a4-ca9535290b24",
+												"type": "text/javascript",
+												"exec": [
+													"// Test la présence de réponse",
+													"if(pm.response.responseSize === 0){",
+													"    tests['No response'] = false;",
+													"    return null;",
+													"}",
+													"",
+													"var jsonData = pm.response.json();",
+													"tests[\"tab is ok\"] = jsonData.tabs instanceof Array;",
+													"",
+													"var variable;",
+													"for(var param in jsonData.tabs[0]){",
+													"    variable = \"get_tabs_\" + param;",
+													"    if(jsonData.tabs[0][param] != null){",
+													"        if(pm.environment.get(variable) != null){",
+													"            tests[param+ \" is ok\"] = jsonData.tabs[0][param] == pm.environment.get(variable);",
+													"        }else{",
+													"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.tabs[0][param])] = true;",
+													"        }",
+													"    }else if(jsonData.tabs[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+													"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+													"    }else{",
+													"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+													"    }",
+													"    pm.environment.unset(variable);",
+													"}",
+													"",
+													"pm.environment.unset(\"get_tab_attributs\");"
+												]
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "288bdaef-db1c-4905-bcc8-a22bbf278333",
+												"type": "text/javascript",
+												"exec": [
+													"pm.environment.set(\"get_tab_attributs\",\"\");"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml, application/json"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {},
+										"url": {
+											"raw": "https://{{host}}/rest/vitis/tabs/:tab_id?token={{main_token}}&attributs={{get_tab_attributs}}",
+											"protocol": "https",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"rest",
+												"vitis",
+												"tabs",
+												":tab_id"
+											],
+											"query": [
+												{
+													"key": "token",
+													"value": "{{main_token}}",
+													"equals": true
+												},
+												{
+													"key": "attributs",
+													"value": "{{get_tab_attributs}}",
+													"equals": true
+												}
+											],
+											"variable": [
+												{
+													"key": "tab_id",
+													"value": "{{get_tabs_tab_id}}"
+												}
+											]
+										},
+										"description": "Request to get Tab by mode id"
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"id": "8f4a710f-7a5c-43c1-8ca0-d5e925d77656",
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"id": "bc4b80af-246f-4701-a2b5-c36056a428ef",
+										"type": "text/javascript"
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Webservices",
+							"description": "Folder for webservices",
+							"item": [
+								{
+									"name": "With rights",
+									"description": "",
+									"item": [
+										{
+											"name": "Get WebServices",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "847d1a7a-c369-4f91-9bab-cc33f800ee22",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "4b81cb5f-63c1-4cf4-9561-18b2b4b13ede",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"webservices is ok\"] = jsonData.webservices instanceof Array;",
+															"",
+															"//tests[\"user_id is ok\"] = jsonData.users[0].user_id === parseInt(pm.environment.get(\"main_user_id\"));",
+															"//tests[\"login is ok\"] = jsonData.users[0].login === pm.environment.get(\"main_user_login\");",
+															"",
+															"for(var param in jsonData.webservices[0]){",
+															"    var variable = \"get_webservices_\" + param;",
+															"    pm.environment.set(variable,jsonData.webservices[0][param]);",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_attributs\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices?token={{main_token}}&attributs={{get_webservices_attributs}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true
+														}
+													]
+												},
+												"description": "Request to get webservices"
+											},
+											"response": []
+										},
+										{
+											"name": "Get WebService",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "a89187e2-323e-45d8-aec6-e19280388694",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");",
+															"pm.environment.set(\"get_webservices_web_service\",pm.environment.get(\"get_webservices_name\"));"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "2cfd3258-fb4c-43b0-b4e9-71d4f9c6871d",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"webservices is ok\"] = jsonData.webservices instanceof Array;",
+															"",
+															"var variable;",
+															"for(var param in jsonData.webservices[0]){",
+															"    variable = \"get_webservices_\" + param;",
+															"    if(jsonData.webservices[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.webservices[0][param] == pm.environment.get(variable);",
+															"            pm.environment.unset(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.webservices[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.webservices[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_attributs\");",
+															"//pm.environment.unset(\"get_webservices_web_service\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices/:web_service?token={{main_token}}&attributs={{get_webservices_attributs}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices",
+														":web_service"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "web_service",
+															"value": "{{get_webservices_web_service}}"
+														}
+													]
+												},
+												"description": "Request to get WebService by id"
+											},
+											"response": []
+										},
+										{
+											"name": "Get ressources list",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "6aeb4219-fcee-408a-8d32-d813b1e1000a",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "0df8b5b8-b506-4e7d-92c5-eacf573746e4",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_attributs\");",
+															"pm.environment.unset(\"get_webservices_attributs\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices/:web_service/ressources?token={{main_token}}&attributs={{get_webservices_attributs}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices",
+														":web_service",
+														"ressources"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "web_service",
+															"value": "{{get_webservices_web_service}}"
+														}
+													]
+												},
+												"description": "Request to get ressources list"
+											},
+											"response": []
+										},
+										{
+											"name": "Get ressources infos",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "901d577b-57bf-437e-9282-c74c0a0f2c60",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "18dadffd-21aa-4eef-9073-52404f9ccd17",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_web_service\");",
+															"pm.environment.unset(\"get_webservices_ressource\");",
+															"pm.environment.unset(\"get_webservices_attributs\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices/:web_service/ressources/:ressource?token={{main_token}}&attributs={{get_webservices_attributs}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices",
+														":web_service",
+														"ressources",
+														":ressource"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "web_service",
+															"value": "{{get_webservices_web_service}}"
+														},
+														{
+															"key": "ressource",
+															"value": "{{get_webservices_ressource}}"
+														}
+													]
+												},
+												"description": "Request to get ressources infos"
+											},
+											"response": []
+										}
+									],
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"id": "cdd93756-d371-4315-b425-062192201088",
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													""
+												],
+												"id": "07ef0b5c-9e55-4d8f-9f02-a9eaa8840e38",
+												"type": "text/javascript"
+											}
+										}
+									],
+									"_postman_isSubFolder": true
+								},
+								{
+									"name": "Without rights",
+									"description": "",
+									"item": [
+										{
+											"name": "Get WebServices (without rights)",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "847d1a7a-c369-4f91-9bab-cc33f800ee22",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "51dac57c-a194-475c-b4f4-c76bf34d2431",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"webservices is ok\"] = jsonData.webservices instanceof Array;",
+															"",
+															"//tests[\"user_id is ok\"] = jsonData.users[0].user_id === parseInt(pm.environment.get(\"main_user_id\"));",
+															"//tests[\"login is ok\"] = jsonData.users[0].login === pm.environment.get(\"main_user_login\");",
+															"",
+															"for(var param in jsonData.webservices[0]){",
+															"    var variable = \"get_webservices_\" + param;",
+															"    pm.environment.set(variable,jsonData.webservices[0][param]);",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_attributs\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices?token={{main_user_token}}&attributs={{get_webservices_attributs}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_user_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true
+														}
+													]
+												},
+												"description": "Request to get webservices"
+											},
+											"response": []
+										},
+										{
+											"name": "Get WebService (without rights)",
+											"event": [
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "a89187e2-323e-45d8-aec6-e19280388694",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");",
+															"pm.environment.set(\"get_webservices_web_service\",pm.environment.get(\"get_webservices_name\"));"
+														]
+													}
+												},
+												{
+													"listen": "test",
+													"script": {
+														"id": "9d5f4f77-d7ad-4179-8de1-18245b65c189",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"var jsonData = pm.response.json();",
+															"tests[\"webservices is ok\"] = jsonData.webservices instanceof Array;",
+															"",
+															"var variable;",
+															"for(var param in jsonData.webservices[0]){",
+															"    variable = \"get_webservices_\" + param;",
+															"    if(jsonData.webservices[0][param] != null){",
+															"        if(pm.environment.get(variable) != null){",
+															"            tests[param+ \" is ok\"] = jsonData.webservices[0][param] == pm.environment.get(variable);",
+															"            pm.environment.unset(variable);",
+															"        }else{",
+															"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.webservices[0][param])] = true;",
+															"        }",
+															"    }else if(jsonData.webservices[0][param] == null && pm.environment.get(variable) == (\"\" || null)){",
+															"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+															"    }else{",
+															"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+															"    }",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_attributs\");",
+															"pm.environment.unset(\"get_webservices_web_service\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/xml, application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices/:web_service?token={{main_token}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices",
+														":web_service"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true,
+															"disabled": true
+														}
+													],
+													"variable": [
+														{
+															"key": "web_service",
+															"value": "{{get_webservices_web_service}}"
+														}
+													]
+												},
+												"description": "Request to get WebService by id"
+											},
+											"response": []
+										},
+										{
+											"name": "Get ressources list (without rights)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "9751642c-9637-4079-b1ad-e6ac71aa5ecd",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_attributs\");"
+														]
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "60318173-3912-4170-ae0a-b00000400de1",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices/:web_service/ressources?token={{main_token}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices",
+														":web_service",
+														"ressources"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true,
+															"disabled": true
+														}
+													],
+													"variable": [
+														{
+															"key": "web_service",
+															"value": "{{get_webservices_web_service}}"
+														}
+													]
+												},
+												"description": "Request to get ressources list"
+											},
+											"response": []
+										},
+										{
+											"name": "Get ressources infos (without rights)",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"id": "153c1296-ee0d-49f6-b233-59be737a7aaa",
+														"type": "text/javascript",
+														"exec": [
+															"// Test la présence de réponse",
+															"if(pm.response.responseSize === 0){",
+															"    tests['No response'] = false;",
+															"    return null;",
+															"}",
+															"",
+															"//Clean variable",
+															"pm.environment.unset(\"get_webservices_web_service\");",
+															"pm.environment.unset(\"get_webservices_ressource\");",
+															"pm.environment.unset(\"get_webservices_attributs\");",
+															""
+														]
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"id": "9b9af8aa-77df-49a2-b340-2e886e680b02",
+														"type": "text/javascript",
+														"exec": [
+															"pm.environment.set(\"get_webservices_attributs\",\"\");"
+														]
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [
+													{
+														"key": "Accept",
+														"value": "application/json, application/x_vm_json"
+													},
+													{
+														"key": "Content-Type",
+														"value": "application/json"
+													}
+												],
+												"body": {},
+												"url": {
+													"raw": "https://{{host}}/rest/vitis/webservices/:web_service/ressources/:ressource?token={{main_token}}&attributs={{get_webservices_attributs}}",
+													"protocol": "https",
+													"host": [
+														"{{host}}"
+													],
+													"path": [
+														"rest",
+														"vitis",
+														"webservices",
+														":web_service",
+														"ressources",
+														":ressource"
+													],
+													"query": [
+														{
+															"key": "token",
+															"value": "{{main_token}}",
+															"equals": true
+														},
+														{
+															"key": "attributs",
+															"value": "{{get_webservices_attributs}}",
+															"equals": true
+														}
+													],
+													"variable": [
+														{
+															"key": "web_service",
+															"value": "{{get_webservices_web_service}}"
+														},
+														{
+															"key": "ressource",
+															"value": "{{get_webservices_ressource}}"
+														}
+													]
+												},
+												"description": "Request to get ressources infos"
+											},
+											"response": []
+										}
+									],
+									"_postman_isSubFolder": true
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"id": "306c624b-f6a2-4edb-80c6-16826387154f",
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"id": "0bc7f9e4-f9b1-4b8d-97dd-64490eafa761",
+										"type": "text/javascript"
+									}
+								}
+							],
+							"_postman_isSubFolder": true
+						},
+						{
+							"name": "Versions",
+							"description": "Folder for versions",
+							"item": [
+								{
+									"name": "Get versions",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"id": "2af2f144-6e64-4652-8a84-ae52f0a6ddc4",
+												"type": "text/javascript",
+												"exec": [
+													"",
+													""
+												]
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"id": "20d2c65a-b90c-422d-a3d9-8cc1f46aa36d",
+												"type": "text/javascript",
+												"exec": [
+													"// Test la présence de réponse",
+													"if(pm.response.responseSize === 0){",
+													"    tests['No response'] = false;",
+													"    return null;",
+													"}"
+												]
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml, application/json, application/x-vm-json"
+											},
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {},
+										"url": {
+											"raw": "https://{{host}}/rest/vitis/versions?token={{main_token}}",
+											"protocol": "https",
+											"host": [
+												"{{host}}"
+											],
+											"path": [
+												"rest",
+												"vitis",
+												"versions"
+											],
+											"query": [
+												{
+													"key": "token",
+													"value": "{{main_token}}",
+													"equals": true
+												}
+											]
+										},
+										"description": "Request to get versions"
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"id": "127f279d-800c-4856-99ff-177112fda876",
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"id": "84978b67-f5ca-4a59-8677-011673ec4223",
 										"type": "text/javascript"
 									}
 								}
@@ -8299,15 +9547,17 @@
 										{
 											"listen": "test",
 											"script": {
+												"id": "9dabf552-5404-4480-a050-0aea568fdd54",
+												"type": "text/javascript",
 												"exec": [
 													"pm.environment.unset(\"main_token\");",
 													"pm.environment.unset(\"main_admin_id\");",
 													"pm.environment.unset(\"main_user_token\");",
 													"pm.environment.unset(\"main_user_id\");",
-													"pm.environment.unset(\"main_User_id\");"
-												],
-												"id": "14acea38-e277-487e-822c-58892fd09851",
-												"type": "text/javascript"
+													"pm.environment.unset(\"main_User_id\");",
+													"pm.environment.unset(\"get_webservices_attributs\");",
+													""
+												]
 											}
 										}
 									],
@@ -8337,9 +9587,9 @@
 											],
 											"query": [
 												{
-													"equals": true,
 													"key": "token",
-													"value": "{{main_token}}"
+													"value": "{{main_token}}",
+													"equals": true
 												}
 											]
 										},
@@ -8402,18 +9652,16 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "6e90210d-4e73-4fd5-a426-46f2e64831aa",
-						"type": "text/javascript",
 						"exec": [
 							""
-						]
+						],
+						"id": "6e90210d-4e73-4fd5-a426-46f2e64831aa",
+						"type": "text/javascript"
 					}
 				},
 				{
 					"listen": "test",
 					"script": {
-						"id": "7f34ae6d-6d33-4184-802c-6a1795773b40",
-						"type": "text/javascript",
 						"exec": [
 							"if(pm.response.responseSize === 0){",
 							"    tests['No response'] = false;",
@@ -8466,7 +9714,9 @@
 							"",
 							"// Repasse en mode normal",
 							"pm.environment.set(\"error_test\", false);"
-						]
+						],
+						"id": "7f34ae6d-6d33-4184-802c-6a1795773b40",
+						"type": "text/javascript"
 					}
 				}
 			]
@@ -13053,403 +14303,16 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Webservices - NTY",
-					"description": "Folder for webservices",
-					"item": [
-						{
-							"name": "With rights",
-							"description": "",
-							"item": [
-								{
-									"name": "Get WebServices",
-									"event": [
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "847d1a7a-c369-4f91-9bab-cc33f800ee22",
-												"type": "text/javascript",
-												"exec": [
-													"pm.environment.set(\"get_webservices_attributs\",\"\");"
-												]
-											}
-										},
-										{
-											"listen": "test",
-											"script": {
-												"id": "11ffa5f6-322c-4c9f-86e6-c4dfe41ca178",
-												"type": "text/javascript",
-												"exec": [
-													"// Test la présence de réponse",
-													"if(pm.response.responseSize === 0){",
-													"    tests['No response'] = false;",
-													"    return null;",
-													"}",
-													"",
-													"var jsonData = pm.response.json();",
-													"tests[\"webservices is ok\"] = jsonData.webservices instanceof Array;",
-													"",
-													"//tests[\"user_id is ok\"] = jsonData.users[0].user_id === parseInt(pm.environment.get(\"main_user_id\"));",
-													"//tests[\"login is ok\"] = jsonData.users[0].login === pm.environment.get(\"main_user_login\");",
-													"pm.environment.set(\"get_webservices_title\",jsonData.webservices[0].title);",
-													"pm.environment.set(\"get_webservices_description\",jsonData.webservices[0].description);",
-													"pm.environment.set(\"get_webservices_version\",jsonData.webservices[0].version);",
-													"pm.environment.set(\"get_webservices_name\",jsonData.webservices[0].name);",
-													"",
-													"//Clean variable",
-													"pm.environment.unset(\"get_webservices_attributs\");"
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/xml, application/json, application/x_vm_json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://{{host}}/rest/vitis/webservices?token={{main_token}}&attributs={{get_webservices_attributs}}",
-											"protocol": "https",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"webservices"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "attributs",
-													"value": "{{get_webservices_attributs}}",
-													"equals": true
-												}
-											]
-										},
-										"description": "Request to get webservices"
-									},
-									"response": []
-								},
-								{
-									"name": "Get WebService",
-									"event": [
-										{
-											"listen": "prerequest",
-											"script": {
-												"id": "a89187e2-323e-45d8-aec6-e19280388694",
-												"type": "text/javascript",
-												"exec": [
-													"pm.environment.set(\"get_webservices_attributs\",\"\");",
-													"pm.environment.set(\"get_webservices_web_service\",pm.environment.get(\"get_webservices_name\"));"
-												]
-											}
-										},
-										{
-											"listen": "test",
-											"script": {
-												"id": "f3100e0a-5c60-476b-9009-1a469b46d353",
-												"type": "text/javascript",
-												"exec": [
-													"// Test la présence de réponse",
-													"if(pm.response.responseSize === 0){",
-													"    tests['No response'] = false;",
-													"    return null;",
-													"}",
-													"",
-													"var jsonData = pm.response.json();",
-													"tests[\"webservices is ok\"] = jsonData.webservices instanceof Array;",
-													"",
-													"for(var param in jsonData.webservices[0]){",
-													"    var variable = \"get_webservices_\" + param;",
-													"    tests[param+ \" is ok\"] = jsonData.webservices[0][param] === pm.environment.get(variable);",
-													"}",
-													"",
-													"//Clean variable",
-													"pm.environment.unset(\"get_webservices_attributs\");"
-												]
-											}
-										}
-									],
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/xml, application/json, application/x_vm_json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://{{host}}/rest/vitis/webservices/:web_service?token={{main_token}}",
-											"protocol": "https",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"webservices",
-												":web_service"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "attributs",
-													"value": "{{get_webservices_attributs}}",
-													"equals": true,
-													"disabled": true
-												}
-											],
-											"variable": [
-												{
-													"key": "web_service",
-													"value": "{{get_webservices_web_service}}"
-												}
-											]
-										},
-										"description": "Request to get WebService by id"
-									},
-									"response": []
-								},
-								{
-									"name": "Get ressources list",
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/json, application/x_vm_json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://{{host}}/rest/vitis/webservices/:web_service/ressources?token={{main_token}}",
-											"protocol": "https",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"webservices",
-												":web_service",
-												"ressources"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "attributs",
-													"value": "{{get_webservices_attributs}}",
-													"equals": true,
-													"disabled": true
-												}
-											],
-											"variable": [
-												{
-													"key": "web_service",
-													"value": "{{get_webservices_web_service}}"
-												}
-											]
-										},
-										"description": "Request to get ressources list"
-									},
-									"response": []
-								},
-								{
-									"name": "Get ressources infos",
-									"request": {
-										"method": "GET",
-										"header": [
-											{
-												"key": "Accept",
-												"value": "application/json, application/x_vm_json"
-											},
-											{
-												"key": "Content-Type",
-												"value": "application/json"
-											}
-										],
-										"body": {},
-										"url": {
-											"raw": "https://{{host}}/rest/vitis/webservices/:web_service/ressources/:ressource?token={{main_token}}&attributs={{get_webservices_attributs}}",
-											"protocol": "https",
-											"host": [
-												"{{host}}"
-											],
-											"path": [
-												"rest",
-												"vitis",
-												"webservices",
-												":web_service",
-												"ressources",
-												":ressource"
-											],
-											"query": [
-												{
-													"key": "token",
-													"value": "{{main_token}}",
-													"equals": true
-												},
-												{
-													"key": "attributs",
-													"value": "{{get_webservices_attributs}}",
-													"equals": true
-												}
-											],
-											"variable": [
-												{
-													"key": "web_service",
-													"value": "{{get_webservices_web_service}}"
-												},
-												{
-													"key": "ressource",
-													"value": "{{get_webservices_ressource}}"
-												}
-											]
-										},
-										"description": "Request to get ressources infos"
-									},
-									"response": []
-								}
-							],
-							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"id": "cdd93756-d371-4315-b425-062192201088",
-										"type": "text/javascript"
-									}
-								},
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											""
-										],
-										"id": "07ef0b5c-9e55-4d8f-9f02-a9eaa8840e38",
-										"type": "text/javascript"
-									}
-								}
-							],
-							"_postman_isSubFolder": true
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "306c624b-f6a2-4edb-80c6-16826387154f",
-								"type": "text/javascript"
-							}
-						},
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "0bc7f9e4-f9b1-4b8d-97dd-64490eafa761",
-								"type": "text/javascript"
-							}
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
 					"name": "Modes - NTY",
 					"description": "Folder for modes",
 					"item": [
-						{
-							"name": "Get Mode",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {},
-								"url": {
-									"raw": "https://{{host}}/rest/vitis/modes/:mode_id?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"modes",
-										":mode_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"equals": true
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}",
-											"equals": true
-										}
-									],
-									"variable": [
-										{
-											"key": "mode_id",
-											"value": "{{mode_id}}"
-										}
-									]
-								},
-								"description": "Request to get Mode by id"
-							},
-							"response": []
-						},
 						{
 							"name": "Get Modes",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
-										"id": "b418a327-a704-4e4f-a222-d7f6668d6f75",
+										"id": "f4c4ed06-4b7f-49aa-9600-c43acfa459da",
 										"type": "text/javascript",
 										"exec": [
 											"// Test la présence de réponse",
@@ -13468,7 +14331,7 @@
 											"    for(var param in jsonData.modes[0]){",
 											"        order_by = param;",
 											"        filter = jsonData.modes[0][param];",
-											"        if(jsonData.tabs[0][param] !== null){",
+											"        if(jsonData.modes[0][param] !== null){",
 											"            break;",
 											"        }",
 											"    }",
@@ -13568,6 +14431,17 @@
 											"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
 											"});",
 											"",
+											"//Save variable for without 's' next test",
+											"var modes = [];",
+											"for(var param in jsonData.modes[0]){",
+											"    var variable = \"get_modes_\" + param;",
+											"    pm.environment.set(variable,jsonData.modes[0][param]);",
+											"}",
+											"for(var param in jsonData.modes){",
+											"    modes.push(jsonData.modes[param].mode_id);",
+											"}",
+											"modes.sort();",
+											"pm.environment.set(\"test_sort_modes_id\",modes);",
 											"",
 											"//Clean variables",
 											"pm.environment.unset(\"get_modes_order_by\");",
@@ -13677,7 +14551,118 @@
 							"response": []
 						},
 						{
+							"name": "Get Mode",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "7b8b3e8f-63de-4d85-b611-ef15d90fe452",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"get_mode_attributs\", \"\");",
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "a8990cea-afe1-45a6-997b-29c6b604b8d7",
+										"type": "text/javascript",
+										"exec": [
+											"// Test la présence de réponse",
+											"if(pm.response.responseSize === 0){",
+											"    tests['No response'] = false;",
+											"    return null;",
+											"}",
+											"",
+											"var jsonData = pm.response.json();",
+											"tests[\"mode is ok\"] = jsonData.modes instanceof Array;",
+											"",
+											"var variable;",
+											"for(var param in jsonData.modes[0]){",
+											"    variable = \"get_modes_\" + param;",
+											"    if(jsonData.modes[0][param] != null){",
+											"        if(pm.environment.get(variable) != null){",
+											"            tests[param+ \" is ok\"] = jsonData.modes[0][param] == pm.environment.get(variable);",
+											"            pm.environment.unset(variable);",
+											"        }else{",
+											"            tests[param+ \" parameter was returned too with a : \" + typeof(jsonData.modes[0][param])] = true;",
+											"        }",
+											"    }else if(jsonData.modes[0][param] == null && pm.environment.get(variable) == \"\"){",
+											"        tests[param+ \" is supposed ok (return filled with null argument)\"] = true;",
+											"    }else{",
+											"        tests[\"! Warning ! \"+ param + \" isn't ok\" ] = false;",
+											"    }",
+											"}",
+											"",
+											"pm.environment.unset(\"get_mode_attributs\");"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{host}}/rest/vitis/modes/:mode_id?token={{main_token}}&attributs={{get_mode_attributs}}",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"modes",
+										":mode_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{main_token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{get_mode_attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "mode_id",
+											"value": "{{get_modes_mode_id}}"
+										}
+									]
+								},
+								"description": "Request to get Mode by id"
+							},
+							"response": []
+						},
+						{
 							"name": "Sort modes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "9d8392e9-5cce-4fe6-aaf8-c1fe6654e3b0",
+										"type": "text/javascript",
+										"exec": [
+											"var aaa = pm.environment.get()"
+										]
+									}
+								}
+							],
 							"request": {
 								"method": "PUT",
 								"header": [
@@ -13690,15 +14675,12 @@
 										"value": "application/json"
 									}
 								],
-								"body": {
-									"mode": "raw",
-									"raw": ""
-								},
+								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/modes/sorting?token={{token}}&modes_id={{modes_id}}",
+									"raw": "https://{{host}}/rest/vitis/modes/sorting?token={{main_token}}&modes_id={{sort_modes_modes_id}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{host}}"
 									],
 									"path": [
 										"rest",
@@ -13709,15 +14691,109 @@
 									"query": [
 										{
 											"key": "token",
-											"value": "{{token}}"
+											"value": "{{main_token}}",
+											"equals": true
 										},
 										{
 											"key": "modes_id",
-											"value": "{{modes_id}}"
+											"value": "{{sort_modes_modes_id}}",
+											"equals": true
 										}
 									]
 								},
 								"description": "Request to sort the modes of the application"
+							},
+							"response": []
+						},
+						{
+							"name": "Test Sort Modes",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "c8aefec7-0484-4cc5-933f-2740e7be79cc",
+										"type": "text/javascript",
+										"exec": [
+											"pm.environment.set(\"get_mode_attributs\", \"\");",
+											"//pm.environment.set(\"get_mode_mode_id\", pm.environment.get(\"get_modes_mode_id\"));",
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"id": "1c1b9979-2f0e-42b0-b616-37d16d661187",
+										"type": "text/javascript",
+										"exec": [
+											"// Test la présence de réponse",
+											"if(pm.response.responseSize === 0){",
+											"    tests['No response'] = false;",
+											"    return null;",
+											"}",
+											"",
+											"var jsonData = pm.response.json();",
+											"tests[\"mode is ok\"] = jsonData.modes instanceof Array;",
+											"",
+											"/*var variable;",
+											"for(var param in jsonData.modes[0]){",
+											"    variable = \"get_modes_\" + param;",
+											"    if(jsonData.modes[0][param] !== null && pm.environment.get(variable) != null){",
+											"        tests[param+ \" is ok\"] = jsonData.modes[0][param] == pm.environment.get(variable);",
+											"        pm.environment.unset(variable);",
+											"    } ",
+											"}*/",
+											"",
+											"pm.environment.unset(\"get_mode_attributs\");"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://{{host}}/rest/vitis/modes/:mode_id?token={{main_token}}&attributs={{get_mode_attributs}}",
+									"protocol": "https",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"modes",
+										":mode_id"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{main_token}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{get_mode_attributs}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "mode_id",
+											"value": "{{get_mode_mode_id}}"
+										}
+									]
+								},
+								"description": "Request to get Mode by id"
 							},
 							"response": []
 						}
@@ -13747,82 +14823,16 @@
 					"_postman_isSubFolder": true
 				},
 				{
-					"name": "Tabs - NTY",
-					"description": "Folder for tabs",
+					"name": "Genericquerys - NTY",
+					"description": "Folder for genericquerys",
 					"item": [
 						{
-							"name": "Get Tab",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {},
-								"url": {
-									"raw": "https://{{host}}/rest/vitis/tabs/:tab_id?token={{token}}&attributs={{attributs}}",
-									"protocol": "https",
-									"host": [
-										"{{host}}"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"tabs",
-										":tab_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{token}}",
-											"equals": true
-										},
-										{
-											"key": "attributs",
-											"value": "{{attributs}}",
-											"equals": true
-										}
-									],
-									"variable": [
-										{
-											"key": "tab_id",
-											"value": "{{tab_id}}"
-										}
-									]
-								},
-								"description": "Request to get Tab by mode id"
-							},
-							"response": []
-						},
-						{
-							"name": "Get Tabs",
+							"name": "Get Querys",
 							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "32a17c20-a312-411f-a790-6e743db96658",
-										"type": "text/javascript",
-										"exec": [
-											"pm.environment.set(\"get_tabs_order_by\", \"\");",
-											"pm.environment.set(\"get_tabs_sort_order\", \"\");",
-											"pm.environment.set(\"get_tabs_limit\", \"50\");",
-											"pm.environment.set(\"get_tabs_offset\", \"\");",
-											"pm.environment.set(\"get_tabs_attributs\", \"\");",
-											"pm.environment.set(\"get_tabs_filter\", \"\");",
-											"pm.environment.set(\"get_tabs_distinct\", \"\");"
-										]
-									}
-								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "02ce71e4-d1c6-4e6d-a0fb-d6da4f910f31",
+										"id": "7cc21c10-175b-4d57-bcf1-94536c8c8dcc",
 										"type": "text/javascript",
 										"exec": [
 											"// Test la présence de réponse",
@@ -13831,129 +14841,8 @@
 											"    return null;",
 											"}",
 											"",
-											"// Tests contenu",
 											"var jsonData = pm.response.json();",
-											"tests[\"tabs is ok\"] = jsonData.tabs instanceof Array;",
-											"",
-											"//Get parameters name for later tests",
-											"var order_by;",
-											"",
-											"var filter;",
-											"    for(var param in jsonData.tabs[0]){",
-											"        order_by = param;",
-											"        filter = jsonData.tabs[0][param];",
-											"        if(jsonData.tabs[0][param] !== null){",
-											"            break;",
-											"        }",
-											"    }",
-											"",
-											"//Tests order_by and sort_order",
-											"var sort = true;",
-											"var varA, varB = null;",
-											"var ordsortjsonData;",
-											"",
-											"//Send request with order_by variable name in ASC order",
-											"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, ordsortResponse) {",
-											"    ordsortjsonData = ordsortResponse.json();",
-											"    ",
-											"//Check sort",
-											"    for(var parameter in ordsortjsonData.tabs){",
-											"        varB = ordsortjsonData.tabs[parameter][order_by];",
-											"        if(varB !== null && varA !== null){",
-											"            if(varA > varB){ ",
-											"                sort = false;",
-											"                break;",
-											"            }",
-											"        }",
-											"        varA = varB;",
-											"    }",
-											"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(sort).to.be.true});",
-											"});",
-											"",
-											"//Tests limit and offset",
-											"var maxListCount, firstparamName, lastparamName, paramName, limoffjsonData;",
-											"var lim = true, off = true;",
-											"",
-											"//Setup limit and offset check parameters",
-											"if(jsonData.list_count > 1){",
-											"    maxListCount = parseInt(jsonData.list_count) - 1 ;",
-											"    firstparamName = jsonData.tabs[0][order_by];",
-											"    lastparamName = jsonData.tabs[parseInt(maxListCount)][order_by];",
-											"    maxListCount--;",
-											"    ",
-											"//Send request with limit at maxListCount -1 and offset at 1",
-											"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(maxListCount) +\"&offset=1\", function (err, limoffResponse) {",
-											"        limoffjsonData = limoffResponse.json();",
-											"    ",
-											"//Check limit and offset result",
-											"        for(var parameter in limoffjsonData.attjsonData){",
-											"            paramName = limoffjsonData.tabs[parameter][order_by];",
-											"            if(paramName === firstparamName){",
-											"                off = false;",
-											"            }",
-											"            if(paramName === lastparamName){",
-											"                lim = false;",
-											"            }",
-											"        }",
-											"        pm.test(\"offset is ok\", function () {pm.expect(off).to.be.true});",
-											"        pm.test(\"limit is ok\", function () {pm.expect(lim).to.be.true});",
-											"    });",
-											"}",
-											"",
-											"//Test attributes",
-											"var attjsonData;",
-											"var att = true;",
-											"",
-											"//Send request to get only the order_by variable name attribute",
-											"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, attResponse) {",
-											"    attjsonData = attResponse.json();",
-											"",
-											"//Check attribute ",
-											"    for(var parameter in attjsonData.tabs){",
-											"        for(var attparam in attjsonData.tabs[parameter]){",
-											"            if(attparam !== order_by){",
-											"                att = false;",
-											"                break;",
-											"            }",
-											"        }",
-											"    }",
-											"pm.test(\"attribute is ok\", function () {pm.expect(att).to.be.true});",
-											"});",
-											"",
-											"//Test filter",
-											"var fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
-											"console.log(order_by + \" : \"+ filter);",
-											"var fltrjsonData;",
-											"var fltr = true;",
-											"",
-											"//Send request with filter argument",
-											"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/tabs?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+fltrjson, function (err, fltrResponse) {",
-											"    fltrjsonData = fltrResponse.json();",
-											"",
-											"//Check filter",
-											"    for(var parameter in fltrjsonData.tabs){",
-											"        for(var fltrparam in fltrjsonData.tabs[parameter]){",
-											"            var tmp = fltrjsonData.tabs[parameter][fltrparam];",
-											"            if(fltrparam === order_by && tmp !== filter){",
-											"                fltr = false;",
-											"                break;",
-											"            }",
-											"        }",
-											"    }",
-											"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
-											"});",
-											"",
-											"",
-											"//Clean variables",
-											"pm.environment.unset(\"get_tabs_order_by\");",
-											"pm.environment.unset(\"get_tabs_sort_order\");",
-											"pm.environment.unset(\"get_tabs_limit\");",
-											"pm.environment.unset(\"get_tabs_offset\");",
-											"pm.environment.unset(\"get_tabs_attributs\");",
-											"pm.environment.unset(\"get_tabs_filter\");",
-											"pm.environment.unset(\"get_tabs_distinct\");",
-											"",
-											"",
+											"pm.environment.set(\"get_querys_database\",jsonData.genericquerys[0].database);",
 											""
 										]
 									}
@@ -13973,7 +14862,7 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://{{host}}/rest/vitis/tabs?token={{main_token}}&order_by={{get_tabs_order_by}}&sort_order={{get_tabs_sort_order}}&limit={{get_tabs_limit}}&offset={{get_tabs_offset}}&attributs={{get_tabs_attributs}}&filter={{get_tabs_filter}}&distinct={{get_tabs_distinct}}",
+									"raw": "https://{{host}}/rest/vitis/genericquerys/databases?token={{main_token}}",
 									"protocol": "https",
 									"host": [
 										"{{host}}"
@@ -13981,248 +14870,47 @@
 									"path": [
 										"rest",
 										"vitis",
-										"tabs"
+										"genericquerys",
+										"databases"
 									],
 									"query": [
 										{
 											"key": "token",
 											"value": "{{main_token}}",
 											"equals": true
-										},
-										{
-											"key": "order_by",
-											"value": "{{get_tabs_order_by}}",
-											"equals": true
-										},
-										{
-											"key": "sort_order",
-											"value": "{{get_tabs_sort_order}}",
-											"equals": true
-										},
-										{
-											"key": "limit",
-											"value": "{{get_tabs_limit}}",
-											"equals": true
-										},
-										{
-											"key": "offset",
-											"value": "{{get_tabs_offset}}",
-											"equals": true
-										},
-										{
-											"key": "attributs",
-											"value": "{{get_tabs_attributs}}",
-											"equals": true
-										},
-										{
-											"key": "filter",
-											"value": "{{get_tabs_filter}}",
-											"equals": true
-										},
-										{
-											"key": "distinct",
-											"value": "{{get_tabs_distinct}}",
-											"equals": true
 										}
 									]
 								},
-								"description": "Request to get Tabs"
+								"description": "Get the dtabases list"
 							},
 							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "8f4a710f-7a5c-43c1-8ca0-d5e925d77656",
-								"type": "text/javascript"
-							}
 						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "bc4b80af-246f-4701-a2b5-c36056a428ef",
-								"type": "text/javascript"
-							}
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Vitissections - NTY",
-					"description": "Folder for vitissections",
-					"item": [
-						{
-							"name": "Get VitisSections",
+							"name": "Get Querys",
 							"event": [
-								{
-									"listen": "prerequest",
-									"script": {
-										"id": "b7f72eaf-96ff-4735-b5d6-a1a0cd35bf0d",
-										"type": "text/javascript",
-										"exec": [
-											"pm.environment.set(\"get_vitissections_order_by\", \"\");",
-											"pm.environment.set(\"get_vitissections_sort_order\", \"\");",
-											"pm.environment.set(\"get_vitissections_limit\", \"50\");",
-											"pm.environment.set(\"get_vitissections_offset\", \"\");",
-											"pm.environment.set(\"get_vitissections_attributs\", \"\");",
-											"pm.environment.set(\"get_vitissections_filter\", \"\");",
-											"pm.environment.set(\"get_vitissections_distinct\", \"\");"
-										]
-									}
-								},
 								{
 									"listen": "test",
 									"script": {
-										"id": "372ff1ce-c3b9-4c21-9d3f-a50fcf5c285c",
+										"id": "f85bb565-700a-48a2-8f0e-7f45eda11605",
 										"type": "text/javascript",
 										"exec": [
-											"// Test la présence de réponse",
 											"if(pm.response.responseSize === 0){",
 											"    tests['No response'] = false;",
 											"    return null;",
 											"}",
 											"",
-											"// Tests contenu",
 											"var jsonData = pm.response.json();",
-											"tests[\"vitissections is ok\"] = jsonData.vitissections instanceof Array;",
-											"",
-											"//Get parameters name for later tests",
-											"var order_by;",
-											"",
-											"var filter;",
-											"    for(var param in jsonData.vitissections[0]){",
-											"        order_by = param;",
-											"        filter = jsonData.vitissections[0][param];",
-											"        if(jsonData.vitissections[0][param] !== null){",
-											"            break;",
-											"        }",
-											"    }",
-											"",
-											"//Tests order_by and sort_order",
-											"var sort = true;",
-											"var varA, varB = null;",
-											"var ordsortjsonData;",
-											"",
-											"//Send request with order_by variable name in ASC order",
-											"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&order_by=\"+order_by+\"&sort_order=asc\", function (err, ordsortResponse) {",
-											"    ordsortjsonData = ordsortResponse.json();",
-											"    ",
-											"//Check sort",
-											"    for(var parameter in ordsortjsonData.vitissections){",
-											"        varB = ordsortjsonData.vitissections[parameter][order_by];",
-											"        if(varB !== null && varA !== null){",
-											"            if(varA > varB){ ",
-											"                sort = false;",
-											"                break;",
-											"            }",
-											"        }",
-											"        varA = varB;",
-											"    }",
-											"    pm.test(\"order_by and sort_order is ok\", function () {pm.expect(sort).to.be.true});",
-											"});",
-											"",
-											"//Tests limit and offset",
-											"var maxListCount, firstparamName, lastparamName, paramName, limoffjsonData;",
-											"var lim = true, off = true;",
-											"",
-											"//Setup limit and offset check parameters",
-											"if(jsonData.list_count > 1){",
-											"    maxListCount = parseInt(jsonData.list_count) - 1 ;",
-											"    firstparamName = jsonData.vitissections[0][order_by];",
-											"    lastparamName = jsonData.vitissections[parseInt(maxListCount)][order_by];",
-											"    maxListCount--;",
-											"    ",
-											"//Send request with limit at maxListCount -1 and offset at 1",
-											"    pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&limit=\"+ parseInt(maxListCount) +\"&offset=1\", function (err, limoffResponse) {",
-											"        limoffjsonData = limoffResponse.json();",
-											"    ",
-											"//Check limit and offset result",
-											"        for(var parameter in limoffjsonData.attjsonData){",
-											"            paramName = limoffjsonData.vitissections[parameter][order_by];",
-											"            if(paramName === firstparamName){",
-											"                off = false;",
-											"            }",
-											"            if(paramName === lastparamName){",
-											"                lim = false;",
-											"            }",
-											"        }",
-											"        pm.test(\"offset is ok\", function () {pm.expect(off).to.be.true});",
-											"        pm.test(\"limit is ok\", function () {pm.expect(lim).to.be.true});",
-											"    });",
-											"}",
-											"",
-											"//Test attributes",
-											"var attjsonData;",
-											"var att = true;",
-											"",
-											"//Send request to get only the order_by variable name attribute",
-											"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&attributs=\"+order_by, function (err, attResponse) {",
-											"    attjsonData = attResponse.json();",
-											"",
-											"//Check attribute ",
-											"    for(var parameter in attjsonData.vitissections){",
-											"        for(var attparam in attjsonData.vitissections[parameter]){",
-											"            if(attparam !== order_by){",
-											"                att = false;",
-											"                break;",
-											"            }",
-											"        }",
-											"    }",
-											"pm.test(\"attribute is ok\", function () {pm.expect(att).to.be.true});",
-											"});",
-											"",
-											"//Test filter",
-											"var fltrjson = JSON.stringify({'column': order_by, 'compare_operator': '=', 'value': filter});",
-											"console.log(order_by + \" : \"+ filter);",
-											"var fltrjsonData;",
-											"var fltr = true;",
-											"",
-											"//Send request with filter argument",
-											"pm.sendRequest(\"https://\"+pm.environment.get(\"host\")+\"/rest/vitis/vitissections?token=\"+pm.environment.get(\"main_token\")+\"&filter=\"+fltrjson, function (err, fltrResponse) {",
-											"    fltrjsonData = fltrResponse.json();",
-											"",
-											"//Check filter",
-											"    for(var parameter in fltrjsonData.vitissections){",
-											"        for(var fltrparam in fltrjsonData.vitissections[parameter]){",
-											"            var tmp = fltrjsonData.vitissections[parameter][fltrparam];",
-											"            if(fltrparam === order_by && tmp !== filter){",
-											"                fltr = false;",
-											"                break;",
-											"            }",
-											"        }",
-											"    }",
-											"pm.test(\"filter is ok\", function () {pm.expect(fltr).to.be.true});",
-											"});",
-											"",
-											"for(var param in jsonData.vitissections[0]){",
-											"    var variable, path;",
-											"    if(jsonData.vitissections[0][param] !== null){",
-											"        varaible = jsonData.vitissections[0][param];",
-											"        path = \"get_vitissection_\" + param;",
-											"        pm.environment.set(path,variable);",
-											"    }",
-											"}",
-											"",
-											"",
-											"",
-											"//Clean variables",
-											"pm.environment.unset(\"get_vitissections_order_by\");",
-											"pm.environment.unset(\"get_vitissections_sort_order\");",
-											"pm.environment.unset(\"get_vitissections_limit\");",
-											"pm.environment.unset(\"get_vitissections_offset\");",
-											"pm.environment.unset(\"get_vitissections_attributs\");",
-											"pm.environment.unset(\"get_vitissections_filter\");",
-											"pm.environment.unset(\"get_vitissections_distinct\");",
-											"",
-											"",
+											"pm.environment.set(\"get_querys_schema\",jsonData.genericquerys[0].schema_name);",
+											""
+										]
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"id": "df09e061-675e-4524-9946-3e5f7d317e0e",
+										"type": "text/javascript",
+										"exec": [
 											""
 										]
 									}
@@ -14242,152 +14930,53 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/vitissections?token={{main_token}}",
+									"raw": "https://{{host}}/rest/vitis/genericquerys/:database/schemas?token={{main_token}}",
 									"protocol": "https",
 									"host": [
-										"medoc"
+										"{{host}}"
 									],
 									"path": [
 										"rest",
 										"vitis",
-										"vitissections"
+										"genericquerys",
+										":database",
+										"schemas"
 									],
 									"query": [
 										{
 											"key": "token",
 											"value": "{{main_token}}",
 											"equals": true
-										},
-										{
-											"key": "order_by",
-											"value": "{{get_vitissections_order_by}}",
-											"equals": true,
-											"disabled": true
-										},
-										{
-											"key": "sort_order",
-											"value": "{{get_vitissections_sort_order}}",
-											"equals": true,
-											"disabled": true
-										},
-										{
-											"key": "limit",
-											"value": "{{get_vitissections_limit}}",
-											"equals": true,
-											"disabled": true
-										},
-										{
-											"key": "offset",
-											"value": "{{get_vitissections_offset}}",
-											"equals": true,
-											"disabled": true
-										},
-										{
-											"key": "attributs",
-											"value": "{{get_vitissections_attributs}}",
-											"equals": true,
-											"disabled": true
-										},
-										{
-											"key": "filter",
-											"value": "{{get_vitissections_filter}}",
-											"equals": true,
-											"disabled": true
-										},
-										{
-											"key": "distinct",
-											"value": "{{get_vitissections_distinct}}",
-											"equals": true,
-											"disabled": true
-										}
-									]
-								},
-								"description": "Request to get VitisSections"
-							},
-							"response": []
-						},
-						{
-							"name": "Get VitisSection",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "Accept",
-										"value": "application/xml, application/json"
-									},
-									{
-										"key": "Content-Type",
-										"value": "application/json"
-									}
-								],
-								"body": {},
-								"url": {
-									"raw": "https://medoc/rest/vitis/vitissections/:section_id?token={{main_token}}",
-									"protocol": "https",
-									"host": [
-										"medoc"
-									],
-									"path": [
-										"rest",
-										"vitis",
-										"vitissections",
-										":section_id"
-									],
-									"query": [
-										{
-											"key": "token",
-											"value": "{{main_token}}",
-											"equals": true
-										},
-										{
-											"key": "attributs",
-											"value": "{{get_vitissection_attributs}}",
-											"equals": true,
-											"disabled": true
 										}
 									],
 									"variable": [
 										{
-											"key": "section_id",
-											"value": "{{get_vitissection_section_id}}"
+											"key": "database",
+											"value": "{{get_querys_database}}"
 										}
 									]
 								},
-								"description": "Request to get VitisSection by mode id"
+								"description": "Get the database schemas"
 							},
 							"response": []
-						}
-					],
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "1760fcfc-6695-49e0-8f53-a1b40c80a9e2",
-								"type": "text/javascript"
-							}
 						},
 						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									""
-								],
-								"id": "543f4508-10aa-4655-8c47-9d78daac2247",
-								"type": "text/javascript"
-							}
-						}
-					],
-					"_postman_isSubFolder": true
-				},
-				{
-					"name": "Versions - NTY",
-					"description": "Folder for versions",
-					"item": [
-						{
-							"name": "Get versions",
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "d1b9737f-c687-44fb-9680-727f3fb65e62",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.responseSize === 0){",
+											"    tests['No response'] = false;",
+											"    return null;",
+											"}"
+										]
+									}
+								}
+							],
 							"request": {
 								"method": "GET",
 								"header": [
@@ -14402,7 +14991,7 @@
 								],
 								"body": {},
 								"url": {
-									"raw": "https://medoc/rest/vitis/versions?token={{main_token}}",
+									"raw": "https://medoc/rest/vitis/genericquerys?token={{main_token}}&login={{get_querys_login}}&password={{get_querys_password}}&server={{get_querys_server}}&port={{get_querys_port}}&database={{get_querys_database}}&schema={{get_querys_schema}}&table={{get_querys_table}}&filter={{get_querys_filter}}&limit={{get_querys_limit}}",
 									"protocol": "https",
 									"host": [
 										"medoc"
@@ -14410,17 +14999,304 @@
 									"path": [
 										"rest",
 										"vitis",
-										"versions"
+										"genericquerys"
 									],
 									"query": [
 										{
 											"key": "token",
 											"value": "{{main_token}}",
 											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{get_querys_login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{get_querys_password}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{get_querys_server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{get_querys_port}}",
+											"equals": true
+										},
+										{
+											"key": "sgbd",
+											"value": "{{get_querys_sgbd}}",
+											"equals": true,
+											"disabled": true
+										},
+										{
+											"key": "database",
+											"value": "{{get_querys_database}}",
+											"equals": true
+										},
+										{
+											"key": "schema",
+											"value": "{{get_querys_schema}}",
+											"equals": true
+										},
+										{
+											"key": "table",
+											"value": "{{get_querys_table}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{get_querys_filter}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{get_querys_limit}}",
+											"equals": true
 										}
 									]
 								},
-								"description": "Request to get versions"
+								"description": "Request to query a schema. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "70bb3fe1-3ba9-44f3-bb72-3caa6c62dbb9",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.responseSize === 0){",
+											"    tests['No response'] = false;",
+											"    return null;",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys/:table_name?token={{main_token}}&login={{get_querys_login}}&password={{get_querys_password}}&server={{get_querys_server}}&port={{get_querys_port}}&sgbd={{get_querys_sgbd}}&database={{get_querys_database}}&schema={{get_querys_schema}}&encoding={{get_querys_encoding}}&order_by={{get_querys_order_by}}&sort_order={{get_querys_sort_order}}&limit={{get_querys_limit}}&offset={{get_querys_offset}}&attributs={{get_querys_attributs}}&filter={{get_querys_filter}}&distinct={{get_querys_distinct}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys",
+										":table_name"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{main_token}}",
+											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{get_querys_login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{get_querys_password}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{get_querys_server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{get_querys_port}}",
+											"equals": true
+										},
+										{
+											"key": "sgbd",
+											"value": "{{get_querys_sgbd}}",
+											"equals": true
+										},
+										{
+											"key": "database",
+											"value": "{{get_querys_database}}",
+											"equals": true
+										},
+										{
+											"key": "schema",
+											"value": "{{get_querys_schema}}",
+											"equals": true
+										},
+										{
+											"key": "encoding",
+											"value": "{{get_querys_encoding}}",
+											"equals": true
+										},
+										{
+											"key": "order_by",
+											"value": "{{get_querys_order_by}}",
+											"equals": true
+										},
+										{
+											"key": "sort_order",
+											"value": "{{get_querys_sort_order}}",
+											"equals": true
+										},
+										{
+											"key": "limit",
+											"value": "{{get_querys_limit}}",
+											"equals": true
+										},
+										{
+											"key": "offset",
+											"value": "{{get_querys_offset}}",
+											"equals": true
+										},
+										{
+											"key": "attributs",
+											"value": "{{get_querys_attributs}}",
+											"equals": true
+										},
+										{
+											"key": "filter",
+											"value": "{{get_querys_filter}}",
+											"equals": true
+										},
+										{
+											"key": "distinct",
+											"value": "{{get_querys_distinct}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "table_name",
+											"value": "{{get_querys_table_name}}"
+										}
+									]
+								},
+								"description": "Request to query a table. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
+							},
+							"response": []
+						},
+						{
+							"name": "Get Querys",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"id": "086bdc2d-f727-4adf-a602-2c0cb53a66c6",
+										"type": "text/javascript",
+										"exec": [
+											"if(pm.response.responseSize === 0){",
+											"    tests['No response'] = false;",
+											"    return null;",
+											"}"
+										]
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/xml, application/json, application/x-vm-json"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {},
+								"url": {
+									"raw": "https://medoc/rest/vitis/genericquerys/:table_name/columns?token={{main_token}}&login={{get_querys_login}}&password={{get_querys_password}}&server={{get_querys_server}}&port={{get_querys_port}}&sgbd={{get_querys_sgbd}}&database={{get_querys_database}}&schema={{get_querys_schema}}&encoding={{get_querys_encoding}}",
+									"protocol": "https",
+									"host": [
+										"medoc"
+									],
+									"path": [
+										"rest",
+										"vitis",
+										"genericquerys",
+										":table_name",
+										"columns"
+									],
+									"query": [
+										{
+											"key": "token",
+											"value": "{{main_token}}",
+											"equals": true
+										},
+										{
+											"key": "login",
+											"value": "{{get_querys_login}}",
+											"equals": true
+										},
+										{
+											"key": "password",
+											"value": "{{get_querys_password}}",
+											"equals": true
+										},
+										{
+											"key": "server",
+											"value": "{{get_querys_server}}",
+											"equals": true
+										},
+										{
+											"key": "port",
+											"value": "{{get_querys_port}}",
+											"equals": true
+										},
+										{
+											"key": "sgbd",
+											"value": "{{get_querys_sgbd}}",
+											"equals": true
+										},
+										{
+											"key": "database",
+											"value": "{{get_querys_database}}",
+											"equals": true
+										},
+										{
+											"key": "schema",
+											"value": "{{get_querys_schema}}",
+											"equals": true
+										},
+										{
+											"key": "encoding",
+											"value": "{{get_querys_encoding}}",
+											"equals": true
+										}
+									],
+									"variable": [
+										{
+											"key": "table_name",
+											"value": "{{table_name}}"
+										}
+									]
+								},
+								"description": "Request to query. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers"
 							},
 							"response": []
 						}
@@ -14432,7 +15308,7 @@
 								"exec": [
 									""
 								],
-								"id": "127f279d-800c-4856-99ff-177112fda876",
+								"id": "80fe1934-e470-453a-ac94-1189916331fc",
 								"type": "text/javascript"
 							}
 						},
@@ -14442,7 +15318,7 @@
 								"exec": [
 									""
 								],
-								"id": "84978b67-f5ca-4a59-8677-011673ec4223",
+								"id": "0c0abdf6-b52f-4321-b881-c557c5ff5488",
 								"type": "text/javascript"
 							}
 						}
