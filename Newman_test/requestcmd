@@ -1,0 +1,13 @@
+cd /home/server/Git/Test_Vitis/
+
+newman run Jenkins/Get_admin_token.postman_collection.json -e Jenkins/Environment_Jenkins.postman_environment.json -k --export-environment Jenkins/Environment_Jenkins.postman_environment.json -r json
+
+newman run Jenkins/Vitis_Project.postman_collection.json -e Jenkins/Environment_Jenkins.postman_environment.json -k --export-environment Jenkins/Environment_Jenkins.postman_environment.json -r json
+
+newman run Jenkins/Get_user_token.postman_collection.json -e Jenkins/Environment_Jenkins.postman_environment.json -k --export-environment Jenkins/Environment_Jenkins.postman_environment.json -r json
+
+newman run Jenkins/Vitis_Project.postman_collection.json -e Jenkins/Environment_Jenkins.postman_environment.json -k --export-environment Jenkins/Environment_Jenkins.postman_environment.json -r json
+
+newman run Jenkins/Clean.postman_collection.json -e Jenkins/Environment_Jenkins.postman_environment.json -k --export-environment Jenkins/Environment_Jenkins.postman_environment.json -r json
+chmod -R ugo+rw newman/*
+

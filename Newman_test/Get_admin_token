@@ -1,0 +1,5 @@
+#!/bin/bash
+
+cd /home/server/Git/Test_Vitis/
+
+newman run Jenkins/Get_admin_token.postman_collection.json -e Jenkins/Environment_Jenkins.postman_environment.json -k --export-environment Jenkins/Environment_Jenkins.postman_environment.json -r json

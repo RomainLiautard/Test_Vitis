@@ -1,0 +1,221 @@
+{
+	"info": {
+		"name": "Clean",
+		"_postman_id": "5105358b-5ad6-6612-8b35-1009eb33ae93",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Clean",
+			"item": [
+				{
+					"name": "Get private token (Admin) //Clean",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cf26176-b12e-4cd3-a057-772143ae1b0c",
+								"type": "text/javascript",
+								"exec": [
+									"if(pm.response.responseSize !== 0){",
+									"    var jsonData = pm.response.json();",
+									"    //Do stuff here",
+									"   ",
+									"    //console.log(jsonData.token);",
+									"    pm.environment.set(\"token\", jsonData.token);",
+									"    pm.environment.set(\"user\", \"\");",
+									"    pm.environment.set(\"password\", \"\");",
+									"}",
+									"var t = pm.environment.get(\"time\");",
+									"pm.test(\"Total time before cleaning : \" + t + \"ms\", function () {});"
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "e95d9582-ebaf-4c62-82cc-cd53d53680ce",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"user\", \"admin\");",
+									"pm.environment.set(\"password\", \"admin\");"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"type": "text",
+									"value": "{{user}}"
+								},
+								{
+									"key": "password",
+									"type": "text",
+									"value": "{{password}}"
+								},
+								{
+									"key": "duration",
+									"type": "text",
+									"value": "2"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{YourServer}}/rest/vitis/privatetoken",
+							"protocol": "https",
+							"host": [
+								"{{YourServer}}"
+							],
+							"path": [
+								"rest",
+								"vitis",
+								"privatetoken"
+							]
+						},
+						"description": "Request to get a token"
+					},
+					"response": []
+				},
+				{
+					"name": "delete User //Clean",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "8cc416cb-c0bf-40d0-a984-f1e230a63339",
+								"type": "text/javascript",
+								"exec": [
+									"if(pm.response.responseSize !== 0){",
+									"    var jsonData = pm.response.json();",
+									"    //Do stuff here",
+									"   ",
+									"}",
+									"var t = pm.environment.get(\"time\");",
+									"pm.test(\"Total time after cleaning : \" + t + \"ms\", function () {});"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json, application/x-vm-json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {},
+						"url": {
+							"raw": "https://{{YourServer}}/rest/vitis/users/:user_id?token={{token}}",
+							"protocol": "https",
+							"host": [
+								"{{YourServer}}"
+							],
+							"path": [
+								"rest",
+								"vitis",
+								"users",
+								":user_id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"equals": true
+								}
+							],
+							"variable": [
+								{
+									"key": "user_id",
+									"value": "{{user_id}}"
+								}
+							]
+						},
+						"description": "Request to delete User"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b8b66cc7-5d55-4bcd-ad0e-f983c2e30e34",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "74753c0f-c7b1-4f09-9eec-611404a353c0",
+				"type": "text/javascript",
+				"exec": [
+					"var t = parseInt(pm.environment.get(\"time\"));",
+					"console.log(t);",
+					"t += parseInt(pm.response.responseTime);",
+					"console.log(t);",
+					"pm.environment.set(\"time\",t);",
+					"",
+					"if(pm.response.responseSize === 0){",
+					"    pm.test(\"Status equal 1\", function () {",
+					"    pm.expect(jsonData.status).to.eql(1);",
+					"    });",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);});",
+					"    return null;",
+					"}",
+					"",
+					"var jsonData = pm.response.json();",
+					"",
+					"if(jsonData.status === 0){",
+					"    if (jsonData.errorMessage !== null){",
+					"        var ErrorMess = jsonData.errorMessage;",
+					"        console.log(ErrorMess);",
+					"        pm.test(ErrorMess, function () {});",
+					"    }",
+					"    else{",
+					"        var ErrorMess = jsonData.error;",
+					"        console.log(ErrorMess);",
+					"        pm.test(ErrorMess, function () {});",
+					"    }",
+					"}",
+					"else{",
+					"    pm.test(\"Status equal 1\", function () {",
+					"    pm.expect(jsonData.status).to.eql(1);",
+					"    });",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);});",
+					"    ",
+					"    //Do stuff here",
+					"   ",
+					"}"
+				]
+			}
+		}
+	]
+}

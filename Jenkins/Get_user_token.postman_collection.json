@@ -1,0 +1,181 @@
+{
+	"info": {
+		"name": "Get_user_token",
+		"_postman_id": "dc9f2af3-02b4-de63-5ec2-3972edea60e9",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User Start",
+			"item": [
+				{
+					"name": "Get private token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "95672ac5-342a-4187-aeb9-60c7523e885d",
+								"type": "text/javascript",
+								"exec": [
+									"if(pm.response.responseSize !== 0){",
+									"    var jsonData = pm.response.json();",
+									"    console.log(\"Token = \" + jsonData.token);",
+									"    pm.environment.set(\"token\", jsonData.token);",
+									"}",
+									"",
+									"",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "1399e644-271b-422d-9cc9-05e2c20a52fc",
+								"type": "text/javascript",
+								"exec": [
+									"pm.environment.set(\"bool\", \"user\");",
+									"pm.environment.set(\"i_domain\",0);",
+									"pm.environment.set(\"i_group\", 0);"
+								]
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/xml, application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "user",
+									"type": "text",
+									"value": "{{user}}"
+								},
+								{
+									"key": "password",
+									"type": "text",
+									"value": "{{password}}"
+								},
+								{
+									"key": "duration",
+									"type": "text",
+									"value": "60"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{YourServer}}/rest/vitis/privatetoken",
+							"protocol": "https",
+							"host": [
+								"{{YourServer}}"
+							],
+							"path": [
+								"rest",
+								"vitis",
+								"privatetoken"
+							]
+						},
+						"description": "Request to get a token"
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"id": "a26d5104-9265-4758-973e-d03c7bc878cd",
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"id": "4979f18b-6990-40e6-be0a-43e4dace8015",
+						"type": "text/javascript"
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "921ca5cb-500e-4fb0-b500-33d1d6f1d331",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "5ceae0d7-eaef-4a2e-96d8-d2a00459a6a2",
+				"type": "text/javascript",
+				"exec": [
+					"var t = parseInt(pm.environment.get(\"time\"));",
+					"console.log(t);",
+					"t += parseInt(pm.response.responseTime);",
+					"console.log(t);",
+					"pm.environment.set(\"time\",t);",
+					"",
+					"if(pm.response.responseSize === 0){",
+					"    pm.test(\"Status equal 1\", function () {",
+					"    pm.expect(jsonData.status).to.eql(1);",
+					"    });",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);});",
+					"    return null;",
+					"}",
+					"",
+					"var jsonData = pm.response.json();",
+					"",
+					"if(jsonData.status === 0){",
+					"    if (jsonData.errorMessage !== null){",
+					"        var ErrorMess = jsonData.errorMessage;",
+					"        console.log(ErrorMess);",
+					"        pm.test(ErrorMess, function () {});",
+					"    }",
+					"    else{",
+					"        var ErrorMess = jsonData.error;",
+					"        console.log(ErrorMess);",
+					"        pm.test(ErrorMess, function () {});",
+					"    }",
+					"}",
+					"else{",
+					"    pm.test(\"Status equal 1\", function () {",
+					"    pm.expect(jsonData.status).to.eql(1);",
+					"    });",
+					"    pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);});",
+					"    ",
+					"    //Do stuff here",
+					"   ",
+					"}"
+				]
+			}
+		}
+	]
+}

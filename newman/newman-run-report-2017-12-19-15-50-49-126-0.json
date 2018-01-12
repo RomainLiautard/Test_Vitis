@@ -1,0 +1,2048 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "5105358b-5ad6-6612-8b35-1009eb33ae93"
+    },
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "item": [
+      {
+        "id": "b0e0c60d-960f-4607-a537-3fe6977fd0ba",
+        "name": "Clean",
+        "item": [
+          {
+            "id": "3e0b3756-2596-45d1-a59c-3070c1901578",
+            "name": "Get private token (Admin) //Clean",
+            "request": {
+              "description": {
+                "content": "Request to get a token",
+                "type": "text/plain"
+              },
+              "url": {
+                "protocol": "https",
+                "path": [
+                  "rest",
+                  "vitis",
+                  "privatetoken"
+                ],
+                "host": [
+                  "{{YourServer}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/xml, application/json"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "user",
+                    "value": "{{user}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "password",
+                    "value": "{{password}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "duration",
+                    "value": "2",
+                    "type": "text"
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "8cf26176-b12e-4cd3-a057-772143ae1b0c",
+                  "type": "text/javascript",
+                  "exec": [
+                    "if(pm.response.responseSize !== 0){",
+                    "    var jsonData = pm.response.json();",
+                    "    //Do stuff here",
+                    "   ",
+                    "    //console.log(jsonData.token);",
+                    "    pm.environment.set(\"token\", jsonData.token);",
+                    "    pm.environment.set(\"user\", \"\");",
+                    "    pm.environment.set(\"password\", \"\");",
+                    "}",
+                    "var t = pm.environment.get(\"time\");",
+                    "pm.test(\"Total time before cleaning : \" + t + \"ms\", function () {});"
+                  ],
+                  "_lastExecutionId": "26616940-c530-4337-a36c-bbd6aa825e63"
+                }
+              },
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "e95d9582-ebaf-4c62-82cc-cd53d53680ce",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.environment.set(\"user\", \"admin\");",
+                    "pm.environment.set(\"password\", \"admin\");"
+                  ],
+                  "_lastExecutionId": "4d69afce-f01a-4573-8605-c03c7fd26633"
+                }
+              }
+            ]
+          },
+          {
+            "id": "83bebd04-3cb8-4a81-9ca0-81ba21ce18db",
+            "name": "delete User //Clean",
+            "request": {
+              "description": {
+                "content": "Request to delete User",
+                "type": "text/plain"
+              },
+              "url": {
+                "protocol": "https",
+                "path": [
+                  "rest",
+                  "vitis",
+                  "users",
+                  ":user_id"
+                ],
+                "host": [
+                  "{{YourServer}}"
+                ],
+                "query": [
+                  {
+                    "key": "token",
+                    "value": "{{token}}"
+                  }
+                ],
+                "variable": [
+                  {
+                    "type": "any",
+                    "value": "{{user_id}}",
+                    "key": "user_id"
+                  }
+                ]
+              },
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/xml, application/json, application/x-vm-json"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "DELETE",
+              "body": {}
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "8cc416cb-c0bf-40d0-a984-f1e230a63339",
+                  "type": "text/javascript",
+                  "exec": [
+                    "if(pm.response.responseSize !== 0){",
+                    "    var jsonData = pm.response.json();",
+                    "    //Do stuff here",
+                    "   ",
+                    "}",
+                    "var t = pm.environment.get(\"time\");",
+                    "pm.test(\"Total time after cleaning : \" + t + \"ms\", function () {});"
+                  ],
+                  "_lastExecutionId": "09cabd6b-0cc1-4746-95b6-1dbc49e1ede1"
+                }
+              }
+            ]
+          }
+        ],
+        "event": []
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "b8b66cc7-5d55-4bcd-ad0e-f983c2e30e34",
+          "type": "text/javascript",
+          "exec": [
+            ""
+          ],
+          "_lastExecutionId": "5960a755-7837-426d-b882-c884314592d2"
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "74753c0f-c7b1-4f09-9eec-611404a353c0",
+          "type": "text/javascript",
+          "exec": [
+            "var t = parseInt(pm.environment.get(\"time\"));",
+            "console.log(t);",
+            "t += parseInt(pm.response.responseTime);",
+            "console.log(t);",
+            "pm.environment.set(\"time\",t);",
+            "",
+            "if(pm.response.responseSize === 0){",
+            "    pm.test(\"Status equal 1\", function () {",
+            "    pm.expect(jsonData.status).to.eql(1);",
+            "    });",
+            "    pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);});",
+            "    return null;",
+            "}",
+            "",
+            "var jsonData = pm.response.json();",
+            "",
+            "if(jsonData.status === 0){",
+            "    if (jsonData.errorMessage !== null){",
+            "        var ErrorMess = jsonData.errorMessage;",
+            "        console.log(ErrorMess);",
+            "        pm.test(ErrorMess, function () {});",
+            "    }",
+            "    else{",
+            "        var ErrorMess = jsonData.error;",
+            "        console.log(ErrorMess);",
+            "        pm.test(ErrorMess, function () {});",
+            "    }",
+            "}",
+            "else{",
+            "    pm.test(\"Status equal 1\", function () {",
+            "    pm.expect(jsonData.status).to.eql(1);",
+            "    });",
+            "    pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);});",
+            "    ",
+            "    //Do stuff here",
+            "   ",
+            "}"
+          ],
+          "_lastExecutionId": "3d95262b-a830-47b8-83ca-f83d9d55f49f"
+        }
+      }
+    ],
+    "variable": [],
+    "info": {
+      "id": "5105358b-5ad6-6612-8b35-1009eb33ae93",
+      "name": "Clean",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment",
+      "postman_exported_at": "2017-12-19T15:50:46.665Z",
+      "postman_exported_using": "Newman/3.9.1"
+    },
+    "id": "d8f8b4b6-3a61-43c8-df18-9a1c7ba333ef",
+    "name": "Environment_Jenkins",
+    "values": [
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_composant"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "attributs"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "order_by"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sort_order"
+      },
+      {
+        "type": "any",
+        "value": "10",
+        "key": "limit"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "offset"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "filter"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "distinct"
+      },
+      {
+        "type": "any",
+        "value": "949|950",
+        "key": "idList"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "composant_type"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_controle"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_entreprise"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_evacuation_eaux"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_filieres_agree"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_installation"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_param_admin"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_param_liste"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_param_tarif"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_pretraitement"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_traitement"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ID_PAR"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_com"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sYear"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sType"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sFileName"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ID_BAT"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "geom"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_par"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "parcelles"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rapport_type"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_sec"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ID_RIVOLI"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_account"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_groups"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_group"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_department"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "branch"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "mixed_rights_management"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "operation_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "command"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "domain"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "alias"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "server"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "port"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "dn_search_user"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "filter_user"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "dn_search_group"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "filter_group"
+      },
+      {
+        "type": "any",
+        "value": "true",
+        "key": "verify_rights"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sgbd"
+      },
+      {
+        "type": "any",
+        "value": "pg_catalog",
+        "key": "schema"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "table"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "encoding"
+      },
+      {
+        "type": "any",
+        "value": "pg_group",
+        "key": "table_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "users"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "application_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "min_days"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "log_directory"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "file_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "folder"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "mode_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "action"
+      },
+      {
+        "type": "any",
+        "value": "anc_saisie|user",
+        "key": "modes_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rolname"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "description"
+      },
+      {
+        "type": "any",
+        "value": "vitis",
+        "key": "module_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ip_constraint"
+      },
+      {
+        "type": "any",
+        "value": "%",
+        "key": "restriction"
+      },
+      {
+        "type": "any",
+        "value": "anc",
+        "key": "web_service"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ressource"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "event_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "business_object_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "title"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sql_summary"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sql_list"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sorted_by"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "geom_column"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "result_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_use_strict"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "index"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "add_form_size"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "edit_form_size"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "display_form_size"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "form"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "cmd"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "crs_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layer_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "theme_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "service_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "visible"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "bo_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layer_list"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layertheme_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "map_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "map_layers"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "visibility"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layer_opacity"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "extent_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "catalog_index"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_theme"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "maptheme_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "module_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "label"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printparameter_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printtemplate_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "editable"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "placeholder"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "defaultvalue"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printreport_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rt_format_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rt_orientation_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "outputformats_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "htmldefinition"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "jsonobjects"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printstyle_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "definition"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "intersect_geom"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "intersect_column"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "intersect_buffer"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "get_geom"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "get_image"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "geom_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "result_srid"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "service_type_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "url"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "key"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "service_type_version"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "maps"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "print_templates"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "print_styles"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "coordsys_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "epsg"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "connection_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "user"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ms_layer_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "source_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ms_layertype_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "tableschema"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "tablename"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "tableidfield"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "opacity"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "user_login"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "user_password"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "wmsservices"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "metadata_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "web_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "wmsservice_ms_layers"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "wmsservice_id"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "count"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "u_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "password"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1",
+        "key": "login"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1",
+        "key": "name"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1",
+        "key": "password_confirm"
+      },
+      {
+        "type": "any",
+        "value": "corp",
+        "key": "company"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1@corp.com",
+        "key": "email"
+      },
+      {
+        "type": "any",
+        "value": "22334",
+        "key": "department"
+      },
+      {
+        "type": "any",
+        "value": "1",
+        "key": "groups"
+      },
+      {
+        "type": "any",
+        "value": "vitis_user",
+        "key": "privileges"
+      },
+      {
+        "type": "any",
+        "value": 31591,
+        "key": "time"
+      },
+      {
+        "type": "any",
+        "value": "user",
+        "key": "bool"
+      },
+      {
+        "type": "any",
+        "value": "3c64fff1641aff4854acd62bafec107e",
+        "key": "token"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group_2",
+        "key": "group_name"
+      },
+      {
+        "type": "any",
+        "value": 3,
+        "key": "admin_id"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "i"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group0",
+        "key": "group_name0"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group1",
+        "key": "group_name1"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group2",
+        "key": "group_name2"
+      },
+      {
+        "type": "any",
+        "value": 948,
+        "key": "group_id2"
+      },
+      {
+        "type": "any",
+        "value": 2,
+        "key": "i_domain"
+      },
+      {
+        "type": "any",
+        "value": 2,
+        "key": "i_group"
+      },
+      {
+        "type": "any",
+        "value": "Domain_0",
+        "key": "domain0"
+      },
+      {
+        "type": "any",
+        "value": "Domain_1",
+        "key": "domain1"
+      },
+      {
+        "type": "any",
+        "value": "Domain_2",
+        "key": "domain2"
+      },
+      {
+        "type": "any",
+        "value": 949,
+        "key": "domain_id0"
+      },
+      {
+        "type": "any",
+        "value": 951,
+        "key": "domain_id"
+      },
+      {
+        "type": "any",
+        "value": 950,
+        "key": "domain_id1"
+      },
+      {
+        "type": "any",
+        "value": 951,
+        "key": "domain_id2"
+      },
+      {
+        "type": "any",
+        "value": "postgres,template0,template1,vitis,vmap",
+        "key": "databases"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "i_query"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "max_query"
+      },
+      {
+        "type": "any",
+        "value": "postgres",
+        "key": "database"
+      },
+      {
+        "type": "any",
+        "value": "user",
+        "key": "mode_id_0"
+      },
+      {
+        "type": "any",
+        "value": "anc_saisie",
+        "key": "mode_id_1"
+      },
+      {
+        "type": "any",
+        "value": 49,
+        "key": "tab_id"
+      },
+      {
+        "type": "any",
+        "value": 50,
+        "key": "section_id"
+      },
+      {
+        "type": "any",
+        "value": 952,
+        "key": "tmpo_uID"
+      },
+      {
+        "type": "any",
+        "value": "[object Object]",
+        "key": "J_file"
+      },
+      {
+        "type": "any",
+        "value": "192.168.56.1",
+        "key": "YourServer"
+      },
+      {
+        "type": "any",
+        "value": 952,
+        "key": "user_id"
+      },
+      {
+        "type": "any",
+        "value": 946,
+        "key": "group_id0"
+      },
+      {
+        "type": "any",
+        "value": 948,
+        "key": "group_id"
+      },
+      {
+        "type": "any",
+        "value": 947,
+        "key": "group_id1"
+      }
+    ]
+  },
+  "globals": {
+    "id": "e69a9b79-9e63-4831-b11e-41f4dd1bbaae",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 7,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 6,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 4,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 266,
+      "started": 1513698648138,
+      "completed": 1513698649120
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 2,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "36a365ed-8cea-46f3-ac05-45f123f7af74",
+          "httpRequestId": "14144cd8-4593-4ae8-a97d-76ff5df9398a"
+        },
+        "item": {
+          "id": "3e0b3756-2596-45d1-a59c-3070c1901578",
+          "name": "Get private token (Admin) //Clean",
+          "request": {
+            "description": {
+              "content": "Request to get a token",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "rest",
+                "vitis",
+                "privatetoken"
+              ],
+              "host": [
+                "{{YourServer}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml, application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "user",
+                  "value": "{{user}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "text"
+                },
+                {
+                  "key": "duration",
+                  "value": "2",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "8cf26176-b12e-4cd3-a057-772143ae1b0c",
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.responseSize !== 0){",
+                  "    var jsonData = pm.response.json();",
+                  "    //Do stuff here",
+                  "   ",
+                  "    //console.log(jsonData.token);",
+                  "    pm.environment.set(\"token\", jsonData.token);",
+                  "    pm.environment.set(\"user\", \"\");",
+                  "    pm.environment.set(\"password\", \"\");",
+                  "}",
+                  "var t = pm.environment.get(\"time\");",
+                  "pm.test(\"Total time before cleaning : \" + t + \"ms\", function () {});"
+                ],
+                "_lastExecutionId": "26616940-c530-4337-a36c-bbd6aa825e63"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "e95d9582-ebaf-4c62-82cc-cd53d53680ce",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"user\", \"admin\");",
+                  "pm.environment.set(\"password\", \"admin\");"
+                ],
+                "_lastExecutionId": "4d69afce-f01a-4573-8605-c03c7fd26633"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Request to get a token",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "https",
+            "path": [
+              "rest",
+              "vitis",
+              "privatetoken"
+            ],
+            "host": [
+              "192",
+              "168",
+              "56",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Accept",
+              "value": "application/xml, application/json"
+            },
+            {
+              "key": "Content-Type",
+              "value": "multipart/form-data; boundary=--------------------------172236845899232952396813"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.1.2"
+            },
+            {
+              "key": "Host",
+              "value": "192.168.56.1"
+            },
+            {
+              "key": "accept-encoding",
+              "value": "gzip, deflate"
+            },
+            {
+              "key": "content-length",
+              "value": 384
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "formdata",
+            "formdata": [
+              {
+                "key": "user",
+                "value": "admin",
+                "type": "text"
+              },
+              {
+                "key": "password",
+                "value": "admin",
+                "type": "text"
+              },
+              {
+                "key": "duration",
+                "value": "2",
+                "type": "text"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "ca0d591f-3563-4faf-82b7-40ecc5e4a171",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 19 Dec 2017 15:50:40 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.29 (Win64) OpenSSL/1.1.0g"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/7.1.9"
+            },
+            {
+              "key": "Expires",
+              "value": "Thu, 19 Nov 1981 08:52:00 GMT"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store, no-cache, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5, max=100"
+            },
+            {
+              "key": "Connection",
+              "value": "Keep-Alive"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=UTF-8"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              116,
+              111,
+              107,
+              101,
+              110,
+              34,
+              58,
+              34,
+              51,
+              99,
+              54,
+              52,
+              102,
+              102,
+              102,
+              49,
+              54,
+              52,
+              49,
+              97,
+              102,
+              102,
+              52,
+              56,
+              53,
+              52,
+              97,
+              99,
+              100,
+              54,
+              50,
+              98,
+              97,
+              102,
+              101,
+              99,
+              49,
+              48,
+              55,
+              101,
+              34,
+              44,
+              34,
+              117,
+              115,
+              101,
+              114,
+              34,
+              58,
+              34,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              118,
+              97,
+              108,
+              105,
+              100,
+              105,
+              116,
+              121,
+              95,
+              100,
+              97,
+              116,
+              101,
+              34,
+              58,
+              34,
+              50,
+              48,
+              49,
+              55,
+              45,
+              49,
+              50,
+              45,
+              49,
+              57,
+              32,
+              49,
+              54,
+              58,
+              53,
+              50,
+              58,
+              52,
+              48,
+              34,
+              44,
+              34,
+              117,
+              115,
+              101,
+              114,
+              95,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              112,
+              114,
+              105,
+              118,
+              105,
+              108,
+              101,
+              103,
+              101,
+              115,
+              34,
+              58,
+              91,
+              34,
+              118,
+              105,
+              116,
+              105,
+              115,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              105,
+              116,
+              105,
+              115,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              99,
+              97,
+              100,
+              97,
+              115,
+              116,
+              114,
+              101,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              99,
+              97,
+              100,
+              97,
+              115,
+              116,
+              114,
+              101,
+              95,
+              108,
+              105,
+              103,
+              104,
+              116,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              109,
+              52,
+              109,
+              115,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              97,
+              110,
+              99,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              97,
+              110,
+              99,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              93,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              49,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 199,
+          "responseSize": 272
+        },
+        "id": "3e0b3756-2596-45d1-a59c-3070c1901578",
+        "assertions": [
+          {
+            "assertion": "Status equal 1"
+          },
+          {
+            "assertion": "Status code is 200"
+          },
+          {
+            "assertion": "Total time before cleaning : 31258ms"
+          }
+        ]
+      },
+      {
+        "cursor": {
+          "ref": "ced1df2f-e52f-4980-a742-efcd8214f516",
+          "length": 2,
+          "cycles": 1,
+          "position": 1,
+          "iteration": 0,
+          "httpRequestId": "dad834c1-492b-4223-b093-285eecf7b8f2"
+        },
+        "item": {
+          "id": "83bebd04-3cb8-4a81-9ca0-81ba21ce18db",
+          "name": "delete User //Clean",
+          "request": {
+            "description": {
+              "content": "Request to delete User",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "rest",
+                "vitis",
+                "users",
+                ":user_id"
+              ],
+              "host": [
+                "{{YourServer}}"
+              ],
+              "query": [
+                {
+                  "key": "token",
+                  "value": "{{token}}"
+                }
+              ],
+              "variable": [
+                {
+                  "type": "any",
+                  "value": "{{user_id}}",
+                  "key": "user_id"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml, application/json, application/x-vm-json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "body": {}
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "8cc416cb-c0bf-40d0-a984-f1e230a63339",
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.responseSize !== 0){",
+                  "    var jsonData = pm.response.json();",
+                  "    //Do stuff here",
+                  "   ",
+                  "}",
+                  "var t = pm.environment.get(\"time\");",
+                  "pm.test(\"Total time after cleaning : \" + t + \"ms\", function () {});"
+                ],
+                "_lastExecutionId": "09cabd6b-0cc1-4746-95b6-1dbc49e1ede1"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Request to delete User",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "https",
+            "path": [
+              "rest",
+              "vitis",
+              "users",
+              "952"
+            ],
+            "host": [
+              "192",
+              "168",
+              "56",
+              "1"
+            ],
+            "query": [
+              {
+                "key": "token",
+                "value": "3c64fff1641aff4854acd62bafec107e"
+              }
+            ],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Accept",
+              "value": "application/xml, application/json, application/x-vm-json"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.1.2"
+            },
+            {
+              "key": "Host",
+              "value": "192.168.56.1"
+            },
+            {
+              "key": "accept-encoding",
+              "value": "gzip, deflate"
+            },
+            {
+              "key": "content-length",
+              "value": ""
+            }
+          ],
+          "method": "DELETE",
+          "body": {}
+        },
+        "response": {
+          "id": "428e9120-92fd-4884-92f7-d488d989d37c",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 19 Dec 2017 15:50:40 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.29 (Win64) OpenSSL/1.1.0g"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/7.1.9"
+            },
+            {
+              "key": "Expires",
+              "value": "Thu, 19 Nov 1981 08:52:00 GMT"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store, no-cache, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5, max=99"
+            },
+            {
+              "key": "Connection",
+              "value": "Keep-Alive"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=UTF-8"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              117,
+              115,
+              101,
+              114,
+              115,
+              34,
+              58,
+              91,
+              123,
+              34,
+              117,
+              115,
+              101,
+              114,
+              95,
+              105,
+              100,
+              34,
+              58,
+              34,
+              57,
+              53,
+              50,
+              34,
+              125,
+              93,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              49,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 333,
+          "responseSize": 40
+        },
+        "id": "83bebd04-3cb8-4a81-9ca0-81ba21ce18db",
+        "assertions": [
+          {
+            "assertion": "Status equal 1"
+          },
+          {
+            "assertion": "Status code is 200"
+          },
+          {
+            "assertion": "Total time after cleaning : 31591ms"
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 312
+    },
+    "failures": [],
+    "error": null
+  }
+}
