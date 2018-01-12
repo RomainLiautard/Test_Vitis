@@ -1,0 +1,3612 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Vitis Test Rest",
+        "description": "All features to access server operation for vitis",
+        "version": "1.0.0"
+    },
+    "host": "medoc",
+    "basePath": "/rest/vitis",
+    "schemes": [
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json",
+        "application/xml",
+        "text/html"
+    ],
+    "paths": {
+        "/accounts/{operation_id}/{command}": {
+            "get": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Send a mail to ask admin confirmation",
+                "description": "Send a mail to ask admin confirmation",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "formData",
+                        "description": "group token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "operation_id",
+                        "in": "path",
+                        "description": "(fpwd, sign_up)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "command",
+                        "in": "path",
+                        "description": "(confirm, update)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fullname",
+                        "in": "formData",
+                        "description": "name of user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "password of user",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/accounts"
+                        }
+                    }
+                }
+            }
+        },
+        "/accounts/{operation_id}": {
+            "post": {
+                "tags": [
+                    "Accounts"
+                ],
+                "summary": "Send a mail to ask admin confirmation",
+                "description": "Send a mail to ask admin confirmation",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "formData",
+                        "description": "group token",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "operation_id",
+                        "in": "path",
+                        "description": "(fpwd, sign_up)",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "username",
+                        "in": "formData",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "fullname",
+                        "in": "formData",
+                        "description": "name of user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "password of user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mail",
+                        "in": "formData",
+                        "description": "mail of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "company",
+                        "in": "formData",
+                        "description": "organization of user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/accounts"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/Test": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Test connection to active directory",
+                "description": "Request to test connection to active directory",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "query",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Encrypted password of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "object",
+                        "in": "query",
+                        "description": "object of test",
+                        "required": true,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": "person",
+                        "enum": [
+                            "person",
+                            "group"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/Tree": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get Active Directory tree of domain",
+                "description": "Request to get active Directory tree of domain by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "query",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Encrypted password of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "object",
+                        "in": "query",
+                        "description": "object of test",
+                        "required": true,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "default": "person",
+                        "enum": [
+                            "person",
+                            "group"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/Users": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Search Active Directory users",
+                "description": "Request to search active Directory users",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "query",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Encrypted password of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search_account",
+                        "in": "query",
+                        "description": "account to search",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search_groups",
+                        "in": "query",
+                        "description": "groups to search",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search_department",
+                        "in": "query",
+                        "description": "department to search",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/Users/{branch}": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get Active Directory users of branch",
+                "description": "Request to get active Directory users of branch by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "branch",
+                        "in": "path",
+                        "description": "branch of tree",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "query",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Encrypted password of user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/Groups": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Search Active Directory groups",
+                "description": "Request to search active Directory groups",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "query",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Encrypted password of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "search_group",
+                        "in": "query",
+                        "description": "group to search",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/Groups/{branch}": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get Active Directory groups of branch",
+                "description": "Request to get active Directory groups of branch by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "branch",
+                        "in": "path",
+                        "description": "branch of tree",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "query",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Encrypted password of user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/ActiveDirectory/UserGroups/{user_id}": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get groups of Active Directory user",
+                "description": "Request to get the groupd of an active Directory user",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "mixed_rights_management",
+                        "in": "query",
+                        "description": "mixed rights management",
+                        "required": true,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/ActiveDirectory"
+                        }
+                    }
+                }
+            }
+        },
+        "/domains/{domain_id}": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get Domain",
+                "description": "Request to get Domain by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/domains"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Update Domain",
+                "description": "Request to update domain",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "path",
+                        "description": "domain id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "domain",
+                        "in": "query",
+                        "description": "domain name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "alias",
+                        "in": "query",
+                        "description": "Domain alias",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "server",
+                        "in": "query",
+                        "description": "Ad server",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "port",
+                        "in": "query",
+                        "description": "Ad server port",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "dn_search_user",
+                        "in": "query",
+                        "description": "Search DN base for users",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter_user",
+                        "in": "query",
+                        "description": "Filter to search users",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn_search_group",
+                        "in": "query",
+                        "description": "Search DN base for groups",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter_group",
+                        "in": "query",
+                        "description": "Filter to search groups",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login to connect to ldap",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "password to connect to ldap",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "query",
+                        "description": "type of ldap server (AD or openldap supported)",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "default": "AD",
+                        "enum": [
+                            "AD",
+                            "OpenLdap"
+                        ]
+                    },
+                    {
+                        "name": "verify_rights",
+                        "in": "query",
+                        "description": "verify rights",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/domains"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "delete Domain",
+                "description": "Request to delete Domain",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "domain token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain_id",
+                        "in": "path",
+                        "description": "id of the domain",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/domains"
+                        }
+                    }
+                }
+            }
+        },
+        "/domains": {
+            "get": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Get Domains",
+                "description": "Request to get Domains",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "Add Domain",
+                "description": "Request to add domain",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "formData",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "domain",
+                        "in": "formData",
+                        "description": "domain name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "alias",
+                        "in": "formData",
+                        "description": "Domain alias",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "server",
+                        "in": "formData",
+                        "description": "Ad server",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "port",
+                        "in": "formData",
+                        "description": "Ad server port",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "dn_search_user",
+                        "in": "formData",
+                        "description": "Search DN base for users",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter_user",
+                        "in": "formData",
+                        "description": "Filter to search users",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "dn_search_group",
+                        "in": "formData",
+                        "description": "Search DN base for groups",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter_group",
+                        "in": "formData",
+                        "description": "Filter to search groups",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "login",
+                        "in": "formData",
+                        "description": "login to connect to ldap",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "password to connect to ldap",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "type",
+                        "in": "formData",
+                        "description": "type of ldap server (AD or openldap supported)",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        },
+                        "collectionFormat": "multi",
+                        "default": "AD",
+                        "enum": [
+                            "AD",
+                            "OpenLdap"
+                        ]
+                    },
+                    {
+                        "name": "verify_rights",
+                        "in": "formData",
+                        "description": "verify rights",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/domains"
+                        }
+                    }
+                }
+            }
+        },
+        "/domains/": {
+            "delete": {
+                "tags": [
+                    "Domains"
+                ],
+                "summary": "delete Domain",
+                "description": "Request to delete Domain",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "domain token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the domains",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/domains"
+                        }
+                    }
+                }
+            }
+        },
+        "/genericquerys": {
+            "get": {
+                "tags": [
+                    "GenericQuerys"
+                ],
+                "summary": "Get Querys",
+                "description": "Request to query a schema. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "user login",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "user password",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "server",
+                        "in": "query",
+                        "description": "database server",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "port",
+                        "in": "query",
+                        "description": "database server port",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sgbd",
+                        "in": "query",
+                        "description": "database server sgbd(pgsql/oci)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "database",
+                        "in": "query",
+                        "description": "database to query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "schema",
+                        "in": "query",
+                        "description": "schema to query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "table",
+                        "in": "query",
+                        "description": "table to query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/genericquerys/{table_name}": {
+            "get": {
+                "tags": [
+                    "GenericQuerys"
+                ],
+                "summary": "Get Querys",
+                "description": "Request to query a table. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "user login",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "user password",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "server",
+                        "in": "query",
+                        "description": "database server",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "port",
+                        "in": "query",
+                        "description": "database server port",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sgbd",
+                        "in": "query",
+                        "description": "database server sgbd (pgsql/oci)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "database",
+                        "in": "query",
+                        "description": "database to query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "schema",
+                        "in": "query",
+                        "description": "schema to query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "table_name",
+                        "in": "path",
+                        "description": "table to query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "encoding",
+                        "in": "query",
+                        "description": "table to query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/genericquerys/{table_name}/columns": {
+            "get": {
+                "tags": [
+                    "GenericQuerys"
+                ],
+                "summary": "Get Querys",
+                "description": "Request to query. There is two ways to use this service: with the token witch will use the current server/port/sgbd, with login/password witch can query distant servers",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "user login",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "user password",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "server",
+                        "in": "query",
+                        "description": "database server",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "port",
+                        "in": "query",
+                        "description": "database server port",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sgbd",
+                        "in": "query",
+                        "description": "database server sgbd (pgsql/oci)",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "database",
+                        "in": "query",
+                        "description": "database to query",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "schema",
+                        "in": "query",
+                        "description": "schema to query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "table_name",
+                        "in": "path",
+                        "description": "table to query",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "encoding",
+                        "in": "query",
+                        "description": "table to query",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/genericquerys/databases": {
+            "get": {
+                "tags": [
+                    "GenericQuerys"
+                ],
+                "summary": "Get Querys",
+                "description": "Get the dtabases list",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/genericquerys/{database}/schemas": {
+            "get": {
+                "tags": [
+                    "GenericQuerys"
+                ],
+                "summary": "Get Querys",
+                "description": "Get the database schemas",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "database",
+                        "in": "path",
+                        "description": "database",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/{group_id}": {
+            "get": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Get Group",
+                "description": "Request to get Group by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/groups"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Update Group",
+                "description": "Request to update Group",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "group token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "id of the group",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name of the group",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "users",
+                        "in": "query",
+                        "description": "Users of the group",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/groups"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "delete Group",
+                "description": "Request to delete Group",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "group token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "group_id",
+                        "in": "path",
+                        "description": "id of the group",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/groups"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups": {
+            "get": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Get Groups",
+                "description": "Request to get Groups",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "group token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/groups"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "Add Group",
+                "description": "Request to add group",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "formData",
+                        "description": "group token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Name of the group",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "users",
+                        "in": "formData",
+                        "description": "Users of the group",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/groups"
+                        }
+                    }
+                }
+            }
+        },
+        "/groups/": {
+            "delete": {
+                "tags": [
+                    "Groups"
+                ],
+                "summary": "delete Group",
+                "description": "Request to delete Group",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "group token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "query",
+                        "description": "id of the groups",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/groups"
+                        }
+                    }
+                }
+            }
+        },
+        "/logs": {
+            "get": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Get logs tree",
+                "description": "Request to get the logs tree",
+                "operationId": "GET",
+                "produces": [
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "application_name",
+                        "in": "query",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/logs"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "delete log files",
+                "description": "Request to delete log files from min_days",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "min_days",
+                        "in": "query",
+                        "description": "number of days from the last revision",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/logs"
+                        }
+                    }
+                }
+            }
+        },
+        "/logs/{log_directory}/file/{file_name}": {
+            "get": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "Get log file content",
+                "description": "Request to get the content of a log file",
+                "operationId": "GET",
+                "produces": [
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "log_directory",
+                        "in": "path",
+                        "description": "Key in properties.log_directories",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file_name",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "folder",
+                        "in": "query",
+                        "description": "File path from the log_directory",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/logs"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Logs"
+                ],
+                "summary": "delete log files",
+                "description": "Request to delete log files",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "log_directory",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "file_name",
+                        "in": "path",
+                        "description": "",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "folder",
+                        "in": "query",
+                        "description": "File path from the log_directory",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/logs"
+                        }
+                    }
+                }
+            }
+        },
+        "/modes/{mode_id}": {
+            "get": {
+                "tags": [
+                    "Modes"
+                ],
+                "summary": "Get Mode",
+                "description": "Request to get Mode by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "mode_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/modes"
+                        }
+                    }
+                }
+            }
+        },
+        "/modes": {
+            "get": {
+                "tags": [
+                    "Modes"
+                ],
+                "summary": "Get Modes",
+                "description": "Request to get Modes",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    },
+                    {
+                        "name": "action",
+                        "in": "query",
+                        "description": "object of test",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        },
+                        "enum": [
+                            "",
+                            "getAll"
+                        ]
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/modes/sorting": {
+            "put": {
+                "tags": [
+                    "Modes"
+                ],
+                "summary": "Sort modes",
+                "description": "Request to sort the modes of the application",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "modes_id",
+                        "in": "query",
+                        "description": "Modes of the application",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Properties Response",
+                        "schema": {
+                            "$ref": "#/definitions/modes"
+                        }
+                    }
+                }
+            }
+        },
+        "/phpinfo": {
+            "get": {
+                "tags": [
+                    "Phpinfo"
+                ],
+                "summary": "Get phpinfo",
+                "description": "Request to get phpinfo",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/phpinfo"
+                        }
+                    }
+                }
+            }
+        },
+        "/privatetoken": {
+            "get": {
+                "tags": [
+                    "Token"
+                ],
+                "summary": "Get token",
+                "description": "Request to get a token",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "token of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token Response",
+                        "schema": {
+                            "$ref": "#/definitions/privatetoken"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Token"
+                ],
+                "summary": "Get private token",
+                "description": "Request to get a token",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "formData",
+                        "description": "Login of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Password of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "duration",
+                        "in": "formData",
+                        "description": "Session duration (minutes)",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32",
+                        "default": "60"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token Response",
+                        "schema": {
+                            "$ref": "#/definitions/privatetoken"
+                        }
+                    }
+                }
+            }
+        },
+        "/privileges/{rolname}": {
+            "get": {
+                "tags": [
+                    "Privileges"
+                ],
+                "summary": "Get Privilege",
+                "description": "Request to get Privilege by rolname",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "rolname",
+                        "in": "path",
+                        "description": "rolname",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of privilege",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "users",
+                        "in": "query",
+                        "description": "Users of the privilege",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/privileges"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Privileges"
+                ],
+                "summary": "Update Privilege",
+                "description": "Request to update Privilege",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "privilege token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "rolname",
+                        "in": "path",
+                        "description": "id of the privilege",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "description",
+                        "in": "query",
+                        "description": "description of the privilege",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "users",
+                        "in": "query",
+                        "description": "Users of the privilege",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/privileges"
+                        }
+                    }
+                }
+            }
+        },
+        "/privileges": {
+            "get": {
+                "tags": [
+                    "Privileges"
+                ],
+                "summary": "Get Privileges",
+                "description": "Request to get Privileges",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "privilege token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/privileges"
+                        }
+                    }
+                }
+            }
+        },
+        "/properties": {
+            "get": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Get properties",
+                "description": "Request to get properties",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/properties"
+                        }
+                    }
+                }
+            }
+        },
+        "/properties/{module_name}": {
+            "put": {
+                "tags": [
+                    "Properties"
+                ],
+                "summary": "Update properties",
+                "description": "Request to update the properties",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "formData",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "module_name",
+                        "in": "path",
+                        "description": "module name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/properties"
+                        }
+                    }
+                }
+            }
+        },
+        "/publictoken": {
+            "get": {
+                "tags": [
+                    "Token"
+                ],
+                "summary": "Get public token",
+                "description": "Request to get a token",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Token Response",
+                        "schema": {
+                            "$ref": "#/definitions/publictoken"
+                        }
+                    }
+                }
+            }
+        },
+        "/tabs/{tab_id}": {
+            "get": {
+                "tags": [
+                    "Tabs"
+                ],
+                "summary": "Get Tab",
+                "description": "Request to get Tab by mode id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "tab_id",
+                        "in": "path",
+                        "description": "tab id",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/tabs"
+                        }
+                    }
+                }
+            }
+        },
+        "/tabs": {
+            "get": {
+                "tags": [
+                    "Tabs"
+                ],
+                "summary": "Get Tabs",
+                "description": "Request to get Tabs",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{user_id}": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get User",
+                "description": "Request to get User by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "user id",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Update User",
+                "description": "Request to update User",
+                "operationId": "PUT",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "id of the user",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "login",
+                        "in": "query",
+                        "description": "login of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "query",
+                        "description": "Name of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "company",
+                        "in": "query",
+                        "description": "Company of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "department",
+                        "in": "query",
+                        "description": "Departement of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "groups",
+                        "in": "query",
+                        "description": "Groups of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "privileges",
+                        "in": "query",
+                        "description": "Privileges of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ip_constraint",
+                        "in": "query",
+                        "description": "Workstation IP address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password_confirm",
+                        "in": "query",
+                        "description": "Password confirmation of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "restriction",
+                        "in": "query",
+                        "description": "Password confirmation of the user",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "delete User",
+                "description": "Request to delete User",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "path",
+                        "description": "id of the user",
+                        "required": true,
+                        "type": "integer",
+                        "format": "int32"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Get Users",
+                "description": "Request to get Users",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Add User",
+                "description": "Request to add user",
+                "operationId": "POST",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "formData",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "login",
+                        "in": "formData",
+                        "description": "Login of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "action",
+                        "in": "formData",
+                        "description": "action",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "formData",
+                        "description": "Name of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "email",
+                        "in": "formData",
+                        "description": "Email of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "company",
+                        "in": "formData",
+                        "description": "Company of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "department",
+                        "in": "formData",
+                        "description": "Departement of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "groups",
+                        "in": "formData",
+                        "description": "Groups of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "privileges",
+                        "in": "formData",
+                        "description": "Privileges of the user",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ip_constraint",
+                        "in": "formData",
+                        "description": "Workstation IP address",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password",
+                        "in": "formData",
+                        "description": "Password of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "password_confirm",
+                        "in": "formData",
+                        "description": "Password confirmation of the user",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "restriction",
+                        "in": "formData",
+                        "description": "Password confirmation of the user",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/": {
+            "delete": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "delete User",
+                "description": "Request to delete User",
+                "operationId": "DELETE",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "idList",
+                        "in": "path",
+                        "description": "id of the users",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/versions": {
+            "get": {
+                "tags": [
+                    "Versions"
+                ],
+                "summary": "Get versions",
+                "description": "Request to get versions",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/versions"
+                        }
+                    }
+                }
+            }
+        },
+        "/vitissections/{section_id}": {
+            "get": {
+                "tags": [
+                    "VitisSections"
+                ],
+                "summary": "Get VitisSection",
+                "description": "Request to get VitisSection by mode id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "section_id",
+                        "in": "path",
+                        "description": "section_id name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/vitissections"
+                        }
+                    }
+                }
+            }
+        },
+        "/vitissections": {
+            "get": {
+                "tags": [
+                    "VitisSections"
+                ],
+                "summary": "Get VitisSections",
+                "description": "Request to get VitisSections",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x-vm-json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "list of ordering fields",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "sort_order",
+                        "in": "query",
+                        "description": "sort order",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "number of element",
+                        "required": false,
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "index of first element",
+                        "required": false,
+                        "type": "string",
+                        "format": "int32"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "list of attributs",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "filter results",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "distinct",
+                        "in": "query",
+                        "description": "delete duplicates",
+                        "required": false,
+                        "type": "boolean"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/VitisSections"
+                        }
+                    }
+                }
+            }
+        },
+        "/webservices": {
+            "get": {
+                "tags": [
+                    "WebServices"
+                ],
+                "summary": "Get WebServices",
+                "description": "Request to get webservices",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x_vm_json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/webservices"
+                        }
+                    }
+                }
+            }
+        },
+        "/webservices/{web_service}": {
+            "get": {
+                "tags": [
+                    "WebServices"
+                ],
+                "summary": "Get WebService",
+                "description": "Request to get WebService by id",
+                "operationId": "GET",
+                "produces": [
+                    "application/xml",
+                    "application/json",
+                    "application/x_vm_json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "web_service",
+                        "in": "path",
+                        "description": "webservice name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/webservices"
+                        }
+                    }
+                }
+            }
+        },
+        "/webservices/{web_service}/ressources": {
+            "get": {
+                "tags": [
+                    "WebServices"
+                ],
+                "summary": "Get ressources list",
+                "description": "Request to get ressources list",
+                "operationId": "GET",
+                "produces": [
+                    "application/json",
+                    "application/x_vm_json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "web_service",
+                        "in": "path",
+                        "description": "webservice name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/webservices"
+                        }
+                    }
+                }
+            }
+        },
+        "/webservices/{web_service}/ressources/{ressource}": {
+            "get": {
+                "tags": [
+                    "WebServices"
+                ],
+                "summary": "Get ressources infos",
+                "description": "Request to get ressources infos",
+                "operationId": "GET",
+                "produces": [
+                    "application/json",
+                    "application/x_vm_json"
+                ],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "query",
+                        "description": "user token",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "web_service",
+                        "in": "path",
+                        "description": "webservice name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "ressource",
+                        "in": "path",
+                        "description": "ressource name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "attributs",
+                        "in": "query",
+                        "description": "attributs",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Poprerties Response",
+                        "schema": {
+                            "$ref": "#/definitions/webservices"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "/accounts": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/accounts"
+                }
+            ]
+        },
+        "/activedirectory": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/activedirectory"
+                }
+            ]
+        },
+        "/domains": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/domains"
+                }
+            ]
+        },
+        "/genericquerys": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/genericquerys"
+                }
+            ]
+        },
+        "/groups": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/groups"
+                }
+            ]
+        },
+        "/logs": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/logs"
+                }
+            ]
+        },
+        "/Modes": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Modes"
+                }
+            ]
+        },
+        "/phpinfo": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/phpinfo"
+                }
+            ]
+        },
+        "/privatetoken": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/privatetoken"
+                }
+            ]
+        },
+        "/privileges": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/privileges"
+                }
+            ]
+        },
+        "/properties": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/properties"
+                }
+            ]
+        },
+        "/publictoken": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/publictoken"
+                }
+            ]
+        },
+        "/Tabs": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Tabs"
+                }
+            ]
+        },
+        "/Users": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Users"
+                }
+            ]
+        },
+        "/versions": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/versions"
+                }
+            ]
+        },
+        "/VitisSections": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/VitisSections"
+                }
+            ]
+        },
+        "/WebServices": {
+            "allOf": [
+                {
+                    "$ref": "#/definitions/WebServices"
+                }
+            ]
+        }
+    },
+    "responses": {
+        "200": {
+            "description": "Poprerties Response",
+            "schema": {
+                "$ref": "#/definitions/VitisSections"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Accounts",
+            "description": "Operations about accounts"
+        },
+        {
+            "name": "Domains",
+            "description": "Operations about Domains"
+        },
+        {
+            "name": "GenericQuerys",
+            "description": "Operations about GenericQuerys"
+        },
+        {
+            "name": "Groups",
+            "description": "Operations about Groups"
+        },
+        {
+            "name": "Logs",
+            "description": "Operations about Logs"
+        },
+        {
+            "name": "Modes",
+            "description": "Operations about Modes"
+        },
+        {
+            "name": "Phpinfo",
+            "description": "Operations about phpinfo"
+        },
+        {
+            "name": "Token",
+            "description": "Operations about token"
+        },
+        {
+            "name": "Privileges",
+            "description": "Operations about Privileges"
+        },
+        {
+            "name": "Properties",
+            "description": "Operations about properties"
+        },
+        {
+            "name": "Token",
+            "description": "Operations about token"
+        },
+        {
+            "name": "Tabs",
+            "description": "Operations about Tabs"
+        },
+        {
+            "name": "Users",
+            "description": "Operations about Users"
+        },
+        {
+            "name": "Versions",
+            "description": "Operations about versions"
+        },
+        {
+            "name": "VitisSections",
+            "description": "Operations about VitisSections"
+        },
+        {
+            "name": "WebServices",
+            "description": "Operations about WebServices"
+        }
+    ]
+}

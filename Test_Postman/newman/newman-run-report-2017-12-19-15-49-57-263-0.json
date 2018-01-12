@@ -1,0 +1,1775 @@
+{
+  "collection": {
+    "_": {
+      "postman_id": "a29becfe-56ba-e164-9dc6-ef3c3de0490c"
+    },
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    },
+    "item": [
+      {
+        "id": "5ffa05da-bb8a-4e53-964c-399102f9271a",
+        "name": "Admin Start",
+        "item": [
+          {
+            "id": "278c3827-36d2-475f-bee4-4291de5c31ae",
+            "name": "Get private token (Admin)",
+            "request": {
+              "description": {
+                "content": "Request to get a token",
+                "type": "text/plain"
+              },
+              "url": {
+                "protocol": "https",
+                "path": [
+                  "rest",
+                  "vitis",
+                  "privatetoken"
+                ],
+                "host": [
+                  "{{YourServer}}"
+                ],
+                "query": [],
+                "variable": []
+              },
+              "header": [
+                {
+                  "key": "Accept",
+                  "value": "application/xml, application/json"
+                },
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "method": "POST",
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "user",
+                    "value": "{{user}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "password",
+                    "value": "{{password}}",
+                    "type": "text"
+                  },
+                  {
+                    "key": "duration",
+                    "value": "60",
+                    "type": "text"
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "6b5d29f4-b5ff-4152-ae97-92cc9b72855b",
+                  "type": "text/javascript",
+                  "exec": [
+                    "if(pm.response.responseSize !== 0){",
+                    "    var jsonData = pm.response.json();",
+                    "    //Do stuff here",
+                    "    pm.environment.set(\"user\", \"\");",
+                    "    pm.environment.set(\"password\", \"\");",
+                    "    ",
+                    "    pm.environment.set(\"token\", jsonData.token);",
+                    "    pm.environment.set(\"admin_id\",jsonData.user_id);",
+                    "    ",
+                    "    postman.setNextRequest(\"Get token\");",
+                    "}"
+                  ],
+                  "_lastExecutionId": "c8ce29d7-a9b1-4d8b-b9b4-ef405dfb6efe"
+                }
+              },
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "f18bd064-d083-45c1-a3f3-a2df8e531289",
+                  "type": "text/javascript",
+                  "exec": [
+                    "pm.environment.set(\"user\", \"admin\");",
+                    "pm.environment.set(\"password\", \"admin\");",
+                    "",
+                    "",
+                    "pm.environment.set(\"time\",0);",
+                    "pm.environment.set(\"bool\", \"admin\");",
+                    "pm.environment.set(\"i_domain\",0);",
+                    "pm.environment.set(\"i_group\", 0);",
+                    ""
+                  ],
+                  "_lastExecutionId": "8fa1054c-bdce-45b4-a552-11e42a4271a9"
+                }
+              }
+            ]
+          }
+        ],
+        "event": [
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "34681e5a-c7db-4ab3-99b9-ac86748c85cd",
+              "type": "text/javascript",
+              "exec": [
+                ""
+              ],
+              "_lastExecutionId": "73fd7eb9-8e6a-4bb0-b99e-0145b80a1cb8"
+            }
+          },
+          {
+            "listen": "test",
+            "script": {
+              "id": "e4eb9985-0c52-4ca9-9989-026ea67c5cd4",
+              "type": "text/javascript",
+              "exec": [
+                ""
+              ],
+              "_lastExecutionId": "1aadd469-81c0-4e2e-b0ca-12fdd5dffb0a"
+            }
+          }
+        ]
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "e72327eb-56ba-4fc0-9cbe-08d068ae223f",
+          "type": "text/javascript",
+          "exec": [
+            ""
+          ],
+          "_lastExecutionId": "816378f8-af91-45fc-b906-df78e0efe02f"
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "5434dd22-9c59-4a02-8b65-e70d944a2e2e",
+          "type": "text/javascript",
+          "exec": [
+            "var t = parseInt(pm.environment.get(\"time\"));",
+            "console.log(t);",
+            "t += parseInt(pm.response.responseTime);",
+            "console.log(t);",
+            "pm.environment.set(\"time\",t);",
+            "",
+            "if(pm.response.responseSize === 0){",
+            "    pm.test(\"Status equal 1\", function () {",
+            "    pm.expect(jsonData.status).to.eql(1);",
+            "    });",
+            "    pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);});",
+            "    return null;",
+            "}",
+            "",
+            "var jsonData = pm.response.json();",
+            "",
+            "if(jsonData.status === 0){",
+            "    if (jsonData.errorMessage !== null){",
+            "        var ErrorMess = jsonData.errorMessage;",
+            "        console.log(ErrorMess);",
+            "        pm.test(ErrorMess, function () {});",
+            "    }",
+            "    else{",
+            "        var ErrorMess = jsonData.error;",
+            "        console.log(ErrorMess);",
+            "        pm.test(ErrorMess, function () {});",
+            "    }",
+            "}",
+            "else{",
+            "    pm.test(\"Status equal 1\", function () {",
+            "    pm.expect(jsonData.status).to.eql(1);",
+            "    });",
+            "    pm.test(\"Status code is 200\", function () {",
+            "    pm.response.to.have.status(200);});",
+            "    ",
+            "    //Do stuff here",
+            "   ",
+            "}"
+          ],
+          "_lastExecutionId": "c03f254b-766a-46bd-b03b-dd6f03f0ed0a"
+        }
+      }
+    ],
+    "variable": [],
+    "info": {
+      "id": "a29becfe-56ba-e164-9dc6-ef3c3de0490c",
+      "name": "Get_admin_token",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    }
+  },
+  "environment": {
+    "_": {
+      "postman_variable_scope": "environment",
+      "postman_exported_at": "2017-12-19T15:49:03.950Z",
+      "postman_exported_using": "Newman/3.9.1"
+    },
+    "id": "d8f8b4b6-3a61-43c8-df18-9a1c7ba333ef",
+    "name": "Environment_Jenkins",
+    "values": [
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_composant"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "attributs"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "order_by"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sort_order"
+      },
+      {
+        "type": "any",
+        "value": "10",
+        "key": "limit"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "offset"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "filter"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "distinct"
+      },
+      {
+        "type": "any",
+        "value": "941|942",
+        "key": "idList"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "composant_type"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_controle"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_entreprise"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_evacuation_eaux"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_filieres_agree"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_installation"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_param_admin"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_param_liste"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_param_tarif"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_pretraitement"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_traitement"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ID_PAR"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_com"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sYear"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sType"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sFileName"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ID_BAT"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "geom"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_par"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "parcelles"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rapport_type"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_sec"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ID_RIVOLI"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_account"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_groups"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_group"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_department"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "branch"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "mixed_rights_management"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "operation_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "command"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "domain"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "alias"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "server"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "port"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "dn_search_user"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "filter_user"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "dn_search_group"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "filter_group"
+      },
+      {
+        "type": "any",
+        "value": "true",
+        "key": "verify_rights"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sgbd"
+      },
+      {
+        "type": "any",
+        "value": "pg_catalog",
+        "key": "schema"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "table"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "encoding"
+      },
+      {
+        "type": "any",
+        "value": "pg_group",
+        "key": "table_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "users"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "application_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "min_days"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "log_directory"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "file_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "folder"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "mode_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "action"
+      },
+      {
+        "type": "any",
+        "value": "anc_saisie|user",
+        "key": "modes_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rolname"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "description"
+      },
+      {
+        "type": "any",
+        "value": "vitis",
+        "key": "module_name"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ip_constraint"
+      },
+      {
+        "type": "any",
+        "value": "%",
+        "key": "restriction"
+      },
+      {
+        "type": "any",
+        "value": "anc",
+        "key": "web_service"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ressource"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "event_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "business_object_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "title"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sql_summary"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sql_list"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "sorted_by"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "geom_column"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "result_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "search_use_strict"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "index"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "add_form_size"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "edit_form_size"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "display_form_size"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "form"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "cmd"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "crs_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layer_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "theme_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "service_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "visible"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "bo_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layer_list"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layertheme_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "map_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "map_layers"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "visibility"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "layer_opacity"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "extent_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "catalog_index"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "id_theme"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "maptheme_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "module_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "label"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printparameter_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printtemplate_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "editable"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "placeholder"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "defaultvalue"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printreport_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rt_format_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "rt_orientation_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "outputformats_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "htmldefinition"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "jsonobjects"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "printstyle_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "definition"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "intersect_geom"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "intersect_column"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "intersect_buffer"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "get_geom"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "get_image"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "geom_field"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "result_srid"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "service_type_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "url"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "key"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "service_type_version"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "maps"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "print_templates"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "print_styles"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "coordsys_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "epsg"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "connection_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "user"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ms_layer_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "source_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "ms_layertype_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "tableschema"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "tablename"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "tableidfield"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "opacity"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "user_login"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "user_password"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "wmsservices"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "metadata_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "web_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "wmsservice_ms_layers"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "wmsservice_id"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "count"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "u_id"
+      },
+      {
+        "type": "any",
+        "value": "",
+        "key": "password"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1",
+        "key": "login"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1",
+        "key": "name"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1",
+        "key": "password_confirm"
+      },
+      {
+        "type": "any",
+        "value": "corp",
+        "key": "company"
+      },
+      {
+        "type": "any",
+        "value": "Basic_user1@corp.com",
+        "key": "email"
+      },
+      {
+        "type": "any",
+        "value": "22334",
+        "key": "department"
+      },
+      {
+        "type": "any",
+        "value": "1",
+        "key": "groups"
+      },
+      {
+        "type": "any",
+        "value": "vitis_user",
+        "key": "privileges"
+      },
+      {
+        "type": "any",
+        "value": 312,
+        "key": "time"
+      },
+      {
+        "type": "any",
+        "value": "admin",
+        "key": "bool"
+      },
+      {
+        "type": "any",
+        "value": "35ce34b117d54332178a58ffef6855d2",
+        "key": "token"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group_2",
+        "key": "group_name"
+      },
+      {
+        "type": "any",
+        "value": 3,
+        "key": "admin_id"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "i"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group0",
+        "key": "group_name0"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group1",
+        "key": "group_name1"
+      },
+      {
+        "type": "any",
+        "value": "Test_Group2",
+        "key": "group_name2"
+      },
+      {
+        "type": "any",
+        "value": 940,
+        "key": "group_id2"
+      },
+      {
+        "type": "any",
+        "value": 0,
+        "key": "i_domain"
+      },
+      {
+        "type": "any",
+        "value": 0,
+        "key": "i_group"
+      },
+      {
+        "type": "any",
+        "value": "Domain_0",
+        "key": "domain0"
+      },
+      {
+        "type": "any",
+        "value": "Domain_1",
+        "key": "domain1"
+      },
+      {
+        "type": "any",
+        "value": "Domain_2",
+        "key": "domain2"
+      },
+      {
+        "type": "any",
+        "value": 941,
+        "key": "domain_id0"
+      },
+      {
+        "type": "any",
+        "value": 943,
+        "key": "domain_id"
+      },
+      {
+        "type": "any",
+        "value": 942,
+        "key": "domain_id1"
+      },
+      {
+        "type": "any",
+        "value": 943,
+        "key": "domain_id2"
+      },
+      {
+        "type": "any",
+        "value": "postgres,template0,template1,vitis,vmap",
+        "key": "databases"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "i_query"
+      },
+      {
+        "type": "any",
+        "value": "0",
+        "key": "max_query"
+      },
+      {
+        "type": "any",
+        "value": "postgres",
+        "key": "database"
+      },
+      {
+        "type": "any",
+        "value": "user",
+        "key": "mode_id_0"
+      },
+      {
+        "type": "any",
+        "value": "anc_saisie",
+        "key": "mode_id_1"
+      },
+      {
+        "type": "any",
+        "value": 49,
+        "key": "tab_id"
+      },
+      {
+        "type": "any",
+        "value": 50,
+        "key": "section_id"
+      },
+      {
+        "type": "any",
+        "value": 944,
+        "key": "tmpo_uID"
+      },
+      {
+        "type": "any",
+        "value": "[object Object]",
+        "key": "J_file"
+      },
+      {
+        "type": "any",
+        "value": "192.168.56.1",
+        "key": "YourServer"
+      },
+      {
+        "type": "any",
+        "value": 944,
+        "key": "user_id"
+      },
+      {
+        "type": "any",
+        "value": 938,
+        "key": "group_id0"
+      },
+      {
+        "type": "any",
+        "value": 940,
+        "key": "group_id"
+      },
+      {
+        "type": "any",
+        "value": 939,
+        "key": "group_id1"
+      }
+    ]
+  },
+  "globals": {
+    "id": "d612749c-07ef-4014-88b3-862fc6295dfc",
+    "values": []
+  },
+  "run": {
+    "stats": {
+      "iterations": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "items": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "scripts": {
+        "total": 6,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "requests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "tests": {
+        "total": 1,
+        "pending": 0,
+        "failed": 0
+      },
+      "assertions": {
+        "total": 2,
+        "pending": 0,
+        "failed": 0
+      },
+      "testScripts": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      },
+      "prerequestScripts": {
+        "total": 3,
+        "pending": 0,
+        "failed": 0
+      }
+    },
+    "timings": {
+      "responseAverage": 312,
+      "started": 1513698596645,
+      "completed": 1513698597258
+    },
+    "executions": [
+      {
+        "cursor": {
+          "position": 0,
+          "iteration": 0,
+          "length": 1,
+          "cycles": 1,
+          "empty": false,
+          "eof": false,
+          "bof": true,
+          "cr": false,
+          "ref": "bc7d40e5-491f-40c8-a98e-b6292a66b672",
+          "httpRequestId": "b40ac20c-91ea-4227-b93c-a1a5708373dd"
+        },
+        "item": {
+          "id": "278c3827-36d2-475f-bee4-4291de5c31ae",
+          "name": "Get private token (Admin)",
+          "request": {
+            "description": {
+              "content": "Request to get a token",
+              "type": "text/plain"
+            },
+            "url": {
+              "protocol": "https",
+              "path": [
+                "rest",
+                "vitis",
+                "privatetoken"
+              ],
+              "host": [
+                "{{YourServer}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml, application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "user",
+                  "value": "{{user}}",
+                  "type": "text"
+                },
+                {
+                  "key": "password",
+                  "value": "{{password}}",
+                  "type": "text"
+                },
+                {
+                  "key": "duration",
+                  "value": "60",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "id": "6b5d29f4-b5ff-4152-ae97-92cc9b72855b",
+                "type": "text/javascript",
+                "exec": [
+                  "if(pm.response.responseSize !== 0){",
+                  "    var jsonData = pm.response.json();",
+                  "    //Do stuff here",
+                  "    pm.environment.set(\"user\", \"\");",
+                  "    pm.environment.set(\"password\", \"\");",
+                  "    ",
+                  "    pm.environment.set(\"token\", jsonData.token);",
+                  "    pm.environment.set(\"admin_id\",jsonData.user_id);",
+                  "    ",
+                  "    postman.setNextRequest(\"Get token\");",
+                  "}"
+                ],
+                "_lastExecutionId": "c8ce29d7-a9b1-4d8b-b9b4-ef405dfb6efe"
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "id": "f18bd064-d083-45c1-a3f3-a2df8e531289",
+                "type": "text/javascript",
+                "exec": [
+                  "pm.environment.set(\"user\", \"admin\");",
+                  "pm.environment.set(\"password\", \"admin\");",
+                  "",
+                  "",
+                  "pm.environment.set(\"time\",0);",
+                  "pm.environment.set(\"bool\", \"admin\");",
+                  "pm.environment.set(\"i_domain\",0);",
+                  "pm.environment.set(\"i_group\", 0);",
+                  ""
+                ],
+                "_lastExecutionId": "8fa1054c-bdce-45b4-a552-11e42a4271a9"
+              }
+            }
+          ]
+        },
+        "request": {
+          "description": {
+            "content": "Request to get a token",
+            "type": "text/plain"
+          },
+          "url": {
+            "protocol": "https",
+            "path": [
+              "rest",
+              "vitis",
+              "privatetoken"
+            ],
+            "host": [
+              "192",
+              "168",
+              "56",
+              "1"
+            ],
+            "query": [],
+            "variable": []
+          },
+          "header": [
+            {
+              "key": "Accept",
+              "value": "application/xml, application/json"
+            },
+            {
+              "key": "Content-Type",
+              "value": "multipart/form-data; boundary=--------------------------346736829444434997667241"
+            },
+            {
+              "key": "User-Agent",
+              "value": "PostmanRuntime/7.1.2"
+            },
+            {
+              "key": "Host",
+              "value": "192.168.56.1"
+            },
+            {
+              "key": "accept-encoding",
+              "value": "gzip, deflate"
+            },
+            {
+              "key": "content-length",
+              "value": 385
+            }
+          ],
+          "method": "POST",
+          "body": {
+            "mode": "formdata",
+            "formdata": [
+              {
+                "key": "user",
+                "value": "admin",
+                "type": "text"
+              },
+              {
+                "key": "password",
+                "value": "admin",
+                "type": "text"
+              },
+              {
+                "key": "duration",
+                "value": "60",
+                "type": "text"
+              }
+            ]
+          }
+        },
+        "response": {
+          "id": "7a20b989-88cb-477c-9841-ae81e2157551",
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Date",
+              "value": "Tue, 19 Dec 2017 15:49:48 GMT"
+            },
+            {
+              "key": "Server",
+              "value": "Apache/2.4.29 (Win64) OpenSSL/1.1.0g"
+            },
+            {
+              "key": "X-Powered-By",
+              "value": "PHP/7.1.9"
+            },
+            {
+              "key": "Expires",
+              "value": "Thu, 19 Nov 1981 08:52:00 GMT"
+            },
+            {
+              "key": "Cache-Control",
+              "value": "no-store, no-cache, must-revalidate"
+            },
+            {
+              "key": "Pragma",
+              "value": "no-cache"
+            },
+            {
+              "key": "Keep-Alive",
+              "value": "timeout=5, max=100"
+            },
+            {
+              "key": "Connection",
+              "value": "Keep-Alive"
+            },
+            {
+              "key": "Transfer-Encoding",
+              "value": "chunked"
+            },
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=UTF-8"
+            }
+          ],
+          "stream": {
+            "type": "Buffer",
+            "data": [
+              123,
+              34,
+              116,
+              111,
+              107,
+              101,
+              110,
+              34,
+              58,
+              34,
+              51,
+              53,
+              99,
+              101,
+              51,
+              52,
+              98,
+              49,
+              49,
+              55,
+              100,
+              53,
+              52,
+              51,
+              51,
+              50,
+              49,
+              55,
+              56,
+              97,
+              53,
+              56,
+              102,
+              102,
+              101,
+              102,
+              54,
+              56,
+              53,
+              53,
+              100,
+              50,
+              34,
+              44,
+              34,
+              117,
+              115,
+              101,
+              114,
+              34,
+              58,
+              34,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              118,
+              97,
+              108,
+              105,
+              100,
+              105,
+              116,
+              121,
+              95,
+              100,
+              97,
+              116,
+              101,
+              34,
+              58,
+              34,
+              50,
+              48,
+              49,
+              55,
+              45,
+              49,
+              50,
+              45,
+              49,
+              57,
+              32,
+              49,
+              55,
+              58,
+              52,
+              57,
+              58,
+              52,
+              56,
+              34,
+              44,
+              34,
+              117,
+              115,
+              101,
+              114,
+              95,
+              105,
+              100,
+              34,
+              58,
+              51,
+              44,
+              34,
+              112,
+              114,
+              105,
+              118,
+              105,
+              108,
+              101,
+              103,
+              101,
+              115,
+              34,
+              58,
+              91,
+              34,
+              118,
+              105,
+              116,
+              105,
+              115,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              105,
+              116,
+              105,
+              115,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              99,
+              97,
+              100,
+              97,
+              115,
+              116,
+              114,
+              101,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              109,
+              97,
+              112,
+              95,
+              99,
+              97,
+              100,
+              97,
+              115,
+              116,
+              114,
+              101,
+              95,
+              108,
+              105,
+              103,
+              104,
+              116,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              44,
+              34,
+              118,
+              109,
+              52,
+              109,
+              115,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              97,
+              110,
+              99,
+              95,
+              97,
+              100,
+              109,
+              105,
+              110,
+              34,
+              44,
+              34,
+              97,
+              110,
+              99,
+              95,
+              117,
+              115,
+              101,
+              114,
+              34,
+              93,
+              44,
+              34,
+              115,
+              116,
+              97,
+              116,
+              117,
+              115,
+              34,
+              58,
+              49,
+              125
+            ]
+          },
+          "cookie": [],
+          "responseTime": 312,
+          "responseSize": 272
+        },
+        "id": "278c3827-36d2-475f-bee4-4291de5c31ae",
+        "assertions": [
+          {
+            "assertion": "Status equal 1"
+          },
+          {
+            "assertion": "Status code is 200"
+          }
+        ]
+      }
+    ],
+    "transfers": {
+      "responseTotal": 272
+    },
+    "failures": [],
+    "error": null
+  }
+}
