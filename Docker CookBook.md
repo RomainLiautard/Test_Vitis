@@ -89,6 +89,12 @@ docker run --name NAME -it CONTAINER
     * `-a` Attach STDOUT/STDERR and forward signals
     * `-i` Attach container's STDIN
 
+* ###### Start container with a shared directory
+ > To map a host directory to a docker container directory you need to use the `-v` flag when using docker run like so: 
+ ```
+docker run -v /host/dir:/container/dir -other -options image_name command_to_run
+```
+
 * ###### Push image
 > * ###### Pre-setup
 
